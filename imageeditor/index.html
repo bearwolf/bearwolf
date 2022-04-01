@@ -1,0 +1,60 @@
+<html>
+
+<head>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+  <div id="wrapper">
+
+    <!-- filters area -->
+    <div id="edit_controls">
+      <p style="font-family: Arial" align="center"><b>Björns episka fotoeditor</b></p>
+     
+     <!-- <li>Svartvit<br><input id="grayscale" class="range" type="range" min="0" max="100" value="0"></li> -->
+      <br>
+      <li>Oskärpa<br><input id="blur" class="range" type="range" min="0" max="10" value="0"></li>
+      <li>Exponering<br><input id="exposure" class="range" type="range" min="0" max="200" value="100"></li>
+      <li>Kontrast<br><input id="sepia" class="range" type="range" min="0" max="200" value="100"></li>
+      <li>Saturering<br><input id="opacity" class="range" type="range" min="0" max="200" value="100"></li>
+      <li>Svartvit<br> <label class="switch">
+  <input id="myCheck" type="checkbox" class="range">
+  <span class="slider round"></span>
+</label></li>
+      <br>
+      
+    <input hidden type="file" id="fu" accept="image/*" onchange="previewFiles()" style="margin-top: 2f0px" >
+
+<input type="button" class = "button" accept="image/*"onclick="document.getElementById('fu').click()" 
+value="Ladda upp en bild" />
+<span id="fileName"></span>
+
+      <button onclick="nollstall()" class = "button">Nollställ</button>
+      <button onclick="download()" class = "button">Ladda ner</button><br>
+      
+    </div>
+    
+</div>
+  
+  <div id="wrapper2">
+    <!-- images area -->
+    <br>
+    <div id="images_div">
+      <!-- accepting only image files -->
+      
+      
+    
+      <canvas id="edited_image_canva">
+          Your browser does not support the HTML5 canvas tag
+        </canvas>
+      <br />
+      
+      <img src="" id="original_image_preview" alt="Väntar på bild" hidden>
+    </div>
+
+  </div>
+  <script src="./script.js"></script>
+</body>
+
+</html>
