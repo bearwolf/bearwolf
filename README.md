@@ -1,9 +1,9 @@
-# Suga-röv-simulatorn
-A eat ass game created using PhaserJs
+# Sex & sånt turnéns pausspel. Hur många rövar kan du äta?
+A game created using PhaserJs
 
 
 
-## Credits
+
 
 ### -- PhaserJs Engine (The Game engine)
 PhaserJs
