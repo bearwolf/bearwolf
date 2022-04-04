@@ -117,9 +117,9 @@ let layerHandlers = {
     var width3 = getLengthFromTextBox3();
 
     /// draw background rect assuming height of font
-    ctx.fillRect(0, 750, (width1*10), 70);
-    ctx.fillRect(0, 820, (width2*10), 75);
-    ctx.fillRect(0, 895, (width3*10), 70);
+    ctx.fillRect(0, 741, (width1*10), 87);
+    ctx.fillRect(0, 813, (width2*10), 86);
+    ctx.fillRect(0, 883, (width3*10), 86);
    //ctx.fillRect(10, 900, 800, 100);
     
     ctx.restore();
@@ -272,21 +272,21 @@ function getLayerDescriptions() {
   {
     type: 'text',
     text: getTextFromTextBox1(),
-    rect: { x: 50, y: 810, w: 0, h: 0 },
+    rect: { x: 51, y: 807, w: 0, h: 0 },
     drawOpts: { font: '900 65px Yleblack', fillStyle: getColor1()},
     zOrder: 100,
   },
   {
     type: 'text',
     text: getTextFromTextBox2(),
-    rect: { x: 50, y: 883, w: 0, h: 0 },
+    rect: { x: 51, y: 880, w: 0, h: 0 },
     drawOpts: { font: '900 65px Yleblack', fillStyle: getColor2()},
     zOrder: 1,
   },
   {
     type: 'text',
     text: getTextFromTextBox3(),
-    rect: { x: 50, y: 955, w: 0, h: 0 },
+    rect: { x: 51, y: 952, w: 0, h: 0 },
     drawOpts: { font: '900 65px Yleblack', fillStyle: getColor3()},
     zOrder: 1,
   },
