@@ -9,7 +9,7 @@ MainGameContainer.GameLoadingScreen.prototype = {
   // Game Assets
   gameAssets: {
     images: [
-      { name: 'wood_bg', src: './assets/img/bedbgfade.png', },
+      { name: 'wood_bg', src: './assets/img/stripebg.jpg', },
       { name: 'knife_texture', src: './assets/img/knife_texture.png', },
       { name: 'knife_texture2', src: './assets/img/knife_texture2.png', },
       { name: 'apple', src: './assets/img/butt1.png', },
@@ -22,7 +22,7 @@ MainGameContainer.GameLoadingScreen.prototype = {
       { name: 'pear_cut', src: './assets/img/heart.png', },
       { name: 'tomato', src: './assets/img/butt5.png', },
       { name: 'tomato_cut', src: './assets/img/heart.png', },
-      { name: 'bomb', src: './assets/img/virus2.png', },
+      { name: 'bomb', src: './assets/img/virus4.png', },
     ],
     sounds: [
       { name: 'confirm', src: './assets/sound/lick.mp3' },

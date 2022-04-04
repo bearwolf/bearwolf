@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>replit</title>
+  <script src="jquery-3.6.0.min.js"></script>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  
+<script>
+  $(document).ready(function()
+{
+       function refresh() {
+            $('#body').load(location.href + " #body");
+        }
+
+        setInterval(function () {
+            refresh()
+        }, 500); //5 seconds
+})
+</script>
+  
+</head>
+
+<body>
+  <div class="header">
+  <h1>VEM ÄTER MEST RÖV?</h1>
+</div>
+  
+ <div id="background">
+  <div id="scoreboard">
+
+<script id="fetcher" src="https://www.dreamlo.com/lb/624468c68f40bc123c4488ea/js" type="text/javascript">
+
+
+  </script>
+
+</div>
+  
+
+  
+   </div>
+</body>
+<script type="text/javascript">         
+  window.onload = clear();          
+  function clear() {            
+    document.body.innerHTML = document.body.innerHTML.replace('Name', 'Spelare');        
+    document.body.innerHTML = document.body.innerHTML.replace('Score', 'Poäng');     
+  }        
+  window.onload = clear();  
+</script>
+</html>

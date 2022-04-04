@@ -28,6 +28,8 @@
 			margin: 0;
 			padding: 0;
 			background-color: #000000;
+      
+      background-image: url("./assets/img/bgtile.jpg");
 		}
     #fullscreen{
      
@@ -75,7 +77,7 @@
   <div id="float"> 
   
   <input type="text" id="name" class="name" name="name" required
-       minlength="4" maxlength="10" size="10" placeholder="Ditt namn" oninput="enable()">
+       minlength="4" maxlength="10" size="10" placeholder="Nickname" oninput="enable()">
   <br>
     <input type="button" id="button" class="button" onclick="letsGo()" value="Ladda spelet" disabled>
   </div>
@@ -91,8 +93,10 @@
 		function letsGo() {
       document.getElementById("name").style.display = "none";
       document.getElementById("button").style.display = "none";
+      document.body.style.backgroundImage='none';
+ 
       var nick = "kuknamn";
-      console.log("Loading game");
+      console.log("test")
       console.log(document.getElementById("name").value);
 			var game = new Phaser.Game(
 				gameConfig.width,
