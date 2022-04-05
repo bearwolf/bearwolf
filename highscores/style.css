@@ -17,7 +17,7 @@
 }
 body{
   background: black;
-  background-image: url("../bgtile.jpg");
+  background-image: url("./bgtile.jpg");
   font-size: 25px;
   font-family: Arial;
 }
