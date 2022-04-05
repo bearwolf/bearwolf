@@ -4,11 +4,12 @@
 <head>
 	<meta charset="UTF-8" />
 	<title>Suga-röv simulatorn</title>
-	<script src="./js/phaser.min.js"></script>
+	<script src="./js/phaser2.16.min.js"></script>
 	<script src="./js/gameConfig.js"></script>
 	<script src="./js/GameBoot.js"></script>
 	<script src="./js/GameLoadingScreen.js"></script>
 	<script src="./js/GamePlay.js"></script>
+  <script src="./js/Juicy.js"></script>
 	<style type="text/css">
 		#gameContainer canvas {
 			display: block;
@@ -53,9 +54,15 @@
     margin-right: auto;
     }
     input[type=text] {
+      width: 420px;
   border: 2px solid green;
   border-radius: 4px;
       font-size: 60px;
+      display: flex;
+  justify-content: center;
+      padding: 10px;
+  align-items: center;
+     
 }
     .button {
   background-color: #4CAF50; /* Green */
@@ -68,16 +75,22 @@
   display: inline-block;
   font-size: 56px;
       border-radius: 12px;
+      
+}
+    @font-face {
+    font-family: "Arial Black";
+    src: url(./ariblk.ttf) format("truetype");
 }
 	</style>
 </head>
 
 <body>
+  <span style="font-family:'Arial Black'"></span>
 <div id=fullscreen>
   <div id="float"> 
-  
+  <img src="./manual.png" alt="Ass=Very yes, virus=Very no" id="manual">
   <input type="text" id="name" class="name" name="name" required
-       minlength="4" maxlength="10" size="10" placeholder="Nickname" oninput="enable()">
+       minlength="4" maxlength="10"  placeholder="Nickname" oninput="enable()">
   <br>
     <input type="button" id="button" class="button" onclick="letsGo()" value="Ladda spelet" disabled>
   </div>
@@ -93,6 +106,7 @@
 		function letsGo() {
       document.getElementById("name").style.display = "none";
       document.getElementById("button").style.display = "none";
+      document.getElementById("manual").style.display = "none";
       document.body.style.backgroundImage='none';
  
       var nick = "kuknamn";
@@ -110,6 +124,7 @@
 			game.state.add('GameBoot', MainGameContainer.GameBoot);
 			game.state.add('GameLoadingScreen', MainGameContainer.GameLoadingScreen);
 			game.state.add('GamePlay', MainGameContainer.GamePlay);
+      game.state.add('Juicy', MainGameContainer.Juicy);
 game.state.start('GameBoot');
 			
 

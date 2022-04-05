@@ -14,7 +14,7 @@ MainGameContainer.GameBoot.prototype = {
   },
   preload: function() {
     // load assets
-    
+    	
     // load image assets
     var x = 0;
     var imagesn = this.gameAssets.images.length;

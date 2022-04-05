@@ -3,6 +3,7 @@ MainGameContainer.GameLoadingScreen = function (game) {};
 
 MainGameContainer.GameLoadingScreen.prototype = {
   // Game Objects or Groups
+  
   preloadBar: undefined,
   bck: undefined,
   ready: false,
@@ -26,11 +27,11 @@ MainGameContainer.GameLoadingScreen.prototype = {
     ],
     sounds: [
       { name: 'confirm', src: './assets/sound/lick.mp3' },
-      { name: 'error', src: './assets/sound/error.wav' },
+      { name: 'error', src: './assets/sound/error4.mp3' },
       { name: 'loadsave', src: './assets/sound/loadsave.wav' },
     ],
     music: [
-      { name: 'blue_beat', src: './assets/music/blue_beat.mp3' },
+      { name: 'blue_beat', src: './assets/music/carelessfart.mp3' },
     ],
     spritesheets: [],
   },
@@ -44,7 +45,7 @@ MainGameContainer.GameLoadingScreen.prototype = {
 		this.preloadBar.anchor.setTo(0,0.5);
 		this.preloadBar.scale.setTo(1,1);
 		this.preloadBar.x = this.world.centerX - this.preloadBar.width/2;
-		
+
 		this.load.setPreloadSprite(this.preloadBar);
 		
 		//Start loading assets

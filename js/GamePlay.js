@@ -9,6 +9,7 @@ MainGameContainer.GamePlay.prototype = {
     jumpButton: undefined,
     startButton: undefined,
     restartButton: undefined,
+    highscoreButton: undefined,
   },
   ui: {
     timeLabel: undefined,
@@ -43,13 +44,19 @@ MainGameContainer.GamePlay.prototype = {
   ],
   items: undefined,
 
-  preload: function () { },
+  preload: function () {
+    this.juicy=this.game.plugins.add(new Phaser.Plugin.Juicy(this));
+    
+  },
   shutdown: function () {
     this.game.world.removeAll();
     // reset everything
     this.resetAll();
   },
   create: function () {
+    
+    
+    
     this.game.time.advancedTiming = true;
     // Enable Global Phisics
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -82,17 +89,18 @@ MainGameContainer.GamePlay.prototype = {
 
     // start button
     var style = {
-      font: '42px Arial',
+      font: '42px Arial Black',
       fill: '#FFFFFF',
       align: 'center',
       stroke: '#000000',
       strokeThickness: 2,
     };
-    this.buttons.startButton = this.game.add.button(this.game.world.centerX - 100, this.game.world.centerY + 300, 'preloaderBar', this.startGame, this, 2, 1, 0);
-    this.ui.startLabel = this.game.add.text(this.game.world.centerX - 25, this.game.world.centerY + 310, 'START', style);
+    this.buttons.startButton = this.game.add.button(this.game.world.centerX - 110, this.game.world.centerY + 300, 'preloaderBar', this.startGame, this, 2, 1, 0);
+    this.ui.startLabel = this.game.add.text(this.game.world.centerX - 35, this.game.world.centerY + 310, 'START', style);
 
   },
   update: function () {
+    
     this.updateUI();
     var self = this;
     if (self.gameState === 'playing') {
@@ -106,6 +114,7 @@ MainGameContainer.GamePlay.prototype = {
               item.destroy();
               self.gameState = 'gameOver';
               self.gameOverState();
+              
             } else {
               self.itemDestroy(item);
             }
@@ -122,6 +131,9 @@ MainGameContainer.GamePlay.prototype = {
             self.sounds.hit.play();
             self.livesCount -= 1;
             item.destroy();
+            self.juicy.shake();
+            self.game.camera.flash(0xe94d25, 500);
+            
           }
 
           if (self.livesCount <= 0 && self.gameState === 'playing') {
@@ -169,7 +181,8 @@ MainGameContainer.GamePlay.prototype = {
     this.buttons.startButton.destroy();
     this.ui.startLabel.visible = false;
     this.gameState = 'playing';
-
+    
+    
       //this.disableWebAudio: true;
     // game music
     this.bgMusic = this.game.add.audio('blue_beat');
@@ -178,7 +191,7 @@ MainGameContainer.GamePlay.prototype = {
     this.bgMusic.play();
 
     var self = this;
-
+    
     // time count for item throw
     this.events.throwItems = self.game.time.events.loop(Phaser.Timer.SECOND * 3, function () {
       if (self.gameState === 'playing') {
@@ -244,7 +257,7 @@ MainGameContainer.GamePlay.prototype = {
   addUIElements() {
     // set text label style
     var style = {
-      font: '24px Arial',
+      font: '24px Arial Black',
       fill: '#FFFFFF',
       align: 'center',
       stroke: '#000000',
@@ -252,9 +265,9 @@ MainGameContainer.GamePlay.prototype = {
     };
 
     // add labels/texts
-    this.ui.scoreLabel = this.game.add.text(180, 5, 'Score:\n' + this.scoreCount, style);
+    this.ui.scoreLabel = this.game.add.text(140, 5, 'Score:\n' + this.scoreCount, style);
     this.ui.scoreLabel.fixedToCamera = true;
-    this.ui.livesLabel = this.game.add.text(500, 5, 'Lives:\n' + this.livesCount, style);
+    this.ui.livesLabel = this.game.add.text(480, 5, 'Lives:\n' + this.livesCount, style);
     this.ui.livesLabel.fixedToCamera = true;
   },
   updateUI() {
@@ -364,6 +377,8 @@ MainGameContainer.GamePlay.prototype = {
     item.body.velocity.setTo(xVector, yVector);
   },
   gameOverState() {
+    this.juicy.shake();
+    this.game.camera.flash(0xff0000, 500);
 console.log(document.getElementById("name").value);
 
     fetch('https://www.dreamlo.com/lb/ID2t_F0XfUStrlqcIH9tYACKi0h5VqjE-zfa73wlNm5Q/add/'+ (document.getElementById("name").value) +'/' + this.scoreCount, {})
@@ -377,22 +392,40 @@ console.log(document.getElementById("name").value);
 
     window.console.log('gameOverState');
     var style = {
-      font: '42px Arial',
+      font: '42px Arial Black',
       fill: '#FFFFFF',
       align: 'center',
       stroke: '#000000',
       strokeThickness: 2,
-    };
+    };  //highscoreButton. Score:\n
+    var style2 = {
+      font: '92px Arial Black',
+      fill: '#FFFFFF',
+      align: 'center',
+      stroke: '#000000',
+      strokeThickness: 7,
+    };  //highscoreButton. Score:\n
 
+this.ui.gameoverscoreLabel = this.game.add.text(this.game.world.centerX - 255, this.game.world.centerY - 310, 'Din poäng:\n' + this.scoreCount, style2);
     
-    this.buttons.restartButton = this.game.add.button(this.game.world.centerX - 100, this.game.world.centerY + 300, 'preloaderBar', this.restartGame, this, 2, 1, 0);
-    this.ui.restartLabel = this.game.add.text(this.game.world.centerX - 35, this.game.world.centerY + 310, 'Börja om', style);
+this.buttons.highscoreButton = this.game.add.button(this.game.world.centerX - 140, this.game.world.centerY + 200, 'preloaderBar', this.highScores, this, 2, 1, 0);
+    this.ui.highscoreLabel = this.game.add.text(this.game.world.centerX - 123, this.game.world.centerY + 210, 'Highscores', style);
+    
+    this.buttons.restartButton = this.game.add.button(this.game.world.centerX - 140, this.game.world.centerY + 300, 'preloaderBar', this.restartGame, this, 2, 1, 0);
+    this.ui.restartLabel = this.game.add.text(this.game.world.centerX - 96, this.game.world.centerY + 310, 'Börja om', style);
     this.bgMusic.stop();
     this.game.time.events.remove(this.events.drawSlash);
     this.game.time.events.remove(this.events.throwItems);
     this.items.removeAll();
   },
+  highScores(){
+
+    window.open('https://bearwolf.github.io/bearwolf/highscores/');
+  },
   restartGame() {
+    this.ui.gameoverscoreLabel.visible = false;
+    this.buttons.highscoreButton.destroy();
+    this.ui.highscoreLabel.visible = false;
     this.buttons.restartButton.destroy();
     this.ui.restartLabel.visible = false;
     this.game.physics.arcade.isPaused = false;
@@ -426,4 +459,9 @@ console.log(document.getElementById("name").value);
     });
 
   },
+};
+function shake() {
+
+    //  You can set your own intensity and duration
+    this.juicy.shake();
 };
