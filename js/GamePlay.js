@@ -219,20 +219,23 @@ MainGameContainer.GamePlay.prototype = {
         if (this.game.input.x !== this.slash[count - 1].x && this.game.input.y !== this.slash[count - 1].y) {
           this.slash.push({
             x: this.game.input.x,
-            y: this.game.input.y
+            y: this.game.input.y,
+            
           });
 
           var count = this.slash.length;
-          if (this.slash.length >= 2) {
+          if (this.slash.length >= 1) {
             var line = this.game.add.graphics(0, 0);
 
             // make it a red rectangle
-            line.lineStyle(5, 0xffffff);
+            line.lineStyle(10, 0xf511de);
+           // line.beginFill(0xff0000);
+          //line.drawCircle();
             line.moveTo(this.slash[count - 2].x, this.slash[count - 2].y);
 
             // draw a line
             line.lineTo(this.slash[count - 1].x, this.slash[count - 1].y);
-
+            
             this.lines.push(line);
           }
         }
@@ -290,34 +293,34 @@ MainGameContainer.GamePlay.prototype = {
     var totalItems = 0;
 
     if (this.gameLevel >= 1 && this.gameLevel <= 5) {
-      totalItems = 1;
+      totalItems = 3;
       console.log('1');
     } else if (this.gameLevel >= 6 && this.gameLevel <= 10) {
-      totalItems = 2;
+      totalItems = 4;
       console.log('2');
     } else if (this.gameLevel >= 11 && this.gameLevel <= 20) {
-      totalItems = 3;
+      totalItems = 5;
       console.log('3');
     } else if (this.gameLevel >= 21 && this.gameLevel <= 29) {
-      totalItems = 4;
+      totalItems = 6;
       console.log('4');
     } else if (this.gameLevel >= 30 && this.gameLevel <= 39) {
-      totalItems = 5;
+      totalItems = 7;
       console.log('5');
     } else if (this.gameLevel >= 40 && this.gameLevel <= 49) {
-      totalItems = 6;
+      totalItems = 8;
       console.log('6');
       } else if (this.gameLevel >= 50 && this.gameLevel <= 59) {
-      totalItems = 7;
+      totalItems = 9;
       console.log('7');
       } else if (this.gameLevel >= 60 && this.gameLevel <= 69) {
-      totalItems = 8;
+      totalItems = 10;
       console.log('8');
       } else if (this.gameLevel >= 70 && this.gameLevel <= 79) {
-      totalItems = 9;
+      totalItems = 11;
       console.log('9');
       } else if (this.gameLevel >= 80 && this.gameLevel <= 89) {
-      totalItems = 11;
+      totalItems = 12;
       console.log('10');
       } else if (this.gameLevel >= 90 && this.gameLevel <= 99) {
       totalItems = 15;
@@ -331,23 +334,26 @@ MainGameContainer.GamePlay.prototype = {
     for (var x = 0; x < totalItems; x++) {
       setTimeout(function () {
         var item = self.createItem();
+        item.alpha = 0;
         self.throwItemToAir(item);
+        
       }, (x * 30));
     }
   },
   // iteam creation
   createItem() {
+    
     var xPos = Math.floor((Math.random() * (this.game.width - 50)) + 50);
     var yPos = this.game.height + 100;
     var fruitType = this.itemList[Math.floor((Math.random() * this.itemList.length))];
-
-    var item = this.items.create(xPos, yPos, fruitType);
+    
+    var item = this.items.create(xPos, yPos, fruitType, alpha = 0);
     item.type = fruitType;
     item.state = 'spawing';
     item.body.setCircle(45);
     item.inputEnabled = true;
     item.anchor.setTo(0.5, 0.5);
-
+    item.alpha = 0;
     return item;
   },
   createSlashedItems(itemType, x, y) {
@@ -375,6 +381,7 @@ MainGameContainer.GamePlay.prototype = {
     }
 
     item.body.velocity.setTo(xVector, yVector);
+    item.alpha = 1;
   },
   gameOverState() {
     this.juicy.shake();
@@ -406,13 +413,17 @@ console.log(document.getElementById("name").value);
       strokeThickness: 7,
     };  //highscoreButton. Score:\n
 
-this.ui.gameoverscoreLabel = this.game.add.text(this.game.world.centerX - 255, this.game.world.centerY - 310, 'Din poäng:\n' + this.scoreCount, style2);
+text = this.ui.gameoverscoreLabel = this.game.add.text(this.game.world.centerX - 290, this.game.world.centerY - 310, 'DIN POÄNG:\n' + this.scoreCount, style2);
     
 this.buttons.highscoreButton = this.game.add.button(this.game.world.centerX - 140, this.game.world.centerY + 200, 'preloaderBar', this.highScores, this, 2, 1, 0);
     this.ui.highscoreLabel = this.game.add.text(this.game.world.centerX - 123, this.game.world.centerY + 210, 'Highscores', style);
     
     this.buttons.restartButton = this.game.add.button(this.game.world.centerX - 140, this.game.world.centerY + 300, 'preloaderBar', this.restartGame, this, 2, 1, 0);
     this.ui.restartLabel = this.game.add.text(this.game.world.centerX - 96, this.game.world.centerY + 310, 'Börja om', style);
+    grd = text.context.createLinearGradient(0, 0, 0, text.canvas.height);
+    grd.addColorStop(0, '#0bcbfb');   
+    grd.addColorStop(1, '#8ffca0');
+    text.fill = grd;
     this.bgMusic.stop();
     this.game.time.events.remove(this.events.drawSlash);
     this.game.time.events.remove(this.events.throwItems);

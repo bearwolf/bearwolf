@@ -2,11 +2,11 @@
   width: 100px;
 }
 #scoreboard {
-
-   
-  width: 50%;
+width: 70%;
+   position: center;
+  max-width: 600px;
  
-  padding: 10px;
+  padding: 30px;
    margin-left: auto;
   margin-right: auto;
 }
@@ -25,6 +25,7 @@ body{
   border-collapse:collapse;
   text-align:center;
   width: 100%; 
+  
 }
 .dreamloLBTable tr:nth-child(even){background-color: #f2f2f2;}
 .dreamloLBTable tr:nth-child(odd) {background: #FFF}
@@ -39,6 +40,8 @@ body{
   border: 1px solid #ddd;
   padding: 15px;
   color: white;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .dreamloLBTable td { 
