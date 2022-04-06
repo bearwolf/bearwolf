@@ -32,6 +32,7 @@ MainGameContainer.GamePlay.prototype = {
   livesCount: 3,
   scoreCount: 0,
   gameLevel: 0,
+  throwTimer: 2,
   slash: [],
   lines: [],
   itemList: [
@@ -193,7 +194,7 @@ MainGameContainer.GamePlay.prototype = {
     var self = this;
     
     // time count for item throw
-    this.events.throwItems = self.game.time.events.loop(Phaser.Timer.SECOND * 3, function () {
+    this.events.throwItems = self.game.time.events.loop(Phaser.Timer.SECOND * this.throwTimer, function () {
       if (self.gameState === 'playing') {
         self.throwItems();
       }
@@ -291,12 +292,15 @@ MainGameContainer.GamePlay.prototype = {
   throwItems() {
     this.gameLevel += 1;
     var totalItems = 0;
-
+    
     if (this.gameLevel >= 1 && this.gameLevel <= 5) {
       totalItems = 3;
+      console.log(this.throwTimer);
       console.log('1');
     } else if (this.gameLevel >= 6 && this.gameLevel <= 10) {
       totalItems = 4;
+      this.throwTimer -= 2;
+      console.log(this.throwTimer);
       console.log('2');
     } else if (this.gameLevel >= 11 && this.gameLevel <= 20) {
       totalItems = 5;
@@ -337,7 +341,7 @@ MainGameContainer.GamePlay.prototype = {
         item.alpha = 0;
         self.throwItemToAir(item);
         
-      }, (x * 30));
+      }, (x * 300));
     }
   },
   // iteam creation
@@ -445,10 +449,11 @@ this.buttons.highscoreButton = this.game.add.button(this.game.world.centerX - 14
     this.scoreCount = 0;
     this.gameLevel = 0;
     this.gameState = 'playing';
+    this.throwTimer = 3;
 
     // time count for item throw
     const self = this;
-    this.events.throwItems = self.game.time.events.loop(Phaser.Timer.SECOND * 3, function () {
+    this.events.throwItems = self.game.time.events.loop(Phaser.Timer.SECOND * this.throwTimer, function () {
       if (self.gameState === 'playing') {
         self.throwItems();
       }
