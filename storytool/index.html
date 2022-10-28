@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>repl.it</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <h1></h1>
+    <div class="row">
+    
+    <div id="bakgrund" style="width: 860px;" class="column">
+    <div style="width: 860px;">
+    <p style="font-family: Arial" align="center"><b>Björns storygramverktyg. Google Chrome rekommenderas</b></p>
+      <p style="font-family: Arial" align="center">Skriv in text och justera boxarna med slajdern. Välj färg, men följ reglerna för färger. (Bara en färg osv).
+      <br></br>IMS och förändringar kan ibland ladda långsamt så ha tålamod. <a href="https://bearwolf.github.io/bearwolf/igtool/">Klicka här för den fyrkantiga instagramcreatorn</a></p> 
+
+    </div>
+   
+    
+   
+      <div>
+        <!--<label for="txt_canvasWidthh">Width:<input type="number" min="1" max="8192" id="txt_canvasWidth" value="1080"/></label>
+        <label for="txt_canvasHeight">Height:<input type="number" min="1" max="8192" id="txt_canvasHeight" value="1080"/></label>
+        <button id="btn_setCanvasSize" onclick="setCanvasSize()">Set canvas size</button>
+        </div> 
+        -->
+        <div style="font-family: Arial">
+            <label for="txt_Ims" >IMS-kod:  &nbsp;<input type="string" class="imsruta" id="txt_Ims" oninput="generate()" value="39-7643786008344a03ab7"/></label>&nbsp;<button id="btn_generate" onclick="generate()">Ladda förändringar</button>       <a id="download" download="myImage.jpg" href="" onclick="download_img(this);" class="button">Ladda ned bilden</a> <!--<label class="container" > PC 
+  <input id="myCheck" oninput="generate();" type="checkbox" checked="checked" hidden>
+  <span class="checkmark"></span>
+</label> -->
+        </div>
+        <div style="font-family: Arial">
+              <label for="txt_Row1">Textrad 1:  <input type="text" style="text-transform:uppercase" oninput="generate()" id="txt_Row1" value="SKRIV IN TEXT"/></label> <input id="length1slider" oninput="slide1()" class="slider" type="range" min="0" max="100" value="49"> <label for="length_Row1">BG 1:&thinsp;&nbsp;<input type="length" id="length_Row1" oninput="number1()" value="54"/> </label><label for="colorSelector">Färg:&nbsp;
+        <select id="colorSelector" class="dropdown" onchange="generate()">
+          <option value="#000000">Svart</option>
+          <option value="#00b4c8">Yle-blå</option>
+          <option value="#1163b0">Mörk-blå</option>
+          <option value="#b93b57">Dramatiskt-röd</option>
+          <option value="#046140">Skogs-grön</option>
+        </select> </label>
+      </div>
+          
+          
+          
+      <div style="font-family: Arial">
+              <label for="txt_Row2">Textrad 2:  <input type="text" style="text-transform:uppercase" oninput="generate()" id="txt_Row2" value="JUSTERA LÄNGDEN"/></label> <input id="length2slider" oninput="slide2()" class="slider" type="range" min="0" max="100" value="63"> <label for="length_Row2">BG 2:&thinsp;&nbsp;<input type="length" id="length_Row2" oninput="number2()" value="69"/></label> <label for="colorSelector2">Färg:&nbsp;
+        <select id="colorSelector2" class="dropdown" onchange="generate()">
+          <option value="#000000">Svart</option>
+          <option value="#00b4c8">Yle-blå</option>
+          <option value="#1163b0">Mörk-blå</option>
+          <option value="#b93b57">Dramatiskt-röd</option>
+          <option value="#046140">Skogs-grön</option>
+        </select> </label>
+      </div>
+      <div style="font-family: Arial">
+              <label for="txt_Row3">Textrad 3:  <input type="text" style="text-transform:uppercase" oninput="generate()" id="txt_Row3" value="VÄLJ FÄRG "/></label> <input id="length3slider" oninput="slide3()" class="slider" type="range" min="0" max="100" value="38"> <label for="length_Row3">BG 3:&thinsp;&nbsp;<input type="length" oninput="number3()" id="length_Row3" value="41"/></label> <label for="colorSelector3">Färg:&nbsp;
+        <select id="colorSelector3" class="dropdown" onchange="generate()">
+          <option value="#000000">Svart</option>
+          <option value="#00b4c8">Yle-blå</option>
+          <option value="#1163b0">Mörk-blå</option>
+          <option value="#b93b57">Dramatiskt-röd</option>
+          <option value="#046140">Skogs-grön</option>
+        </select> </label>
+      </div>
+                
+        <div style="font-family: Arial">
+              <label for="txt_Row4">Textrad 4:  <input type="text" style="text-transform:uppercase" oninput="generate()" id="txt_Row4" value="SKRIV IN TEXT"/></label> <input id="length4slider" oninput="slide4()" class="slider" type="range" min="0" max="100" value="49"> <label for="length_Row1">BG 4:&thinsp;&nbsp;<input type="length" id="length_Row4" oninput="number4()" value="54"/> </label><label for="colorSelector4">Färg:&nbsp;
+        <select id="colorSelector4" class="dropdown" onchange="generate()">
+          <option value="#000000">Svart</option>
+          <option value="#00b4c8">Yle-blå</option>
+          <option value="#1163b0">Mörk-blå</option>
+          <option value="#b93b57">Dramatiskt-röd</option>
+          <option value="#046140">Skogs-grön</option>
+        </select> </label>
+      </div>
+          
+          
+          
+      <div style="font-family: Arial">
+              <label for="txt_Row5">Textrad 5:  <input type="text" style="text-transform:uppercase" oninput="generate()" id="txt_Row5" value="JUSTERA LÄNGDEN"/></label> <input id="length5slider" oninput="slide5()" class="slider" type="range" min="0" max="100" value="63"> <label for="length_Row5">BG 5:&thinsp;&nbsp;<input type="length" id="length_Row5" oninput="number5()" value="69"/></label> <label for="colorSelector5">Färg:&nbsp;
+        <select id="colorSelector5" class="dropdown" onchange="generate()">
+          <option value="#000000">Svart</option>
+          <option value="#00b4c8">Yle-blå</option>
+          <option value="#1163b0">Mörk-blå</option>
+          <option value="#b93b57">Dramatiskt-röd</option>
+          <option value="#046140">Skogs-grön</option>
+        </select> 
+      </div>
+      <div style="font-family: Arial">
+              <label for="txt_Row6">Textrad 6:  <input type="text" style="text-transform:uppercase" oninput="generate()" id="txt_Row6" value="VÄLJ FÄRG "/></label> <input id="length6slider" oninput="slide6()" class="slider" type="range" min="0" max="100" value="38"> <label for="length_Row6">BG 6:&thinsp;&nbsp;<input type="length" oninput="number6()" id="length_Row6" value="41"/></label> <label for="colorSelector6">Färg:&nbsp;
+        <select id="colorSelector6" class="dropdown" onchange="generate()">
+          <option value="#000000">Svart</option>
+          <option value="#00b4c8">Yle-blå</option>
+          <option value="#1163b0">Mörk-blå</option>
+          <option value="#b93b57">Dramatiskt-röd</option>
+          <option value="#046140">Skogs-grön</option>
+        </select> </label>
+      </div>
+            
+        </div></div>
+    
+    
+      
+        
+      <div class="column">
+      <div class="canvas">
+      <canvas id="canvas1" width="1080" height="1920 style="border: 1px solid black"></canvas>
+        </div>
+      </div>
+      </div>
+      
+     
+      <div id="snapshotFrame1" style="display: none; border: 1px solid black">
+        <span>image snapshot for export:</span>
+       
+        <div>
+        <img id="targetImage1" />
+        </div>
+        <div><button onclick="hideSnapshotFrame()">hide snapshot</button></div>
+      </div>
+     
+   
+    
+    <script src="script.js"></script>
+  </body>
+</html>

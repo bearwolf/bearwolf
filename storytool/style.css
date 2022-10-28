@@ -1,0 +1,220 @@
+h1 {
+  font-family:  'Yle',Arial, sans-serif;
+  font-weight: 400;
+  font-size: 48px;
+
+  //letter-spacing: -4px;
+}
+p {
+  font-family:  'Yleblack',Arial, sans-serif;
+  font-weight: 400px;
+  
+}
+.column {
+  float: left;
+  width: 25%;
+}
+.row {
+  align: center;
+  width: 100;
+}
+button {
+  font-family:  'Yle',Arial, sans-serif;
+  background-color: #00b4c8; /* Green */
+  border: none;
+  color: white;
+  padding: 6px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 8px;
+}
+#bakgrund {
+  background-color: #adadad;
+  width: 1100px;
+  margin: 20px;
+  margin-left: 30px;
+  padding: 6px 32px;
+  border-radius: 12px;
+ 
+}
+.button {
+  font-family:  'Yle',Arial, sans-serif;
+  background-color: #00b4c8; /* Green */
+  border: none;
+  color: white;
+  padding: 6px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 8px;
+}
+input[type=text] {
+  font-family:  'Yle',Arial, sans-serif;
+  
+  width: 280px;
+  padding: 5px 7px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 2px solid gray;
+  border-radius: 4px;
+}
+input[type=length] {
+  font-family:  'Yle',Arial, sans-serif;
+  
+  width: 50px;
+  padding: 5px 7px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 2px solid gray;
+  border-radius: 4px;
+}
+input[type=string] {
+  font-family:  'Yle',Arial, sans-serif;
+  width: 282px;
+  padding: 5px 7px;
+  margin: 0px 0;
+  box-sizing: border-box;
+  border: 2px solid gray;
+  border-radius: 4px;
+}
+select {
+  width: 50%;
+  font-family:  'Yle',Arial, sans-serif;
+  padding: 5px 7px;
+  border: 2px solid gray;
+  border-radius: 4px;
+  background-color: white;
+}
+body {
+max-width: max-content;
+margin: auto;
+font-family:  'Yleblack',Arial, sans-serif;
+  background-color: #f2f2f2;
+
+}
+.imsruta{
+  width: 20px;
+}
+.slider{
+  width: 200px;
+}
+.content {
+  max-width: 500px;
+  margin: auto;
+}
+.dropdown{
+  width: 140px;
+}
+input,textarea {
+  font-family:  'Yle',Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  font-size: 14px;
+}
+textarea {
+  font-family:  'Yle',Arial, sans-serif;
+}
+canvas {
+  //transform scale: 0.5;
+  //-webkit-transform: scale(0.5, 0.5);
+  height: 700px;
+  padding:20px;
+  
+}
+
+.wrap {
+		background:yellow;
+		height:660px;
+		width:55px;
+		padding:10px;
+		float:left;
+		-webkit-transition:0.5s all;
+		-moz-transition:0.5s all;
+		/* more transition here */
+	}
+
+  @font-face {
+    
+  font-family: 'Yleblack';
+    src: url('YLE-BLACK.OTF');
+    src: url('yle-black-webfont.eot?#') format('embedded-opentype'),
+         url('yle-black-webfont.eot?#iefix') format('embedded-opentype'),
+         url('yle-black-webfont.woff2') format('woff2'),
+         url('yle-black-webfont.woff') format('woff'),
+         url('yle-black-webfont.ttf') format('truetype'),
+         url('yle-black-webfont.svg#Yle') format('svg');
+    font-weight: bold;
+font-style: normal;
+
+}
+/* Customize the label (the container) */
+.container {
+  display: inline-block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+}
+
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.container input:checked ~ .checkmark {
+  background-color: #2196F3;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.container .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
