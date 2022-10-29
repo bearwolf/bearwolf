@@ -1,14 +1,22 @@
 h1 {
-  font-family:  'Yle',Arial, sans-serif;
-  font-weight: 400;
-  font-size: 48px;
-
-  //letter-spacing: -4px;
+  font-family:  Arial, sans-serif;
+  font-weight: 40;
+  font-size: 20px;
+/* 
+  //letter-spacing: -4px; */
 }
 p {
   font-family:  'Yleblack',Arial, sans-serif;
   font-weight: 400px;
   
+}
+.column {
+  float: left;
+  width: 30%;
+}
+.row {
+  
+  width: 100;
 }
 button {
   font-family:  'Yle',Arial, sans-serif;
@@ -23,9 +31,12 @@ button {
   border-radius: 8px;
 }
 #bakgrund {
-  background-color: #adadad;
+  box-shadow: 3px 3px 10px rgb(0 0 0 / 0.2);
+  background-image: linear-gradient(to bottom right, rgba(255,0,0,0), rgb(208, 208, 208));
+  background-color: #95B0B5;  
   width: 1100px;
-  margin: 10px;
+  margin: 20px;
+  margin-left: 30px;
   padding: 6px 32px;
   border-radius: 12px;
 }
@@ -82,7 +93,7 @@ body {
 max-width: max-content;
 margin: auto;
 font-family:  'Yleblack',Arial, sans-serif;
-  background-color: #f2f2f2;
+  background-color: #E6F4F1;
 
 }
 .imsruta{
@@ -109,9 +120,11 @@ textarea {
   font-family:  'Yle',Arial, sans-serif;
 }
 canvas {
-  //transform scale: 0.5;
-  //-webkit-transform: scale(0.5, 0.5);
+  /* //transform scale: 0.5;
+  //-webkit-transform: scale(0.5, 0.5); */
+  box-shadow: 3px 3px 5px rgb(0 0 0 / 0.2);
   height: 500px;
+  MARGIN:20px;
 }
 
 .wrap {
@@ -120,6 +133,7 @@ canvas {
 		width:55px;
 		padding:10px;
 		float:left;
+    transition: 0.5s all;
 		-webkit-transition:0.5s all;
 		-moz-transition:0.5s all;
 		/* more transition here */
@@ -134,6 +148,8 @@ canvas {
          url('yle-black-webfont.woff') format('woff'),
          url('yle-black-webfont.ttf') format('truetype'),
          url('yle-black-webfont.svg#Yle') format('svg');
+         font-weight: bold;
+         font-style: normal;
 
 }
 /* Customize the label (the container) */

@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width">
     <title>repl.it</title>
     <link href="style.css" rel="stylesheet" type="text/css" />
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="manifest" href="site.webmanifest">
   </head>
   <body>
     <h1></h1>
@@ -14,23 +18,16 @@
     <div style="width: 860px;">
     <p style="font-family: Arial" align="center"><b>Björns storygramverktyg. Google Chrome rekommenderas</b></p>
       <p style="font-family: Arial" align="center">Skriv in text och justera boxarna med slajdern. Välj färg, men följ reglerna för färger. (Bara en färg osv).
-      <br></br>IMS och förändringar kan ibland ladda långsamt så ha tålamod. <a href="https://bearwolf.github.io/bearwolf/igtool/">Klicka här för den fyrkantiga instagramcreatorn</a></p> 
+      <br>IMS och förändringar kan ibland ladda långsamt så ha tålamod. <a href="https://bearwolf.github.io/bearwolf/igtool/">Klicka här för den fyrkantiga instagramcreatorn</a></p> 
 
     </div>
    
     
    
       <div>
-        <!--<label for="txt_canvasWidthh">Width:<input type="number" min="1" max="8192" id="txt_canvasWidth" value="1080"/></label>
-        <label for="txt_canvasHeight">Height:<input type="number" min="1" max="8192" id="txt_canvasHeight" value="1080"/></label>
-        <button id="btn_setCanvasSize" onclick="setCanvasSize()">Set canvas size</button>
-        </div> 
-        -->
+     
         <div style="font-family: Arial">
-            <label for="txt_Ims" >IMS-kod:  &nbsp;<input type="string" class="imsruta" id="txt_Ims" oninput="generate()" value="39-7643786008344a03ab7"/></label>&nbsp;<button id="btn_generate" onclick="generate()">Ladda förändringar</button>       <a id="download" download="myImage.jpg" href="" onclick="download_img(this);" class="button">Ladda ned bilden</a> <!--<label class="container" > PC 
-  <input id="myCheck" oninput="generate();" type="checkbox" checked="checked" hidden>
-  <span class="checkmark"></span>
-</label> -->
+            <label for="txt_Ims" >IMS-kod:  &nbsp;<input type="string" class="imsruta" id="txt_Ims" oninput="generate()" value="39-7643786008344a03ab7"/></label>&nbsp;<button id="btn_generate" onclick="generate()">Ladda förändringar</button>       <a id="download" download="myImage.jpg" href="" onclick="download_img(this);" class="button">Ladda ned bilden</a> 
         </div>
         <div style="font-family: Arial">
               <label for="txt_Row1">Textrad 1:  <input type="text" style="text-transform:uppercase" oninput="generate()" id="txt_Row1" value="SKRIV IN TEXT"/></label> <input id="length1slider" oninput="slide1()" class="slider" type="range" min="0" max="100" value="49"> <label for="length_Row1">BG 1:&thinsp;&nbsp;<input type="length" id="length_Row1" oninput="number1()" value="54"/> </label><label for="colorSelector">Färg:&nbsp;
@@ -107,7 +104,7 @@
         
       <div class="column">
       <div class="canvas">
-      <canvas id="canvas1" width="1080" height="1920 style="border: 1px solid black"></canvas>
+      <canvas id="canvas1" width="1080" height="1920"></canvas>
         </div>
       </div>
       </div>
