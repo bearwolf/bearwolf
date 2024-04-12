@@ -118,16 +118,58 @@ body {
 max-width: max-content;
 margin: auto;
 font-family:  'Yle',Arial, sans-serif;
-  background-color: #E6F4F1;;
+background-color:  #39c5db;
 
   overflow: auto;
   background: linear-gradient(315deg, rgb(55, 197, 219) 3%, rgba(60,132,206,1) 38%, rgba(48,238,226,1) 68%, rgb(9, 114, 233) 98%);
   animation: gradient 150s ease infinite;
   background-size: 400% 400%;
   background-attachment: fixed;
+  animation: fadeInAnimation ease 1s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
 
 
+}
+.fadeInAnimation{
+  animation: fadeInAnimation ease 1s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
 
+}
+.fadeOutAnimation{
+  animation: fadeOutAnimation ease 1s;
+  animation-iteration-count: 1;
+  animation-fill-mode: backwards;
+
+}
+@keyframes fadeInAnimation {
+  0% {
+      opacity: 0;
+  }
+  100% {
+      opacity: 1;
+  }
+}
+@keyframes fadeOutAnimation {
+  0% {
+      opacity: 1;
+  }
+  100% {
+      opacity: 0;
+  }
+}
+
+@keyframes gradient {
+  0% {
+      background-position: 0% 0%;
+  }
+  50% {
+      background-position: 100% 100%;
+  }
+  100% {
+      background-position: 0% 0%;
+  }
 }
 .imsruta{
   width: 20px;

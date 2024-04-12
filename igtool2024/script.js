@@ -7,34 +7,20 @@ var sliderGuiderY = -2000;
 var sliderGuiderX = 450;
 function qsl(s) { return document.querySelector(s); }
 let ctx = qsl('#canvas1').getContext('2d');
-//let can = document.querySelector('canvas');
+
 var clearTimer;
 var timerStarted = false;
 let canvas = document.getElementById('canvas1');
 var selectedPodd = 'bg2.png';
 var heightOffset = 0;
 var poddHeight = 516;
-//let myTimeout = setInterval(removeGuider(), 3000);
-//var imsNew = document.getElementById("txt_Ims").value;
 
 
 
-/* sliderGuider.addEventListener('input', function () {
-  isSliding = true;
-  console.log("Slide");
-  sliderGuiderY = 0;
-});
-
-sliderGuider.addEventListener('mouseup', function () {
-  isSliding = false;
-  console.log("noslide");
-  sliderGuiderY = -2000;
-
- 
-}); 
-
-*/
-
+function swapSite(){
+  document.body.classList.add("fadeOutAnimation");
+  setTimeout(() => {  window.location.href = 'https://bearwolf.github.io/bearwolf/storytool2024/'; }, 1000);//window.location.href = 'http://127.0.0.1:8080/storytool2024/';
+}
 
 function setCtxDrawOpts(ctx, drawOpts) {
   ctx.fillStyle = drawOpts.fillStyle || ctx.fillStyle;
@@ -54,9 +40,7 @@ function getCtxDrawOpts(ctx) {
 }
 
 function slide1() {
-  //document.getElementById('length_Row1').value = document.getElementById('length1slider').value;
-  //console.log(document.getElementById("length_Row1").value);
-  //var myTimeout = 0;
+
   arrowLocation = getLengthFromTextBox1();
   sliderGuiderY = 0;
   console.log(timerStarted);
@@ -71,7 +55,7 @@ function slide1() {
 
 function removeGuider(){
   sliderGuiderY = -2000;
-  //console.log("AGASG");
+
   generate();
 }
 
@@ -125,28 +109,15 @@ function drawLayers(layers, ctx) {
 }
 let layerHandlers = {
   'text': function (layer, ctx) {
-  //    var checkBox = document.getElementById("myCheck");
-  //if (checkBox.checked == true){
-  //  canvas.style.letterSpacing = '-4px';
-  //} else {
-  //  canvas.style.letterSpacing = '0px';
-  //}
-    //canvas.style.letterSpacing = '-4px';
+
     canvas.style.letterSpacing = '0px';
     ctx.save();
-    
     setCtxDrawOpts(ctx, layer.drawOpts || getCtxDrawOpts(ctx));
-
-
-    //ctx.fillRect(10, 800, 100, 100);
-    //ctx.zOrder = -90
     ctx.fillText(layer.text, layer.rect.x, layer.rect.y);
-    //ctx.strokeStyle = '#00b4c8';  // some color/style
+
     ctx.strokeStyle = qsl('#colorSelector').value;
     ctx.lineWidth = 100;         // thickness
-    //ctx.strokeRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-   
-    //tx.fillStyle = '#f50'
+
     ctx.zOrder = 3
 
 
@@ -154,36 +125,13 @@ let layerHandlers = {
   },
   'image': function (layer, ctx) {
     ctx.save();
-    
-    // TODO - implement scaling/rotation, check if layer has
-    // options for scaling/rotation
     ctx.drawImage(layer.image, layer.rect.x, layer.rect.y);
     ctx.beginPath(); 
     ctx.fillStyle = '#FFFFFF';
-        /// get width of text
-    
-
-  
-
-    /// draw background rect assuming height of font
-   // ctx.fillRect(0, 741, (width1*10), 87);
-   // ctx.fillRect(0, 813, (width2*10), 86);
-   // ctx.fillRect(0, 883, (width3*10), 86);
-   //ctx.fillRect(10, 900, 800, 100);
-
-
-
 
     ctx.restore();
   },
 }
-// vi vill specifikt ÅTERANVÄNDA image-handlern, 
-// så vi måste göra det så här
-
-
-
-
-
 
 // re-use image handler for yleCDNImage
 layerHandlers['yleCDNImage'] = layerHandlers['image'];
@@ -207,10 +155,6 @@ function buildYleCDNImageUrl(base, imsId, extension){
     const defaultExtension = '.jpg';
     return `${base||defaultBase}${imsId||defaultImsId}${extension||defaultExtension}`;
 }
-
-// NOTE : there is some reasonable way to do this
-// without duplicating all of makeImageLayer, but I cannot
-// come up with it right now -tero
 
 function makeYleCDNImageLayer(options){
     const imgUrl = buildYleCDNImageUrl(
@@ -306,11 +250,6 @@ async function makeLayers(layerDescriptions) {
   return layers;
 }
 
-
-
-
-// vi tar bort dethär, eftersom vi inte har textrutan här
-//qsl('#txt_layers').value = JSON.stringify(defaultLayerDescriptions, undefined, 2)
 
 async function generate() {
   if (document.getElementById("txt_Row2").value == ''){

@@ -18,6 +18,14 @@ var poddHeight = 717;
 var selectedPodd = 'bg2.png';
 //var imsNew = document.getElementById("txt_Ims").value;
 
+
+function swapSite(){
+  document.body.classList.add("fadeOutAnimation");
+  setTimeout(() => {  window.location.href = 'https://bearwolf.github.io/bearwolf/igtool2024/'; }, 900);//window.location.href = 'http://127.0.0.1:8080/storytool2024/';
+}
+
+
+
 function setCtxDrawOpts(ctx, drawOpts) {
   ctx.fillStyle = drawOpts.fillStyle || ctx.fillStyle;
   ctx.strokeStyle = drawOpts.strokeStyle || ctx.strokeStyle;
