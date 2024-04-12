@@ -141,7 +141,7 @@ background-color:  #39c5db;
 .fadeOutAnimation{
   animation: fadeOutAnimation ease 1s;
   animation-iteration-count: 1;
-  animation-fill-mode: backwards;
+  animation-fill-mode: forwards;
 
 }
 @keyframes fadeInAnimation {
