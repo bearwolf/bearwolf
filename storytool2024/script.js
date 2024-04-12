@@ -15,7 +15,7 @@ var sliderGuiderY = -2000;
 let canvas = document.getElementById('canvas1');
 var heightOffset = 0;
 var poddHeight = 717;
-var selectedPodd = 'BG2.png';
+var selectedPodd = 'bg2.png';
 //var imsNew = document.getElementById("txt_Ims").value;
 
 function setCtxDrawOpts(ctx, drawOpts) {

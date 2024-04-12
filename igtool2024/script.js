@@ -11,7 +11,7 @@ let ctx = qsl('#canvas1').getContext('2d');
 var clearTimer;
 var timerStarted = false;
 let canvas = document.getElementById('canvas1');
-var selectedPodd = 'BG2.png';
+var selectedPodd = 'bg2.png';
 var heightOffset = 0;
 var poddHeight = 516;
 //let myTimeout = setInterval(removeGuider(), 3000);
