@@ -76,6 +76,7 @@ button {
   border-radius: 8px;
   float: left;
   margin-right: 6px;
+  cursor:pointer;
 }
 input[type=text] {
   font-family:  'Yle',Arial, sans-serif;
