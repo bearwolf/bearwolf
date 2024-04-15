@@ -146,15 +146,7 @@ background-color:  #39c5db;
 }
 
 
-@media only screen and (max-width: 600px) {
-  .dropdown{
-    width: 100px;
-}
-input[type=text] {
-  width: 200px;
 
-}
-}
 
 @keyframes fadeInAnimation {
   0% {
@@ -415,4 +407,13 @@ canvas {
       transform: translateY(1) translateX(1);
 
   }
+}
+@media only screen and (max-width: 600px) {
+  .dropdown{
+    width: 100px;
+}
+input[type=text] {
+  width: 200px;
+
+}
 }
