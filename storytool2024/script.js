@@ -178,12 +178,10 @@ function makeLayer() {
 }
 
 function buildYleCDNImageUrl(base, imsId, extension){
-    //const defaultBase = 'https://images.cdn.yle.fi/image/upload/f_auto,fl_progressive/q_100/w_1080/w_1080,h_1920,c_fill,g_auto/w_1080/';
     const defaultBase = 'https://images.cdn.yle.fi/image/upload/f_auto,fl_progressive/q_100/h_1920,c_fill/';
     const defaultImsId = getDefaultImsId();
     const defaultExtension = '.jpg';
     return `${base||defaultBase}${imsId||defaultImsId}${extension||defaultExtension}`;
-    //return `https://images.cdn.yle.fi/image/upload/f_auto,fl_progressive/q_100/h_1920,c_fill/39-10187516343b80ac986f.jpg`;
 }
 
 // NOTE : there is some reasonable way to do this
@@ -215,7 +213,7 @@ function makeYleCDNImageLayer(options){
         resolve(imgObj);
         
         document.getElementById("scrollslider").min = (-Math.abs(imgObj.image.naturalWidth-1080));
-        console.log(document.getElementById("scrollslider").min); // this will be 300 
+        console.log(document.getElementById("scrollslider").min);
       }
     });    
 }
@@ -286,10 +284,6 @@ async function makeLayers(layerDescriptions) {
 }
 
 
-
-
-// vi tar bort dethär, eftersom vi inte har textrutan här
-//qsl('#txt_layers').value = JSON.stringify(defaultLayerDescriptions, undefined, 2)
 
 async function generate() {
   if (document.getElementById("txt_Row5").value == ''){

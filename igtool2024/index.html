@@ -37,7 +37,7 @@
         </div>
         <div style="font-family: Arial">
               <label for="txt_Row1">Textrad 1:  <input type="text" style="text-transform:uppercase" oninput="generate()" id="txt_Row1" value="SKRIV IN TEXT"/></label>  </label><label for="colorSelector">Färg:&nbsp; 
-        <select id="colorSelector" class="dropdown" onchange="colorCheck1()">
+        <select id="colorSelector1" class="dropdown" onchange="masterColorCheck(1)">
           <option value="#000000">Svart</option>
           <option value="#4A4F54">Grå</option>
           <option value="#00809C">Turkos</option>
@@ -47,13 +47,13 @@
           <option value="#9436B5">Lila</option>
           <option value="#725A07">Gul</option>
           <option value="#E65A27">Orange</option>
-          <option value="#ffffff">Vit</option>
+          <option disabled value="#ffffff">Vit</option>
         </select> </label>
       </div>
           
       <div style="font-family: Arial">
               <label for="txt_Row2">Textrad 2:  <input type="text" style="text-transform:uppercase" oninput="generate()" id="txt_Row2" value="JUSTERA LÄNGDEN"/></label> <label for="colorSelector2">Färg:&nbsp;
-        <select id="colorSelector2" class="dropdown" onchange="colorCheck2()">
+        <select id="colorSelector2" class="dropdown" onchange="masterColorCheck(2)">
           <option value="#000000">Svart</option>
           <option value="#4A4F54">Grå</option>
           <option value="#00809C">Turkos</option>
@@ -63,12 +63,12 @@
           <option value="#9436B5">Lila</option>
           <option value="#725A07">Gul</option>
           <option value="#E65A27">Orange</option>
-          <option value="#ffffff">Vit</option>
+          <option disabled value="#ffffff">Vit</option>
         </select> </label>
       </div>
       <div style="font-family: Arial">
               <label for="txt_Row3">Textrad 3:  <input type="text" style="text-transform:uppercase" oninput="generate()" id="txt_Row3" value="VÄLJ FÄRG "/></label> <label for="colorSelector3">Färg:&nbsp;
-        <select id="colorSelector3" class="dropdown" onchange="colorCheck3()">
+        <select id="colorSelector3" class="dropdown" onchange="masterColorCheck(3)">
           <option value="#000000">Svart</option>
           <option value="#4A4F54">Grå</option>
           <option selected value="#00809C">Turkos</option>
@@ -78,7 +78,7 @@
           <option value="#9436B5">Lila</option>
           <option value="#725A07">Gul</option>
           <option value="#E65A27">Orange</option>
-          <option value="#ffffff">Vit</option>
+          <option disabled value="#ffffff">Vit</option>
         </select> </label>
       </div>
 
@@ -87,7 +87,7 @@
       <p style="font-family: Arial" > Pil ⬅️➡️: <input id="length1slider" oninput="slide1()" class="sliderLong" type="range" min="-1080" max="0" value="-318"> <br><br><i>Justera pilen så att pilens rundning börjar
         där texten slutar.</i>  </p> 
         </div> <p style="font-family: Arial">  <label for="colorSelector4">Pilfärg:&nbsp;
-          <select id="colorSelector4" class="dropdown" onchange="arrowColorPick()" style="width: 130px;">
+          <select id="colorSelector4" class="dropdown" onchange="arrowColorPick()" >
             <option selected value="white">Vit</option>
             <option value="green">Grön</option>
             <option value="lila">Lila</option>
@@ -103,7 +103,7 @@
             <option value="blueforwhite">Blå för vit text</option>
           </select> </label>
           <label for="poddSelector">&nbsp;Podd:&nbsp;
-            <select id="poddSelector" class="dropdown" onchange="poddSelect()" style="width: 130px;">
+            <select id="poddSelector" class="dropdown" onchange="poddSelect()">
               <option selected value="bg2.png">Nej</option>
               <option value="nyheter1min.png">Nyheter på en minut</option>
               <option value="sallskapet.png">Sällskapet</option>

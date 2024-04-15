@@ -115,7 +115,7 @@ let layerHandlers = {
     setCtxDrawOpts(ctx, layer.drawOpts || getCtxDrawOpts(ctx));
     ctx.fillText(layer.text, layer.rect.x, layer.rect.y);
 
-    ctx.strokeStyle = qsl('#colorSelector').value;
+    ctx.strokeStyle = qsl('#colorSelector1').value;
     ctx.lineWidth = 100;         // thickness
 
     ctx.zOrder = 3
@@ -278,33 +278,20 @@ async function generate() {
 
   drawLayers(layers, ctx);
 }
-function colorCheck1(){
-  if (document.getElementById("colorSelector2").selectedIndex != 0 && document.getElementById("colorSelector").selectedIndex != 0){
-    document.getElementById("colorSelector2").selectedIndex = document.getElementById("colorSelector").selectedIndex;
-  };
-  if (document.getElementById("colorSelector3").selectedIndex != 0 && document.getElementById("colorSelector").selectedIndex != 0){
-    document.getElementById("colorSelector3").selectedIndex = document.getElementById("colorSelector").selectedIndex;
+
+function masterColorCheck(x){
+  if (document.getElementById("colorSelector"+x).selectedIndex != 0){
+    for (let i = 1; i < 4; i++) {
+     if (document.getElementById("colorSelector"+i).selectedIndex != 0) {
+      document.getElementById("colorSelector"+i).selectedIndex = document.getElementById("colorSelector"+x).selectedIndex;
+     }
+    }
   };
   generate();
 }
-function colorCheck2(){
-  if (document.getElementById("colorSelector").selectedIndex != 0 && document.getElementById("colorSelector2").selectedIndex != 0){
-    document.getElementById("colorSelector").selectedIndex = document.getElementById("colorSelector2").selectedIndex;
-  };
-  if (document.getElementById("colorSelector3").selectedIndex != 0 && document.getElementById("colorSelector2").selectedIndex != 0){
-    document.getElementById("colorSelector3").selectedIndex = document.getElementById("colorSelector2").selectedIndex;
-  };
-  generate(); 
-}
-  function colorCheck3(){
-    if (document.getElementById("colorSelector2").selectedIndex != 0 && document.getElementById("colorSelector3").selectedIndex != 0){
-      document.getElementById("colorSelector2").selectedIndex = document.getElementById("colorSelector3").selectedIndex;
-    };
-    if (document.getElementById("colorSelector").selectedIndex != 0 && document.getElementById("colorSelector3").selectedIndex != 0){
-      document.getElementById("colorSelector").selectedIndex = document.getElementById("colorSelector3").selectedIndex;
-    };
-    generate();
-}
+
+
+
 function poddSelect(){
   selectedPodd = document.getElementById('poddSelector').value;
   generate();
@@ -314,37 +301,28 @@ function arrowColorPick() {
   arrowColor = document.getElementById('colorSelector4').value;
   setArrow()
   var index = document.getElementById('colorSelector4').selectedIndex;
-  //if (index == 1 || index == 2 || index == 3 || index == 4 || index == 5 || index == 6) {
     if (index > 0 && index < 7 ) {
-    document.getElementById('colorSelector').selectedIndex=0;
-    document.getElementById('colorSelector2').selectedIndex=0;
-    document.getElementById('colorSelector3').selectedIndex=0;
-    document.getElementById('colorSelector').disabled=true;
-    document.getElementById('colorSelector2').disabled=true;
-    document.getElementById('colorSelector3').disabled=true;
+      for (let i = 1; i < 4; i++) {
+        document.getElementById('colorSelector'+i).selectedIndex=0;
+        document.getElementById('colorSelector'+i).disabled=true;
+      }
     console.log("All black");
   } 
-
   else if (index > 6) {
-    document.getElementById('colorSelector').selectedIndex=9;
-    document.getElementById('colorSelector2').selectedIndex=9;
-    document.getElementById('colorSelector3').selectedIndex=9;
-    document.getElementById('colorSelector').disabled=true;
-    document.getElementById('colorSelector2').disabled=true;
-    document.getElementById('colorSelector3').disabled=true;
+    for (let i = 1; i < 4; i++) {
+      document.getElementById('colorSelector'+i).selectedIndex=9;
+      document.getElementById('colorSelector'+i).disabled=true;
+    }
+
     console.log("All white");
   }
-
   else {
+    for (let i = 1; i < 4; i++) {
+      document.getElementById('colorSelector'+i).selectedIndex=0;
+      document.getElementById('colorSelector'+i).disabled=false;
+    }
     console.log("release the colors");
-    document.getElementById('colorSelector').disabled=false;
-    document.getElementById('colorSelector2').disabled=false;
-    document.getElementById('colorSelector3').disabled=false;
-    document.getElementById('colorSelector').selectedIndex=0;
-    document.getElementById('colorSelector2').selectedIndex=0;
-    document.getElementById('colorSelector3').selectedIndex=0;
   }
-  //document.getElementById('my_drop_down').selectedIndex=2;
   generate();
 }
 
@@ -477,7 +455,7 @@ function getLengthFromTextBox3(){
   return document.getElementById("length_Row3").value;
 }  
 function getColor1(){
-  return document.getElementById("colorSelector").value;
+  return document.getElementById("colorSelector1").value;
 }  
 function getColor2(){
   return document.getElementById("colorSelector2").value;

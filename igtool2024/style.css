@@ -165,7 +165,7 @@ font-family:  'Yleblack',Arial, sans-serif;
   margin: auto;
 }
 .dropdown{
-  width: 120px;
+  width: 130px;
 }
 input,textarea {
   font-family:  'Yle',Arial, sans-serif;
@@ -197,6 +197,18 @@ canvas {
 		-moz-transition:0.5s all;
 		/* more transition here */
 	}
+
+
+  @media only screen and (max-width: 600px) {
+    .dropdown{
+      width: 100px;
+  }
+  input[type=text] {
+    width: 200px;
+
+  }
+  }
+
 
   @font-face {
   font-family: 'Yleblack';
