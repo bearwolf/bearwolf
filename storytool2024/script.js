@@ -335,7 +335,32 @@ async function generate() {
 }
 function poddSelect(){
   selectedPodd = document.getElementById('poddSelector').value;
-  generate();
+  console.log("ballle");
+  if (document.getElementById('poddSelector').selectedIndex != 0){
+    document.getElementById('colorSelector7').selectedIndex = 0;
+    document.getElementById('colorSelector7').disabled = true;
+    arrowColorPick()
+  }
+  else {
+    document.getElementById('colorSelector7').disabled = false;
+  }
+  if (document.getElementById('poddSelector').selectedIndex == 3){
+    for (let i = 1; i < 7; i++) {
+      document.getElementById('colorSelector'+i).options[9].disabled=false;
+     }
+    }
+    else {
+      for (let i = 1; i < 7; i++) {
+        document.getElementById('colorSelector'+i).options[9].disabled=true;
+        if (document.getElementById('colorSelector'+i).selectedIndex == 9){
+          document.getElementById('colorSelector'+i).selectedIndex = 0;
+        }
+       }
+
+    }
+
+    generate();
+
 }
 
 
@@ -352,7 +377,7 @@ function arrowColorPick() {
   } 
   else if (index > 6) {
     for (let i = 1; i < 7; i++) {
-      document.getElementById('colorSelector'+i).selectedIndex=9;
+      document.getElementById('colorSelector'+i).selectedIndex=10;
       document.getElementById('colorSelector'+i).disabled=true;
     }
 

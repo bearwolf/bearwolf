@@ -294,7 +294,34 @@ function masterColorCheck(x){
 
 function poddSelect(){
   selectedPodd = document.getElementById('poddSelector').value;
-  generate();
+  // Disable/enable arrow when podding
+  if (document.getElementById('poddSelector').selectedIndex != 0){
+    document.getElementById('colorSelector4').selectedIndex = 0;
+    document.getElementById('colorSelector4').disabled = true;
+    arrowColorPick()
+  }
+  else {
+    document.getElementById('colorSelector4').disabled = false;
+  }
+
+ // enable x3mcolor, maybe delete if x3m wants to do regular posts with the tool
+  if (document.getElementById('poddSelector').selectedIndex == 3){
+    for (let i = 1; i < 4; i++) {
+      document.getElementById('colorSelector'+i).options[9].disabled=false;
+     }
+    }
+    else {
+      for (let i = 1; i < 4; i++) {
+        document.getElementById('colorSelector'+i).options[9].disabled=true;
+        if (document.getElementById('colorSelector'+i).selectedIndex == 9){
+          document.getElementById('colorSelector'+i).selectedIndex = 0;
+        }
+       }
+
+    }
+
+    generate();
+
 }
 
 function arrowColorPick() {
@@ -310,7 +337,7 @@ function arrowColorPick() {
   } 
   else if (index > 6) {
     for (let i = 1; i < 4; i++) {
-      document.getElementById('colorSelector'+i).selectedIndex=9;
+      document.getElementById('colorSelector'+i).selectedIndex=10;
       document.getElementById('colorSelector'+i).disabled=true;
     }
 
