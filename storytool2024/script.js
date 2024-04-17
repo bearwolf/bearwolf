@@ -289,7 +289,7 @@ async function generate() {
   if (document.getElementById("txt_Row5").value == ''){
     console.log("1 rad");
     arrowLenght = 'arrow1';
-    poddHeight = 1077;
+    poddHeight = 1074;
     sliderGuiderX = 495;
     setArrow();
     }
@@ -452,14 +452,14 @@ function getLayerDescriptions() {
   {
     type: 'image',
     url: arrow,
-    rect: { x: arrowLocation, y: +845 + +heightOffset, w: 1080, h: 1080 },
+    rect: { x: arrowLocation, y: +850 + +heightOffset, w: 1080, h: 1080 },
     drawOpts: {fillStyle: 'black', globalCompositeOperation:'destination-in'},
     zOrder: -90
   },
     {
     type: 'image',
     url: selectedPodd,
-    rect: { x: 0, y: +poddHeight + +heightOffset, w: 1080, h: 1080 },
+    rect: { x: 0, y: +poddHeight + +heightOffset + +5, w: 1080, h: 1080 },
     drawOpts: {fillStyle: 'black', globalCompositeOperation:'destination-in'},
     zOrder: -90
   },
