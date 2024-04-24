@@ -21,7 +21,7 @@ var selectedPodd = 'bg2.png';
 
 function swapSite(){
   document.body.classList.add("fadeOutAnimation");
-  setTimeout(() => {  window.location.href = 'https://bearwolf.github.io/bearwolf/igtool2024/'; }, 900);//window.location.href = 'http://127.0.0.1:8080/storytool2024/';
+  setTimeout(() => {  window.location.href = 'https://bearwolf.github.io/bearwolf/igtool/'; }, 900);//window.location.href = 'http://127.0.0.1:8080/storytool2024/';
 }
 
 
