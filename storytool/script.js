@@ -336,16 +336,12 @@ async function generate() {
 function poddSelect(){
   selectedPodd = document.getElementById('poddSelector').value;
   console.log("ballle");
-  if (document.getElementById('poddSelector').selectedIndex != 0 && document.getElementById('poddSelector').selectedIndex != 6){
+  if (document.getElementById('poddSelector').selectedIndex != 0){
     document.getElementById('colorSelector7').selectedIndex = 0;
     document.getElementById('colorSelector7').disabled = true;
     arrowColorPick()
   }
-  else if (document.getElementById('poddSelector').selectedIndex == 6){
-    document.getElementById('colorSelector7').selectedIndex = 13;
-    document.getElementById('colorSelector7').disabled = true;
-    arrowColorPick()
-  }
+
   else {
     document.getElementById('colorSelector7').disabled = false;
   }
