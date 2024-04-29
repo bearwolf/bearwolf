@@ -22,6 +22,9 @@ function getCtxDrawOpts(ctx) {
   
 }
 
+// added a comment lalala 
+
+
 function slide1() {
   document.getElementById('length_Row1').value = document.getElementById('length1slider').value;
   generate();
