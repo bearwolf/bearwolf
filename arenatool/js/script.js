@@ -21,13 +21,13 @@ function swapSite() {
   document.body.classList.add("fadeOutAnimation");
   setTimeout(() => {
     window.location.href = "https://bearwolf.github.io/bearwolf/igtool/";
-  }, 900); 
+  }, 900);
 }
 function swapSite2() {
   document.body.classList.add("fadeOutAnimation");
   setTimeout(() => {
     window.location.href = "https://bearwolf.github.io/bearwolf/storytool/";
-  }, 900); 
+  }, 900);
 }
 function setCtxDrawOpts(ctx, drawOpts) {
   ctx.fillStyle = drawOpts.fillStyle || ctx.fillStyle;
@@ -458,34 +458,7 @@ function getImsFromTextBoxOrDefault() {
   return imsNew;
 }
 
-// ypperligt
-function getTextFromTextBox1() {
-  return document.getElementById("txt_Row1").value.toUpperCase();
-}
-function getTextFromTextBox2() {
-  return document.getElementById("txt_Row2").value.toUpperCase();
-}
-function getTextFromTextBox3() {
-  return document.getElementById("txt_Row3").value.toUpperCase();
-}
-function getLengthFromTextBox1() {
-  return document.getElementById("length1slider").value;
-}
-function getLengthFromTextBox2() {
-  return document.getElementById("length_Row2").value;
-}
-function getLengthFromTextBox3() {
-  return document.getElementById("length_Row3").value;
-}
-function getColor1() {
-  return document.getElementById("colorSelector1").value;
-}
-function getColor2() {
-  return document.getElementById("colorSelector2").value;
-}
-function getColor3() {
-  return document.getElementById("colorSelector3").value;
-}
+
 
 function setCanvasSize() {
   const DEFAULT_WIDTH = 1080;
@@ -507,15 +480,44 @@ function setCanvasSize() {
 }
 
 download_img = function (el) {
-  const d = new Date();
-  console.log(d);
+  var timeStamp = getTimeStamp();
+  console.log(timeStamp);
+  var currentPodd = getCurrentPodd();
+  console.log(currentPodd);
   var canvasPNG = document.getElementById("canvas");
   var image2 = canvas.toDataURL();
   var aDownloadLink = document.createElement("a");
-  aDownloadLink.download = "canvas_image.png";
+  aDownloadLink.download = "Arenatool" + "." + timeStamp +"."+ currentPodd;
   aDownloadLink.href = image2;
   aDownloadLink.click();
 };
+function getCurrentPodd(){
+  var poddString = document.getElementById("poddSelector").value;
+  var poddStringClean = poddString
+    .replace("å", "a")
+    .replace("ä", "a")
+    .replace("ö", "o")
+    .replace("Å", "A")
+    .replace("Ä", "A")
+    .replace("Ö", "O");
+    return poddStringClean;
+}
+function getTimeStamp(){
+  var date = new Date();
+return(
+  date.getFullYear() +
+    "." +
+    (date.getMonth() + 1).toString().padStart(2, "0") +
+    "." +
+    date.getDate().toString().padStart(2, "0") +
+    "-" +
+    date.getHours().toString().padStart(2, "0") +
+    "." +
+    date.getMinutes().toString().padStart(2, "0")
+);
+}
+
+
 function showsnackbar() {
   // Get the snackbar DIV
   var x = document.getElementById("snackbar");
@@ -542,3 +544,4 @@ setTimeout(() => {
 setTimeout(() => {
   generate();
 }, 3000);
+

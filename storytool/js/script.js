@@ -678,16 +678,30 @@ function setCanvasSize() {
 }
 
 download_img = function (el) {
-  //var image = canvas.toDataURL("image/png");
-  //el.href = image;
+  var timeStamp = getTimeStamp();
+  console.log(timeStamp);
 
   var canvasPNG = document.getElementById("canvas");
   var image2 = canvas.toDataURL();
   var aDownloadLink = document.createElement("a");
-  aDownloadLink.download = "canvas_image.png";
+  aDownloadLink.download = "Storytool" + "." + timeStamp + ".png";
   aDownloadLink.href = image2;
   aDownloadLink.click();
 };
+function getTimeStamp() {
+  var date = new Date();
+  return (
+    date.getFullYear() +
+    "." +
+    (date.getMonth() + 1).toString().padStart(2, "0") +
+    "." +
+    date.getDate().toString().padStart(2, "0") +
+    "-" +
+    date.getHours().toString().padStart(2, "0") +
+    "." +
+    date.getMinutes().toString().padStart(2, "0")
+  );
+}
 function showsnackbar() {
   // Get the snackbar DIV
   var x = document.getElementById("snackbar");
