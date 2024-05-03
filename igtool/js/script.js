@@ -21,7 +21,10 @@ function swapSite(){
   document.body.classList.add("fadeOutAnimation");
   setTimeout(() => {  window.location.href = 'https://bearwolf.github.io/bearwolf/storytool/'; }, 900);//window.location.href = 'http://127.0.0.1:8080/storytool2024/';
 }
-
+function swapSite2(){
+  document.body.classList.add("fadeOutAnimation");
+  setTimeout(() => {  window.location.href = 'https://bearwolf.github.io/bearwolf/arenatool/'; }, 900);//window.location.href = 'http://127.0.0.1:8080/storytool2024/';
+}
 function setCtxDrawOpts(ctx, drawOpts) {
   ctx.fillStyle = drawOpts.fillStyle || ctx.fillStyle;
   ctx.strokeStyle = drawOpts.strokeStyle || ctx.strokeStyle;

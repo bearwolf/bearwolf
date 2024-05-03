@@ -35,15 +35,15 @@
   <div class="row">
     <div id="bakgrund" class="column">
       <div>
-        <button class="buttonLeft" onclick="swapSite()">Arenatool</button>
+        <button class="buttonLeft" onclick="swapSite()">Fyrkant</button>
         <p id="p2">
           <b>Björns arenatool 2024 edition 😎</b>
         </p>
-        <p id="p3">Välj podd och justera höjden.</p>
+        <p id="p3"><button class="buttonLeft" onclick="swapSite2()">Story</button>Välj podd och justera höjden.</p>
       </div>
 
       <div>
-        <div style="font-family: Arial">
+        <div>
           <label for="txt_Ims"
             >IMS-kod: &nbsp;<input
               type="string"
@@ -66,7 +66,7 @@
 
       <div class="row">
         <div class="flexcolumn">
-          <p style="font-family: Arial">
+          <p>
             Pil ⬇️⬆️:
             <input
               id="height1slider"
@@ -77,12 +77,10 @@
               max="660"
               value="0"
             />
-            <br /><br /><i
-              >Justera pilen så att pilens rundning börjar där texten slutar.</i
-            >
+            <br />
           </p>
         </div>
-        <p style="font-family: Arial">
+        <p>
           <label for="poddSelector"
             >&nbsp;Podd:&nbsp;
             <select id="poddSelector" class="dropdown" onchange="poddSelect()">

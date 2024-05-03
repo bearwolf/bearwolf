@@ -22,7 +22,12 @@ function swapSite() {
     window.location.href = "https://bearwolf.github.io/bearwolf/igtool/";
   }, 900);
 }
-
+function swapSite2() {
+  document.body.classList.add("fadeOutAnimation");
+  setTimeout(() => {
+    window.location.href = "https://bearwolf.github.io/bearwolf/arenatool/";
+  }, 900);
+}
 function setCtxDrawOpts(ctx, drawOpts) {
   ctx.fillStyle = drawOpts.fillStyle || ctx.fillStyle;
   ctx.strokeStyle = drawOpts.strokeStyle || ctx.strokeStyle;
@@ -324,30 +329,24 @@ function poddSelect() {
     document.getElementById("colorSelector7").disabled = false;
     releaseColours();
   }
-  if (document.getElementById("poddSelector").selectedIndex == 1){
+  if (document.getElementById("poddSelector").selectedIndex == 1) {
     nyheter1minSelected();
-  }
-  else if (document.getElementById("poddSelector").selectedIndex == 2){
+  } else if (document.getElementById("poddSelector").selectedIndex == 2) {
     sallskapetSelected();
-  }
-  else if (document.getElementById("poddSelector").selectedIndex == 3) {
+  } else if (document.getElementById("poddSelector").selectedIndex == 3) {
     x3mSelected();
-  } 
-  else if (document.getElementById("poddSelector").selectedIndex == 4){
+  } else if (document.getElementById("poddSelector").selectedIndex == 4) {
     nyhetspoddenSelected();
-  }
-  else if (document.getElementById("poddSelector").selectedIndex == 5){
+  } else if (document.getElementById("poddSelector").selectedIndex == 5) {
     nyhetspoddenSelected();
-  }
-  else if (document.getElementById("poddSelector").selectedIndex == 8){
+  } else if (document.getElementById("poddSelector").selectedIndex == 8) {
     krimpoddenSelected();
-  }
-  else {
+  } else {
     releaseColours();
   }
   generate();
 }
-function releaseColours(){
+function releaseColours() {
   for (let i = 1; i < 7; i++) {
     for (let j = 1; j < 10; j++) {
       // enable regular colors
@@ -355,13 +354,13 @@ function releaseColours(){
       // set everythang back to black
       document.getElementById("colorSelector" + i).selectedIndex = 0;
     }
-    for (let k = 10; k < 13; k++){
+    for (let k = 10; k < 13; k++) {
       // disable poddcolors
       document.getElementById("colorSelector" + i).options[k].disabled = true;
     }
   }
 }
-function krimpoddenSelected(){
+function krimpoddenSelected() {
   releaseColours();
   for (let i = 1; i < 7; i++) {
     for (let j = 1; j < 10; j++) {
@@ -369,11 +368,11 @@ function krimpoddenSelected(){
       document.getElementById("colorSelector" + i).options[j].disabled = true;
       console.log("hej");
     }
-        // Enable specific color
-   document.getElementById("colorSelector" + i).options[4].disabled = false;
+    // Enable specific color
+    document.getElementById("colorSelector" + i).options[4].disabled = false;
   }
 }
-function nyhetspoddenSelected(){
+function nyhetspoddenSelected() {
   releaseColours();
   for (let i = 1; i < 7; i++) {
     for (let j = 1; j < 10; j++) {
@@ -385,7 +384,7 @@ function nyhetspoddenSelected(){
     document.getElementById("colorSelector" + i).options[2].disabled = false;
   }
 }
-function sallskapetSelected(){
+function sallskapetSelected() {
   releaseColours();
   for (let i = 1; i < 7; i++) {
     for (let j = 1; j < 10; j++) {
@@ -393,11 +392,11 @@ function sallskapetSelected(){
     }
   }
 }
-function nyheter1minSelected(){
+function nyheter1minSelected() {
   releaseColours();
   for (let i = 1; i < 7; i++) {
     // Enable specific color
-   document.getElementById("colorSelector" + i).options[12].disabled = false;
+    document.getElementById("colorSelector" + i).options[12].disabled = false;
     for (let j = 1; j < 10; j++) {
       // disable everythang else
       document.getElementById("colorSelector" + i).options[j].disabled = true;
@@ -405,11 +404,11 @@ function nyheter1minSelected(){
     }
   }
 }
-function x3mSelected(){
+function x3mSelected() {
   releaseColours();
   for (let i = 1; i < 7; i++) {
     // Enable specific color
-   document.getElementById("colorSelector" + i).options[10].disabled = false;
+    document.getElementById("colorSelector" + i).options[10].disabled = false;
     for (let j = 1; j < 10; j++) {
       // disable everythang else
       document.getElementById("colorSelector" + i).options[j].disabled = true;
@@ -684,8 +683,8 @@ download_img = function (el) {
 
   var canvasPNG = document.getElementById("canvas");
   var image2 = canvas.toDataURL();
-  var aDownloadLink = document.createElement('a');
-  aDownloadLink.download = 'canvas_image.png';
+  var aDownloadLink = document.createElement("a");
+  aDownloadLink.download = "canvas_image.png";
   aDownloadLink.href = image2;
   aDownloadLink.click();
 };
