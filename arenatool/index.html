@@ -39,9 +39,7 @@
         <p id="p2">
           <b>Björns arenatool 2024 edition 😎</b>
         </p>
-        <p id="p3">
-          Välj podd och justera höjden.
-        </p>
+        <p id="p3">Välj podd och justera höjden.</p>
       </div>
 
       <div>
@@ -64,63 +62,55 @@
             value="0"
           />
         </div>
+      </div>
 
-
-        </div>
-
-        <div class="row">
-          <div class="flexcolumn">
-            <p style="font-family: Arial">
-              Pil ⬇️⬆️:
-              <input
-                id="height1slider"
-                oninput="setHeight()"
-                class="sliderLong"
-                type="range"
-                min="-100"
-                max="660"
-                value="0"
-              />
-              <br /><br /><i
-                >Justera pilen så att pilens rundning börjar där texten
-                slutar.</i
-              >
-            </p>
-          </div>
+      <div class="row">
+        <div class="flexcolumn">
           <p style="font-family: Arial">
-            <label for="poddSelector"
-              >&nbsp;Podd:&nbsp;
-              <select
-                id="poddSelector"
-                class="dropdown"
-                onchange="poddSelect()"
-              >
-                <option value="sallskapet.png">Sällskapet</option>
-                <option value="nyhetspodden.png">Nyhetspodden</option>
-                <option value="politiken.png">Politiken</option>
-                <option value="slageteftertolv.png">Slaget efter tolv</option>
-                <option value="krimpodden.png">Krimpodden</option>
-              </select> </label
-            >&nbsp;&nbsp;&nbsp;<a
-              id="download"
-              href=""
-              onclick="download_img(this);"
-              class="button"
-              >Ladda ned bilden</a
+            Pil ⬇️⬆️:
+            <input
+              id="height1slider"
+              oninput="setHeight()"
+              class="sliderLong"
+              type="range"
+              min="-100"
+              max="660"
+              value="0"
+            />
+            <br /><br /><i
+              >Justera pilen så att pilens rundning börjar där texten slutar.</i
             >
           </p>
-          <div class="column"></div>
         </div>
+        <p style="font-family: Arial">
+          <label for="poddSelector"
+            >&nbsp;Podd:&nbsp;
+            <select id="poddSelector" class="dropdown" onchange="poddSelect()">
+              <option value="sallskapet.png">Sällskapet</option>
+              <option value="nyhetspodden.png">Nyhetspodden</option>
+              <option value="politiken.png">Politiken</option>
+              <option value="slageteftertolv.png">Slaget efter tolv</option>
+              <option value="krimpodden.png">Krimpodden</option>
+            </select> </label
+          >&nbsp;&nbsp;&nbsp;<a
+            id="download"
+            href=""
+            onclick="download_img(this);"
+            class="button"
+            >Ladda ned bilden</a
+          >
+        </p>
+        <div class="column"></div>
       </div>
     </div>
 
-    <div class="column">
-      <div class="canvas">
-        <canvas id="canvas1" width="1080" height="1080"></canvas>
-      </div>
+
+  <div class="column">
+    <div class="canvas">
+      <canvas id="canvas1" width="1080" height="1080"></canvas>
     </div>
   </div>
-
+</div>
   <div id="snapshotFrame1" style="display: none; border: 1px solid black">
     <span>image snapshot for export:</span>
 
