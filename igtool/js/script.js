@@ -327,13 +327,13 @@ function poddSelect() {
 }
 function releaseColours(){
   for (let i = 1; i < 4; i++) {
-    for (let j = 1; j < 9; j++) {
+    for (let j = 1; j < 10; j++) {
       // enable regular colors
       document.getElementById("colorSelector" + i).options[j].disabled = false;
       // set everythang back to black
       document.getElementById("colorSelector" + i).selectedIndex = 0;
     }
-    for (let k = 9; k < 13; k++){
+    for (let k = 10; k < 13; k++){
       // disable poddcolors
       document.getElementById("colorSelector" + i).options[k].disabled = true;
     }
@@ -342,22 +342,20 @@ function releaseColours(){
 function krimpoddenSelected(){
   releaseColours();
   for (let i = 1; i < 4; i++) {
-    // Enable specific color
-   document.getElementById("colorSelector" + i).options[12].disabled = false;
-    for (let j = 1; j < 9; j++) {
+    for (let j = 1; j < 10; j++) {
       // disable everythang else
       document.getElementById("colorSelector" + i).options[j].disabled = true;
-      console.log("hej");
     }
+        // Enable specific color
+   document.getElementById("colorSelector" + i).options[4].disabled = false;
   }
 }
 function nyhetspoddenSelected(){
   releaseColours();
   for (let i = 1; i < 4; i++) {
-    for (let j = 1; j < 9; j++) {
+    for (let j = 1; j < 10; j++) {
       // disable everythang else
       document.getElementById("colorSelector" + i).options[j].disabled = true;
-      console.log("hej");
     }
     //enable specific color
     document.getElementById("colorSelector" + i).options[2].disabled = false;
@@ -366,7 +364,7 @@ function nyhetspoddenSelected(){
 function sallskapetSelected(){
   releaseColours();
   for (let i = 1; i < 4; i++) {
-    for (let j = 1; j < 9; j++) {
+    for (let j = 1; j < 10; j++) {
       document.getElementById("colorSelector" + i).options[j].disabled = true;
     }
   }
@@ -375,8 +373,8 @@ function nyheter1minSelected(){
   releaseColours();
   for (let i = 1; i < 4; i++) {
     // Enable specific color
-   document.getElementById("colorSelector" + i).options[11].disabled = false;
-    for (let j = 1; j < 9; j++) {
+   document.getElementById("colorSelector" + i).options[12].disabled = false;
+    for (let j = 1; j < 10; j++) {
       // disable everythang else
       document.getElementById("colorSelector" + i).options[j].disabled = true;
       console.log("hej");
@@ -387,8 +385,8 @@ function x3mSelected(){
   releaseColours();
   for (let i = 1; i < 4; i++) {
     // Enable specific color
-   document.getElementById("colorSelector" + i).options[9].disabled = false;
-    for (let j = 1; j < 9; j++) {
+   document.getElementById("colorSelector" + i).options[10].disabled = false;
+    for (let j = 1; j < 10; j++) {
       // disable everythang else
       document.getElementById("colorSelector" + i).options[j].disabled = true;
     }
