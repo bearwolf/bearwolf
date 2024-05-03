@@ -11,7 +11,7 @@ let ctx = qsl('#canvas1').getContext('2d');
 var clearTimer;
 var timerStarted = false;
 let canvas = document.getElementById('canvas1');
-var selectedPodd = 'bg2.png';
+var selectedPodd = 'png/bg2.png';
 var heightOffset = 0;
 var poddHeight = 516;
 
@@ -292,36 +292,107 @@ function masterColorCheck(x){
 
 
 
-function poddSelect(){
-  selectedPodd = document.getElementById('poddSelector').value;
-  // Disable/enable arrow when podding
-  if (document.getElementById('poddSelector').selectedIndex != 0){
-    document.getElementById('colorSelector4').selectedIndex = 0;
-    document.getElementById('colorSelector4').disabled = true;
-    arrowColorPick()
+function poddSelect() {
+  selectedPodd = "png/" + document.getElementById("poddSelector").value;
+  if (document.getElementById("poddSelector").selectedIndex != 0) {
+    document.getElementById("colorSelector4").selectedIndex = 0;
+    document.getElementById("colorSelector4").disabled = true;
+    arrowColorPick();
+  } else {
+    document.getElementById("colorSelector4").disabled = false;
+    releaseColours()
+  }
+  if (document.getElementById("poddSelector").selectedIndex == 1){
+    nyheter1minSelected();
+  }
+  else if (document.getElementById("poddSelector").selectedIndex == 2){
+    sallskapetSelected();
+  }
+  else if (document.getElementById("poddSelector").selectedIndex == 3) {
+    x3mSelected();
+  } 
+  else if (document.getElementById("poddSelector").selectedIndex == 4){
+    nyhetspoddenSelected();
+  }
+  else if (document.getElementById("poddSelector").selectedIndex == 5){
+    nyhetspoddenSelected();
+  }
+  else if (document.getElementById("poddSelector").selectedIndex == 8){
+    krimpoddenSelected();
   }
   else {
-    document.getElementById('colorSelector4').disabled = false;
+    releaseColours();
   }
-
- // enable x3mcolor, maybe delete if x3m wants to do regular posts with the tool
-  if (document.getElementById('poddSelector').selectedIndex == 3){
-    for (let i = 1; i < 4; i++) {
-      document.getElementById('colorSelector'+i).options[9].disabled=false;
-     }
+  generate();
+}
+function releaseColours(){
+  for (let i = 1; i < 4; i++) {
+    for (let j = 1; j < 9; j++) {
+      // enable regular colors
+      document.getElementById("colorSelector" + i).options[j].disabled = false;
+      // set everythang back to black
+      document.getElementById("colorSelector" + i).selectedIndex = 0;
     }
-    else {
-      for (let i = 1; i < 4; i++) {
-        document.getElementById('colorSelector'+i).options[9].disabled=true;
-        if (document.getElementById('colorSelector'+i).selectedIndex == 9){
-          document.getElementById('colorSelector'+i).selectedIndex = 0;
-        }
-       }
-
+    for (let k = 9; k < 13; k++){
+      // disable poddcolors
+      document.getElementById("colorSelector" + i).options[k].disabled = true;
     }
-
-    generate();
-
+  }
+}
+function krimpoddenSelected(){
+  releaseColours();
+  for (let i = 1; i < 4; i++) {
+    // Enable specific color
+   document.getElementById("colorSelector" + i).options[12].disabled = false;
+    for (let j = 1; j < 9; j++) {
+      // disable everythang else
+      document.getElementById("colorSelector" + i).options[j].disabled = true;
+      console.log("hej");
+    }
+  }
+}
+function nyhetspoddenSelected(){
+  releaseColours();
+  for (let i = 1; i < 4; i++) {
+    for (let j = 1; j < 9; j++) {
+      // disable everythang else
+      document.getElementById("colorSelector" + i).options[j].disabled = true;
+      console.log("hej");
+    }
+    //enable specific color
+    document.getElementById("colorSelector" + i).options[2].disabled = false;
+  }
+}
+function sallskapetSelected(){
+  releaseColours();
+  for (let i = 1; i < 4; i++) {
+    for (let j = 1; j < 9; j++) {
+      document.getElementById("colorSelector" + i).options[j].disabled = true;
+    }
+  }
+}
+function nyheter1minSelected(){
+  releaseColours();
+  for (let i = 1; i < 4; i++) {
+    // Enable specific color
+   document.getElementById("colorSelector" + i).options[11].disabled = false;
+    for (let j = 1; j < 9; j++) {
+      // disable everythang else
+      document.getElementById("colorSelector" + i).options[j].disabled = true;
+      console.log("hej");
+    }
+  }
+}
+function x3mSelected(){
+  releaseColours();
+  for (let i = 1; i < 4; i++) {
+    // Enable specific color
+   document.getElementById("colorSelector" + i).options[9].disabled = false;
+    for (let j = 1; j < 9; j++) {
+      // disable everythang else
+      document.getElementById("colorSelector" + i).options[j].disabled = true;
+    }
+  }
 }
 
 function arrowColorPick() {
@@ -355,7 +426,7 @@ function arrowColorPick() {
 
 
 function setArrow(){
-  arrow = arrowLenght + arrowColor + '.png';
+  arrow = "png/" + arrowLenght + arrowColor + '.png';
 
 }
 function clearErrorMessage(){
@@ -374,21 +445,21 @@ function getLayerDescriptions() {
     type: 'text',
     text: getTextFromTextBox1(),
     rect: { x: 45, y: 797, w: 0, h: 0 },
-    drawOpts: { font: '900 65px Yleblack', fillStyle: getColor1()},
+    drawOpts: { font: '900 65px Heavy', fillStyle: getColor1()},
     zOrder: 100,
   },
   {
     type: 'text',
     text: getTextFromTextBox2(),
     rect: { x: 45, y: 869, w: 0, h: 0 },
-    drawOpts: { font: '900 65px Yleblack', fillStyle: getColor2()},
+    drawOpts: { font: '900 65px Heavy', fillStyle: getColor2()},
     zOrder: 1,
   },
   {
     type: 'text',
     text: getTextFromTextBox3(),
     rect: { x: 45, y: 941, w: 0, h: 0 },
-    drawOpts: { font: '900 65px Yleblack', fillStyle: getColor3()},
+    drawOpts: { font: '900 65px Heavy', fillStyle: getColor3()},
     zOrder: 1,
   },
   {
@@ -407,14 +478,14 @@ function getLayerDescriptions() {
   },
   {
     type: 'image',
-    url: 'guideline.png',
+    url: 'png/guideline.png',
     rect: { x: +arrowLocation + +sliderGuiderX, y: sliderGuiderY, w: 0, h: 0},
     drawOpts: {fillStyle: 'black',},
     zOrder: 3
   },
   {
     type: 'image',
-    url: 'bg2.png',
+    url: 'png/bg2.png',
     rect: { x: 0, y: 0, w: 0, h: 0 },
     drawOpts: {fillStyle: 'white'},
     zOrder: -90

@@ -16,12 +16,11 @@ var heightOffset = 0;
 var poddHeight = 717;
 var selectedPodd = "png/bg2.png";
 
-
 function swapSite() {
   document.body.classList.add("fadeOutAnimation");
   setTimeout(() => {
     window.location.href = "https://bearwolf.github.io/bearwolf/igtool/";
-  }, 900); 
+  }, 900);
 }
 
 function setCtxDrawOpts(ctx, drawOpts) {
@@ -317,28 +316,105 @@ async function generate() {
 }
 function poddSelect() {
   selectedPodd = "png/" + document.getElementById("poddSelector").value;
-  console.log("ballle");
   if (document.getElementById("poddSelector").selectedIndex != 0) {
     document.getElementById("colorSelector7").selectedIndex = 0;
     document.getElementById("colorSelector7").disabled = true;
     arrowColorPick();
   } else {
     document.getElementById("colorSelector7").disabled = false;
+    releaseColours()
   }
-  if (document.getElementById("poddSelector").selectedIndex == 3) {
-    for (let i = 1; i < 7; i++) {
-      document.getElementById("colorSelector" + i).options[9].disabled = false;
-    }
-  } else {
-    for (let i = 1; i < 7; i++) {
-      document.getElementById("colorSelector" + i).options[9].disabled = true;
-      if (document.getElementById("colorSelector" + i).selectedIndex == 9) {
-        document.getElementById("colorSelector" + i).selectedIndex = 0;
-      }
-    }
+  if (document.getElementById("poddSelector").selectedIndex == 1){
+    nyheter1minSelected();
   }
-
+  else if (document.getElementById("poddSelector").selectedIndex == 2){
+    sallskapetSelected();
+  }
+  else if (document.getElementById("poddSelector").selectedIndex == 3) {
+    x3mSelected();
+  } 
+  else if (document.getElementById("poddSelector").selectedIndex == 4){
+    nyhetspoddenSelected();
+  }
+  else if (document.getElementById("poddSelector").selectedIndex == 5){
+    nyhetspoddenSelected();
+  }
+  else if (document.getElementById("poddSelector").selectedIndex == 8){
+    krimpoddenSelected();
+  }
+  else {
+    releaseColours();
+  }
   generate();
+}
+function releaseColours(){
+  for (let i = 1; i < 7; i++) {
+    for (let j = 1; j < 9; j++) {
+      // enable regular colors
+      document.getElementById("colorSelector" + i).options[j].disabled = false;
+      // set everythang back to black
+      document.getElementById("colorSelector" + i).selectedIndex = 0;
+    }
+    for (let k = 9; k < 13; k++){
+      // disable poddcolors
+      document.getElementById("colorSelector" + i).options[k].disabled = true;
+    }
+  }
+}
+function krimpoddenSelected(){
+  releaseColours();
+  for (let i = 1; i < 7; i++) {
+    // Enable specific color
+   document.getElementById("colorSelector" + i).options[12].disabled = false;
+    for (let j = 1; j < 9; j++) {
+      // disable everythang else
+      document.getElementById("colorSelector" + i).options[j].disabled = true;
+      console.log("hej");
+    }
+  }
+}
+function nyhetspoddenSelected(){
+  releaseColours();
+  for (let i = 1; i < 7; i++) {
+    for (let j = 1; j < 9; j++) {
+      // disable everythang else
+      document.getElementById("colorSelector" + i).options[j].disabled = true;
+      console.log("hej");
+    }
+    //enable specific color
+    document.getElementById("colorSelector" + i).options[2].disabled = false;
+  }
+}
+function sallskapetSelected(){
+  releaseColours();
+  for (let i = 1; i < 7; i++) {
+    for (let j = 1; j < 9; j++) {
+      document.getElementById("colorSelector" + i).options[j].disabled = true;
+    }
+  }
+}
+function nyheter1minSelected(){
+  releaseColours();
+  for (let i = 1; i < 7; i++) {
+    // Enable specific color
+   document.getElementById("colorSelector" + i).options[11].disabled = false;
+    for (let j = 1; j < 9; j++) {
+      // disable everythang else
+      document.getElementById("colorSelector" + i).options[j].disabled = true;
+      console.log("hej");
+    }
+  }
+}
+function x3mSelected(){
+  releaseColours();
+  for (let i = 1; i < 7; i++) {
+    // Enable specific color
+   document.getElementById("colorSelector" + i).options[9].disabled = false;
+    for (let j = 1; j < 9; j++) {
+      // disable everythang else
+      document.getElementById("colorSelector" + i).options[j].disabled = true;
+    }
+  }
 }
 
 function arrowColorPick() {
@@ -619,8 +695,7 @@ function showsnackbar() {
   }, 10000);
 }
 
-
-  // autorefresh to make the loading of the font to seem snappier, don't judge me. 
+// autorefresh to make the loading of the font to seem snappier, don't judge me.
 generate();
 setTimeout(() => {
   generate();
