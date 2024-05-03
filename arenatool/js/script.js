@@ -507,9 +507,8 @@ function setCanvasSize() {
 }
 
 download_img = function (el) {
-  //var image = canvas.toDataURL("image/png");
-  //el.href = image;
-
+  const d = new Date();
+  console.log(d);
   var canvasPNG = document.getElementById("canvas");
   var image2 = canvas.toDataURL();
   var aDownloadLink = document.createElement("a");

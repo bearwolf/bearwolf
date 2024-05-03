@@ -67,6 +67,7 @@ button {
   border-radius: 8px;
   float: right;
   margin-right: 6px;
+  cursor: pointer;
 }
 .buttonLeft {
   font-family: Arial, sans-serif;

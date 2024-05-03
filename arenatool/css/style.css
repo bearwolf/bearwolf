@@ -72,6 +72,7 @@ p {
   border-radius: 8px;
   float: right;
   margin-right: 6px;
+  cursor: pointer;
 }
 input[type="text"] {
   font-family: Arial, sans-serif;
