@@ -679,8 +679,15 @@ function setCanvasSize() {
 }
 
 download_img = function (el) {
-  var image = canvas.toDataURL("image/jpg");
-  el.href = image;
+  //var image = canvas.toDataURL("image/png");
+  //el.href = image;
+
+  var canvasPNG = document.getElementById("canvas");
+  var image2 = canvas.toDataURL();
+  var aDownloadLink = document.createElement('a');
+  aDownloadLink.download = 'canvas_image.png';
+  aDownloadLink.href = image2;
+  aDownloadLink.click();
 };
 function showsnackbar() {
   // Get the snackbar DIV

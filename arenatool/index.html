@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Yle IgTool</title>
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <link href="css/snackbar.css" rel="stylesheet" type="text/css" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="png/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="png/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="png/favicon-16x16.png"
+    />
+    <link rel="manifest" href="site.webmanifest" />
+  </head>
+  <!-- <body onload="showsnackbar()">  -->
+  <div class="wave"></div>
+  <div class="wave"></div>
+  <div class="wave"></div>
+  <div class="beachBall"><img width="600" src="png/beachball.png" /></div>
+
+  <h1></h1>
+  <div class="row">
+    <div id="bakgrund" class="column">
+      <div>
+        <button class="buttonLeft" onclick="swapSite()">Arenatool</button>
+        <p id="p2">
+          <b>Björns arenatool 2024 edition 😎</b>
+        </p>
+        <p id="p3">
+          Välj podd och justera höjden.
+        </p>
+      </div>
+
+      <div>
+        <div style="font-family: Arial">
+          <label for="txt_Ims"
+            >IMS-kod: &nbsp;<input
+              type="string"
+              class="imsruta"
+              id="txt_Ims"
+              oninput="generate()"
+              value="39-7643786008344a03ab7" /></label
+          >&nbsp;⬅️➡️
+          <input
+            id="scrollslider"
+            oninput="generate()"
+            class="slider"
+            type="range"
+            min="-1920"
+            max="0"
+            value="0"
+          />
+        </div>
+
+
+        </div>
+
+        <div class="row">
+          <div class="flexcolumn">
+            <p style="font-family: Arial">
+              Pil ⬇️⬆️:
+              <input
+                id="height1slider"
+                oninput="setHeight()"
+                class="sliderLong"
+                type="range"
+                min="-100"
+                max="660"
+                value="0"
+              />
+              <br /><br /><i
+                >Justera pilen så att pilens rundning börjar där texten
+                slutar.</i
+              >
+            </p>
+          </div>
+          <p style="font-family: Arial">
+            <label for="poddSelector"
+              >&nbsp;Podd:&nbsp;
+              <select
+                id="poddSelector"
+                class="dropdown"
+                onchange="poddSelect()"
+              >
+                <option value="sallskapet.png">Sällskapet</option>
+                <option value="nyhetspodden.png">Nyhetspodden</option>
+                <option value="politiken.png">Politiken</option>
+                <option value="slageteftertolv.png">Slaget efter tolv</option>
+                <option value="krimpodden.png">Krimpodden</option>
+              </select> </label
+            >&nbsp;&nbsp;&nbsp;<a
+              id="download"
+              href=""
+              onclick="download_img(this);"
+              class="button"
+              >Ladda ned bilden</a
+            >
+          </p>
+          <div class="column"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="column">
+      <div class="canvas">
+        <canvas id="canvas1" width="1080" height="1080"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div id="snapshotFrame1" style="display: none; border: 1px solid black">
+    <span>image snapshot for export:</span>
+
+    <div>
+      <img id="targetImage1" />
+    </div>
+    <div><button onclick="hideSnapshotFrame()">hide snapshot</button></div>
+  </div>
+
+  <script src="js/script.js"></script>
+
+  <div id="snackbar">
+    <h1><b>Goda nyheter!</b></h1>
+    <br />
+    <p id="p3">
+      Nu finns det ett verktyg för instastories!<br />Du hittar länken här uppe
+      på sidan.<br />Ha en skön dag! /Björn
+    </p>
+  </div>
+
+  <!-- </body> -->
+</html>
