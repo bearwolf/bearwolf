@@ -23,7 +23,7 @@ function swapSite() {
     window.location.href = "https://bearwolf.github.io/bearwolf/igtool/";
   }, 900); 
 }
-function swapSite() {
+function swapSite2() {
   document.body.classList.add("fadeOutAnimation");
   setTimeout(() => {
     window.location.href = "https://bearwolf.github.io/bearwolf/storytool/";
