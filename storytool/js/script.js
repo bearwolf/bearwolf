@@ -15,6 +15,9 @@ let canvas = document.getElementById("canvas1");
 var heightOffset = 0;
 var poddHeight = 717;
 var selectedPodd = "png/bg2.png";
+var zoomFactor = 1;
+var loadingImage = false;
+var currentHeigh = 1080;
 
 function swapSite() {
   document.body.classList.add("fadeOutAnimation");
@@ -173,7 +176,7 @@ function makeLayer() {
 
 function buildYleCDNImageUrl(base, imsId, extension) {
   const defaultBase =
-    "https://images.cdn.yle.fi/image/upload/f_auto,fl_progressive/q_100/h_1920,c_fill/";
+    "https://images.cdn.yle.fi/image/upload/f_auto,fl_progressive/q_100/h_" + 1920*zoomFactor + ",c_fill/";
   const defaultImsId = getDefaultImsId();
   const defaultExtension = ".jpg";
   return `${base || defaultBase}${imsId || defaultImsId}${
@@ -181,10 +184,25 @@ function buildYleCDNImageUrl(base, imsId, extension) {
   }`;
 }
 
-// NOTE : there is some reasonable way to do this
-// without duplicating all of makeImageLayer, but I cannot
-// come up with it right now
+function imsSelect(){
+  loadingImage = true;
+  document.getElementById("zoomSelector").selectedIndex = 0;
+  zoomFactor = 1;
+  generate();
 
+}
+function zoomSelect(){
+  zoomFactor = document.getElementById("zoomSelector").value;
+  loadingImage = true;
+  if (document.getElementById("zoomSelector").selectedIndex != 0) {
+    document.getElementById("zoomSpan").hidden = false;
+  }
+  else {
+    document.getElementById("zoomSpan").hidden = true;
+  }
+  console.log(currentHeigh);
+  generate();
+}
 function makeYleCDNImageLayer(options) {
   const imgUrl = buildYleCDNImageUrl(
     options.imgBaseUrl,
@@ -210,6 +228,9 @@ function makeYleCDNImageLayer(options) {
 
       document.getElementById("scrollslider").min = -Math.abs(
         imgObj.image.naturalWidth - 1080
+      );
+      document.getElementById("zoomedslider").min = -Math.abs(
+        imgObj.image.naturalHeight - 1920
       );
       console.log(document.getElementById("scrollslider").min);
     };
@@ -259,7 +280,9 @@ let layerMakers = {
 
 async function makeLayers(layerDescriptions) {
   console.log("creating layers, loading images etc...");
-
+  if (loadingImage == true) {
+    document.getElementById("spinner").hidden = false;
+  }
   let a = [];
 
   for (ld of layerDescriptions) {
@@ -273,6 +296,13 @@ async function makeLayers(layerDescriptions) {
   let layers = await Promise.all(a);
 
   console.log("finished making layers");
+  if (document.getElementById("spinner").hidden == false){
+    loadingImage = false;
+    document.getElementById("spinner").hidden = true;
+    setTimeout(() => {
+      generate();
+    }, 10);
+    };
   return layers;
 }
 
@@ -563,7 +593,7 @@ function getLayerDescriptions() {
 
       rect: {
         x: document.getElementById("scrollslider").value,
-        y: 0,
+        y: document.getElementById("zoomedslider").value,
         w: 0,
         h: 0,
       },

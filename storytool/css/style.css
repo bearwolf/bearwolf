@@ -27,6 +27,13 @@ p {
 .row {
   width: 100;
 }
+.spinner {
+  position: absolute;
+  margin: 20px;
+}
+#zoomSelector {
+  width: 70px;
+}
 button {
   font-family: Arial, sans-serif;
   background-color: #00b4c8; 
@@ -188,6 +195,8 @@ body {
 }
 .slider {
   width: 200px;
+  float: right;
+
 }
 .sliderLong {
   width: 450px;
