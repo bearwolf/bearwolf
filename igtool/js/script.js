@@ -20,6 +20,77 @@ var zoomFactor = 1;
 var loadingImage = false;
 var currentHeigh = 1080;
 
+
+
+// x: document.getElementById("scrollslider").value,
+// y: document.getElementById("zoomedslider").value,
+
+let isMouseDown = false;
+let lastX = 0;
+let lastY = 0;
+const xSlider = document.getElementById('scrollslider');
+const ySlider = document.getElementById('zoomedslider');
+
+function onMouseMove(event) {
+    if (!isMouseDown) return;
+
+    const deltaX = event.clientX - lastX;
+    const deltaY = event.clientY - lastY;
+
+    // Använd en skalfaktor för att bestämma hur mycket en dragrörelse ska påverka slidern
+    const scaleFactor = 1;
+    const changeX = deltaX * scaleFactor;
+    const changeY = deltaY * scaleFactor;
+
+    // Uppdatera X-slidern
+    const newValueX = Math.min(Math.max(parseInt(xSlider.value) + changeX, xSlider.min), xSlider.max);
+    xSlider.value = newValueX;
+
+    // Uppdatera Y-slidern
+    const newValueY = Math.min(Math.max(parseInt(ySlider.value) + changeY, ySlider.min), ySlider.max); // Observera "-" för Y för att invertera rörelsen
+    ySlider.value = newValueY;
+
+    lastX = event.clientX;
+    lastY = event.clientY;
+    generate();
+}
+
+function onMouseDown(event) {
+  
+    if (event.button === 0) {
+        isMouseDown = true;
+        lastX = event.clientX;
+        lastY = event.clientY;
+    }
+}
+
+function onMouseUp(event) {
+    if (event.button === 0) {
+        isMouseDown = false;
+    }
+}
+
+canvas.addEventListener('mousemove', onMouseMove);
+canvas.addEventListener('mousedown', onMouseDown);
+document.addEventListener('mouseup', onMouseUp);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function swapSite() {
   document.body.classList.add("fadeOutAnimation");
   setTimeout(() => {

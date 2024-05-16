@@ -354,6 +354,13 @@ canvas {
   left: 0;
   z-index: -2;
 }
+#bubble {
+
+  position: relative;
+  bottom: 600px;
+  left: -400px;
+
+}
 .wave:nth-of-type(4) {
   bottom: -2.5em;
   animation: wave 24s -1s reverse infinite;
