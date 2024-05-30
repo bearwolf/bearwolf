@@ -201,26 +201,19 @@ let layerHandlers = {
   text: function (layer, ctx) {
     ctx.save();
     setCtxDrawOpts(ctx, layer.drawOpts || getCtxDrawOpts(ctx));
-    //ctx.fillText(layer.text, layer.rect.x, layer.rect.y);
+
 
 
       offCtx.fillStyle = 'blue';
-      //offCtx.fillRect(10,10, 2000, 2000);
-      offCtx.drawImage(layer.image, document.getElementById("scrollslider").value - -180, document.getElementById("zoomedslider").value,);
+
+      offCtx.drawImage(layer.image, document.getElementById("scrollslider").value - -180, document.getElementById("zoomedslider").value - -150,);
         // Rita maskbilden på off-screen canvas
         offCtx.globalCompositeOperation = 'destination-out';
-        //offCtx.drawImage(layer.image, 300, layer.rect.y);
+
         offCtx.drawImage(maskImage, 0, 0, offScreenCanvas.width, offScreenCanvas.height);
-        //offCtx.drawImage(layer.image, layer.rect.x, layer.rect.y);
-        // Använd globalCompositeOperation för att applicera masken
+
         offCtx.globalCompositeOperation = 'source-out';
-    
-        // Överför den befintliga bilden från huvudcanvas till off-screen canvas
-        //offCtx.drawImage(canvas, 0, 0);
-        
-        // Nu har masken applicerats på bilden i off-screen canvas,
-        // och vi kan överföra resultatet tillbaka till huvudcanvasen
-        //ctx.clearRect(0, 0, canvas.width, canvas.height); // Rensa huvudcanvasen om nödvändigt
+
         ctx.drawImage(offScreenCanvas, 0, 0); // Överför det maskerade resultatet
 
 
@@ -259,7 +252,7 @@ function buildYleCDNImageUrl(base, imsId, extension) {
 function buildYleCDNImageUrl2(base, imsId, extension) {
   // const defaultBase = 'https://images.cdn.yle.fi/image/upload/f_auto,fl_progressive/q_100/w_1080/w_1080,h_1080,c_fill,g_auto/w_1080/';
   const defaultBase =
-    "https://images.cdn.yle.fi/image/upload/f_auto,fl_progressive/q_100/h_" + 880*zoomFactor + ",w_"+ 880*zoomFactor +",c_fill/";
+    "https://images.cdn.yle.fi/image/upload/f_auto,fl_progressive/q_100/h_" + 1680*zoomFactor + ",w_"+ 1680*zoomFactor +",c_fill/";
   const defaultImsId = getDefaultImsId();
   const defaultExtension = ".jpg";
   return `${base || defaultBase}${imsId || defaultImsId}${
@@ -281,7 +274,7 @@ function zoomSelect(){
     document.getElementById("zoomSpan").hidden = false;
   }
   else {
-    document.getElementById("zoomSpan").hidden = true;
+    document.getElementById("zoomSpan").hidden = false;
   }
   console.log(currentHeigh);
   generate();
@@ -341,10 +334,10 @@ function makeYleCDNImageLayer2(options) {
       resolve(imgObj);
 
       document.getElementById("scrollslider").min = -Math.abs(
-        imgObj.image.naturalWidth - 880
+        imgObj.image.naturalWidth - 2640*zoomFactor
       );
       document.getElementById("zoomedslider").min = -Math.abs(
-        imgObj.image.naturalHeight - 880
+        imgObj.image.naturalHeight - 2660*zoomFactor
       );
       currentHeigh = imgObj.image.naturalHeight;
       console.log(currentHeigh);
@@ -599,8 +592,8 @@ function getLayerDescriptions() {
       type: "yleCDNImage",
 
       rect: {
-        x: document.getElementById("scrollslider").value,
-        y: document.getElementById("zoomedslider").value,
+        x: 0, //document.getElementById("scrollslider").value,
+        y: 0,//document.getElementById("zoomedslider").value,
         w: 0,
         h: 0,
       },
