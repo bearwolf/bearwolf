@@ -241,7 +241,7 @@ function makeLayer() {
 function buildYleCDNImageUrl(base, imsId, extension) {
   // const defaultBase = 'https://images.cdn.yle.fi/image/upload/f_auto,fl_progressive/q_100/w_1080/w_1080,h_1080,c_fill,g_auto/w_1080/';
   const defaultBase =
-    "https://images.cdn.yle.fi/image/upload/f_auto,fl_progressive/q_100/h_" + 1080*zoomFactor + ",w_"+ 1080*zoomFactor + ",c_fill/";
+    "https://images.cdn.yle.fi/image/upload/f_auto,fl_progressive/q_100/h_" + (1080*zoomFactor).toFixed(0) + ",w_"+ (1080*zoomFactor).toFixed(0) + ",c_fill/";
   const defaultImsId = getDefaultImsId();
   const defaultExtension = ".jpg";
   return `${base || defaultBase}${imsId || defaultImsId}${
@@ -252,7 +252,7 @@ function buildYleCDNImageUrl(base, imsId, extension) {
 function buildYleCDNImageUrl2(base, imsId, extension) {
   // const defaultBase = 'https://images.cdn.yle.fi/image/upload/f_auto,fl_progressive/q_100/w_1080/w_1080,h_1080,c_fill,g_auto/w_1080/';
   const defaultBase =
-    "https://images.cdn.yle.fi/image/upload/f_auto,fl_progressive/q_100/h_" + 1680*zoomFactor + ",w_"+ 1680*zoomFactor +",c_fill/";
+    "https://images.cdn.yle.fi/image/upload/f_auto,fl_progressive/q_100/h_" + (1680*zoomFactor).toFixed(0) + ",w_"+ (1680*zoomFactor).toFixed(0) +",c_fill/";
   const defaultImsId = getDefaultImsId();
   const defaultExtension = ".jpg";
   return `${base || defaultBase}${imsId || defaultImsId}${
