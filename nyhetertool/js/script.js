@@ -663,7 +663,7 @@ download_img = function (el) {
   var canvasPNG = document.getElementById("canvas");
   var image2 = canvas.toDataURL();
   var aDownloadLink = document.createElement("a");
-  aDownloadLink.download = "Arenatool" + "." + timeStamp +"."+ currentPodd;
+  aDownloadLink.download = "Nyheternatool" + "." + timeStamp +".png";
   aDownloadLink.href = image2;
   aDownloadLink.click();
 };

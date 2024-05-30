@@ -261,12 +261,13 @@ canvas {
   left: 0;
   height: 25px;
   width: 25px;
-  background-color: #eee;
+
+  background-color: #ffffff;
 }
 
 /* On mouse-over, add a grey background color */
 .container:hover input ~ .checkmark {
-  background-color: #ccc;
+  background-color: #ffffff;
 }
 
 /* When the checkbox is checked, add a blue background */

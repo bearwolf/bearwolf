@@ -19,6 +19,7 @@ var poddHeight = 516;
 var zoomFactor = 1;
 var loadingImage = false;
 var currentHeigh = 1080;
+var saturation = "0";
 
 
 
@@ -221,7 +222,7 @@ function makeLayer() {
 function buildYleCDNImageUrl(base, imsId, extension) {
   // const defaultBase = 'https://images.cdn.yle.fi/image/upload/f_auto,fl_progressive/q_100/w_1080/w_1080,h_1080,c_fill,g_auto/w_1080/';
   const defaultBase =
-    "https://images.cdn.yle.fi/image/upload/f_auto,fl_progressive/q_100/h_" + 1080*zoomFactor + ",c_fill/";
+    "https://images.cdn.yle.fi/image/upload/f_auto,fl_progressive/q_100/h_" + 1080*zoomFactor + ",e_saturation:" + saturation +",c_fill/";
   const defaultImsId = getDefaultImsId();
   const defaultExtension = ".jpg";
   return `${base || defaultBase}${imsId || defaultImsId}${
@@ -351,7 +352,10 @@ async function makeLayers(layerDescriptions) {
     };
   return layers;
 }
-
+function blackWhite(){
+  loadingImage = true;
+  generate();
+}
 async function generate() {
   if (document.getElementById("txt_Row2").value == "") {
     console.log("1 rad");
@@ -371,6 +375,13 @@ async function generate() {
     sliderGuiderX = 450;
     poddHeight = 516;
     setArrow();
+  }
+  if (document.getElementById("greyscale").checked == true){
+    console.log("BW");
+    saturation = "-100";
+  }
+  else {
+    saturation = "0";
   }
 
   let layers = await makeLayers(getLayerDescriptions());
@@ -497,7 +508,7 @@ function arrowColorPick() {
     console.log("All black");
   } else if (index > 6) {
     for (let i = 1; i < 4; i++) {
-      document.getElementById("colorSelector" + i).selectedIndex = 10;
+      document.getElementById("colorSelector" + i).selectedIndex = 11;
       document.getElementById("colorSelector" + i).disabled = true;
     }
 
