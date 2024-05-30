@@ -516,7 +516,7 @@ function arrowColorPick() {
     console.log("All black");
   } else if (index > 6) {
     for (let i = 1; i < 7; i++) {
-      document.getElementById("colorSelector" + i).selectedIndex = 10;
+      document.getElementById("colorSelector" + i).selectedIndex = 11;
       document.getElementById("colorSelector" + i).disabled = true;
     }
 
