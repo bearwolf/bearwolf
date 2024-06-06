@@ -634,11 +634,16 @@ setTimeout(() => {
 }, 50);
 setTimeout(() => {
   generate();
+}, 250);
+setTimeout(() => {
+  generate();
 }, 500);
+setTimeout(() => {
+  generate();
+}, 750);
 setTimeout(() => {
   generate();
 }, 1500);
 setTimeout(() => {
   generate();
 }, 3000);
-
