@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Yle PoddTool</title>
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <link href="css/snackbar.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/midi.js/0.3.2/MIDI.min.js"></script>
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="png/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="png/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="png/favicon-16x16.png"
+    />
+    <link rel="manifest" href="site.webmanifest" />
+  </head>
+  <!-- <body onload="showsnackbar()">  -->
+  <div class="wave"></div>
+  <div class="wave"></div>
+  <div class="wave"></div>
+  <div class="beachBall"><img width="600" src="png/beachball.png" /><img width="600" id="bubble" src="png/bubble.png" /></div>
+
+  <h1></h1>
+  <div class="row">
+    <div id="bakgrund" >
+      <img onclick="playMIDI()" src="png/heading.png" />
+
+      <div class="container2">
+        <div class="item" onclick="swapSite('https://bearwolf.github.io/bearwolf/igtool/')"><img src="png/igtool.png" />IGtool för instagraminlägg</div>
+        <div class="item" onclick="swapSite('https://bearwolf.github.io/bearwolf/nyhetertool/')"><img src="png/nyhetertool.png"/>Nyhetertool för nyheter</div>
+        <div class="item" onclick="swapSite('https://bearwolf.github.io/bearwolf/arenatool/')"><img src="png/arenatool.png" />Arenatool för poddbilder till arenan</div>
+        <div class="item" onclick="swapSite('https://bearwolf.github.io/bearwolf/poddtool/')"><img src="png/poddtool.png" />Poddtool för bilder till lyftartiklar</div>
+        <div class="item" onclick="swapSite('https://bearwolf.github.io/bearwolf/storytool/')"><img height="100" src="png/storytool.png" />Storytool för storyinlägg till instagram</div>
+
+
+
+    </div>
+
+      <div class="row">
+
+
+        <div class="column"></div>
+      </div><span style="color:grey">(1:1 guiden försvinner automatiskt när du laddar ner)</span>
+    </div>
+
+
+  </div>
+
+
+  <script src="js/script.js"></script>
+
+  <div id="snackbar">
+    <h1><b>Goda nyheter!</b></h1>
+    <br />
+    <p id="p3">
+      Nu finns det ett verktyg för instastories!<br />Du hittar länken här uppe
+      på sidan.<br />Ha en skön dag! /Björn
+    </p>
+  </div>
+
+  <!-- </body> -->
+</html>
