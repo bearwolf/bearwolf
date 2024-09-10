@@ -6,7 +6,7 @@
     <title>Yle PoddTool</title>
     <link href="css/style.css" rel="stylesheet" type="text/css" />
     <link href="css/snackbar.css" rel="stylesheet" type="text/css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/midi.js/0.3.2/MIDI.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/combine/npm/tone@14.7.58,npm/@magenta/music@1.23.1/es6/core.js,npm/focus-visible@5,npm/html-midi-player@1.4.0"></script>
     <link
       rel="apple-touch-icon"
       sizes="180x180"
@@ -35,7 +35,7 @@
   <h1></h1>
   <div class="row">
     <div id="bakgrund" >
-      <img onclick="playMIDI()" src="png/heading.png" />
+      <img src="png/heading.png" />
 
       <div class="container2">
         <div class="item" onclick="swapSite('https://bearwolf.github.io/bearwolf/igtool/')"><img src="png/igtool.png" />IGtool för instagraminlägg</div>
@@ -52,7 +52,11 @@
 
 
         <div class="column"></div>
-      </div><span style="color:grey">(1:1 guiden försvinner automatiskt när du laddar ner)</span>
+        <midi-player loop 
+  src="midi/moviekombat.mid"
+  sound-font visualizer="#myVisualizer">
+</midi-player>
+      </div>
     </div>
 
 
