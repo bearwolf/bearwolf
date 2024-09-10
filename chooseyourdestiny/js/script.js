@@ -658,4 +658,3 @@ function playMIDI() {
 function stopMIDI() {
   MIDI.Player.stop();
 }
-player.loop = true;
