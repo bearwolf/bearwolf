@@ -239,23 +239,62 @@ canvas {
   flex-wrap: wrap;
   gap: 10px; /* Just to add some space between the items */
 }
+.headinglogo {
+max-width: 70%;
+}
 
 .item img {
   width: 100%;
   max-height: 400px; /* Ensure the image scales proportionally */
-  object-fit: contain;
+  object-fit: scale-down;
   height: auto;
   display: block; /* Remove bottom space under the image */
   cursor: pointer;
+  border-radius: 10px;
+}
+:root{
+  --color1:#39c5db;
+  --color2: rgba(60, 132, 206, 1);
+  --color3: rgba(48, 238, 226, 1);
+  --color4: rgb(9, 114, 233);
 }
 .item {
   flex: 1 1 calc(33.33% - 20px); /* Each item takes up one-third of the width minus the gap */
   padding: 10px;
-  background-color: #f0f0f0;
-  border: 1px solid #ccc;
+  background-color: #91919100;
+  border: 4px solid #000000a2;
+  background: linear-gradient(
+    315deg,
+    var(--color1) 10%,
+    var(--color2) 38%,
+    var(--color3) 68%,
+    var(--color4) 98%
+  );
+  background-size: 400% 400%;
+  border-radius: 10px;
   text-align: center;
   box-sizing: border-box;
   cursor: pointer;
+  box-shadow: 3px 3px 5px rgb(0 0 0 / 1);
+  animation: shimmer 10s ease-in-out infinite;
+}
+#playerrow {
+  margin: 5px;
+}
+#playerrow img{
+  max-height: 80px;
+  max-width: 40%;
+}
+@keyframes shimmer {
+  0% {
+      background-position: 0% 50%;
+  }
+  50% {
+      background-position: 100% 50%;
+  }
+  100% {
+      background-position: 0% 50%;
+  }
 }
 #bakgrund {
   box-shadow: 3px 3px 10px rgb(0 0 0 / 1);
@@ -266,6 +305,7 @@ canvas {
   );
   background-color: #a4b4b7;
   width: 50%;
+  min-width: 300px;
   margin: 20px;
   margin-left: 30px;
   padding: 6px 32px;

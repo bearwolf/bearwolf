@@ -658,3 +658,13 @@ function playMIDI() {
 function stopMIDI() {
   MIDI.Player.stop();
 }
+function retro(){
+  var images = document.getElementsByClassName('retro');
+  for (i = 0; i < images.length;i++ ) {
+    images[i].style.visibility = "visible";
+};
+document.documentElement.style.setProperty('--color1', 'red');
+//document.documentElement.style.setProperty('--color2', 'red');
+document.documentElement.style.setProperty('--color3', 'red');
+//document.documentElement.style.setProperty('--color4', 'red');
+};
