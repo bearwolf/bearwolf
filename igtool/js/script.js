@@ -95,13 +95,13 @@ document.addEventListener('mouseup', onMouseUp);
 function swapSite() {
   document.body.classList.add("fadeOutAnimation");
   setTimeout(() => {
-    window.location.href = "https://bearwolf.github.io/bearwolf/storytool/";
+    window.location.href = "https://bearwolf.github.io/bearwolf/chooseyourdestiny/";
   }, 900); //window.location.href = 'http://127.0.0.1:8080/storytool2024/';
 }
 function swapSite2() {
   document.body.classList.add("fadeOutAnimation");
   setTimeout(() => {
-    window.location.href = "https://bearwolf.github.io/bearwolf/arenatool/";
+    window.location.href = "https://bearwolf.github.io/bearwolf/chooseyourdestiny/";
   }, 900); //window.location.href = 'http://127.0.0.1:8080/storytool2024/';
 }
 function setCtxDrawOpts(ctx, drawOpts) {
