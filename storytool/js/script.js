@@ -777,7 +777,7 @@ function setCanvasSize() {
   canvasElement.width = canvasWidth;
   canvasElement.height = canvasHeight;
 }
-function removeGuider() {
+function removeGuiders() {
   slidersGuiderY = -8000;
 
   generate();
@@ -786,24 +786,24 @@ function handleCheckboxClick() {
   var checkbox = document.getElementById('exampleCheckbox');
   if (checkbox.checked) {
     // Kör funktion om checkboxen är markerad
-    removeGuider();
+    removeGuiders();
   } else {
     // Kör funktion om checkboxen inte är markerad
-    returnGuider();
+    returnGuiders();
   }
 }
-function returnGuider() {
+function returnGuiders() {
   slidersGuiderY = 0;
 
   generate();
 }
 function hideDownload(x){
-  removeGuider();
+  removeGuiders();
   setTimeout(() => {
     download_img(x);
   }, 200);
   setTimeout(() => {
-    returnGuider();
+    returnGuiders();
   }, 1000);
 };
 
