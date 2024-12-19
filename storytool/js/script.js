@@ -11,7 +11,7 @@ var timerStarted = false;
 var sliderGuider = document.getElementById("length1slider");
 var sliderGuiderX = 450;
 var sliderGuiderY = -2000;
-var slidersGuiderY = 0;
+var slidersGuiderY = -8000;
 let canvas = document.getElementById("canvas1");
 var heightOffset = 0;
 var poddHeight = 717;
@@ -786,10 +786,11 @@ function handleCheckboxClick() {
   var checkbox = document.getElementById('exampleCheckbox');
   if (checkbox.checked) {
     // Kör funktion om checkboxen är markerad
-    removeGuiders();
+    returnGuiders();
+    
   } else {
     // Kör funktion om checkboxen inte är markerad
-    returnGuiders();
+    removeGuiders();
   }
 }
 function returnGuiders() {
@@ -799,11 +800,13 @@ function returnGuiders() {
 }
 function hideDownload(x){
   removeGuiders();
+  var checkbox = document.getElementById('exampleCheckbox');
+  checkbox.checked = false;
   setTimeout(() => {
     download_img(x);
   }, 200);
   setTimeout(() => {
-    returnGuiders();
+    //returnGuiders();
   }, 1000);
 };
 
