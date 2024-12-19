@@ -11,6 +11,7 @@ var timerStarted = false;
 var sliderGuider = document.getElementById("length1slider");
 var sliderGuiderX = 450;
 var sliderGuiderY = -2000;
+var slidersGuiderY = 0;
 let canvas = document.getElementById("canvas1");
 var heightOffset = 0;
 var poddHeight = 717;
@@ -444,7 +445,7 @@ function releaseColours() {
     }
     for (let k = 10; k < 13; k++) {
       // disable poddcolors
-      document.getElementById("colorSelector" + i).options[k].disabled = true;
+      //document.getElementById("colorSelector" + i).options[k].disabled = true;
     }
   }
 }
@@ -641,6 +642,18 @@ function getLayerDescriptions() {
     },
     {
       type: "image",
+      url: "png/guidelines.png",
+      rect: {
+        x: 0,
+        y: slidersGuiderY,
+        w: 0,
+        h: 0,
+      },
+      drawOpts: { fillStyle: "black" },
+      zOrder: 3,
+    },
+    {
+      type: "image",
       url: "png/bg2.png",
       rect: { x: 0, y: 0, w: 0, h: 0 },
       drawOpts: { fillStyle: "white" },
@@ -764,6 +777,36 @@ function setCanvasSize() {
   canvasElement.width = canvasWidth;
   canvasElement.height = canvasHeight;
 }
+function removeGuider() {
+  slidersGuiderY = -8000;
+
+  generate();
+}
+function handleCheckboxClick() {
+  var checkbox = document.getElementById('exampleCheckbox');
+  if (checkbox.checked) {
+    // Kör funktion om checkboxen är markerad
+    removeGuider();
+  } else {
+    // Kör funktion om checkboxen inte är markerad
+    returnGuider();
+  }
+}
+function returnGuider() {
+  slidersGuiderY = 0;
+
+  generate();
+}
+function hideDownload(x){
+  removeGuider();
+  setTimeout(() => {
+    download_img(x);
+  }, 200);
+  setTimeout(() => {
+    returnGuider();
+  }, 1000);
+};
+
 
 download_img = function (el) {
   var timeStamp = getTimeStamp();

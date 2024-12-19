@@ -259,7 +259,22 @@ canvas {
   -ms-user-select: none;
   user-select: none;
 }
+.checkbox-container {
+  display:inline-flex;
+  vertical-align: middle;
+  float: right;
+}
 
+.checkbox-container i,
+.checkbox-container label{
+  display: inline-block;
+  vertical-align: middle;
+  white-space: nowrap; /* Förhindra radbrytningar inom label */
+  margin: 10;
+}
+.checkbox-container input {
+  margin-left: 5px; /* Justera avståndet mellan elementen om nödvändigt */
+}
 /* Hide the browser's default checkbox */
 .container input {
   position: absolute;

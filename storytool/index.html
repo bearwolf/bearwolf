@@ -117,9 +117,9 @@
               <option value="#29225a">Lila</option>
               <option value="#725A07">Gul</option>
               <option value="#E65A27">Orange</option>
-              <option disabled value="#ff4c20">X3M-orange</option>
-              <option disabled value="#ffffff">Vit</option>29225a
-              <option disabled value="#29225a">Nyheter 1 min-blå</option>
+              <option value="#ff4c20">X3M-orange</option>
+              <option value="#ffffff">Vit</option>29225a
+              <option value="#29225a">Nyheter 1 min-blå</option>
             </select>
           </label>
         </div>
@@ -151,9 +151,9 @@
               <option value="#29225a">Lila</option>
               <option value="#725A07">Gul</option>
               <option value="#E65A27">Orange</option>
-              <option disabled value="#ff4c20">X3M-orange</option>
-              <option disabled value="#ffffff">Vit</option>
-              <option disabled value="#29225a">Nyheter 1 min-blå</option>
+              <option  value="#ff4c20">X3M-orange</option>
+              <option  value="#ffffff">Vit</option>
+              <option  value="#29225a">Nyheter 1 min-blå</option>
             </select>
           </label>
         </div>
@@ -184,9 +184,9 @@
               <option value="#29225a">Lila</option>
               <option value="#725A07">Gul</option>
               <option value="#E65A27">Orange</option>
-              <option disabled value="#ff4c20">X3M-orange</option>
-              <option disabled value="#ffffff">Vit</option>
-              <option disabled value="#29225a">Nyheter 1 min-blå</option>
+              <option  value="#ff4c20">X3M-orange</option>
+              <option  value="#ffffff">Vit</option>
+              <option  value="#29225a">Nyheter 1 min-blå</option>
             </select>
           </label>
         </div>
@@ -218,9 +218,9 @@
               <option value="#29225a">Lila</option>
               <option value="#725A07">Gul</option>
               <option value="#E65A27">Orange</option>
-              <option disabled value="#ff4c20">X3M-orange</option>
-              <option disabled value="#ffffff">Vit</option>
-              <option disabled value="#29225a">Nyheter 1 min-blå</option>
+              <option  value="#ff4c20">X3M-orange</option>
+              <option  value="#ffffff">Vit</option>
+              <option  value="#29225a">Nyheter 1 min-blå</option>
             </select>
           </label>
         </div>
@@ -252,9 +252,9 @@
               <option value="#29225a">Lila</option>
               <option value="#725A07">Gul</option>
               <option value="#E65A27">Orange</option>
-              <option disabled value="#ff4c20">X3M-orange</option>
-              <option disabled value="#ffffff">Vit</option>
-              <option disabled value="#29225a">Nyheter 1 min-blå</option>
+              <option  value="#ff4c20">X3M-orange</option>
+              <option  value="#ffffff">Vit</option>
+              <option  value="#29225a">Nyheter 1 min-blå</option>
               
             </select>
           </label>
@@ -285,10 +285,10 @@
               <option value="#29225a">Lila</option>
               <option value="#725A07">Gul</option>
               <option value="#E65A27">Orange</option>
-              <option disabled value="#ff4c20">X3M-orange</option>
-              <option disabled value="#ffffff">Vit</option>
-              <option disabled value="#29225a">Nyheter 1 min-blå</option>
-              <option disabled value="#9A092D">Krimpodd-röd</option>
+              <option  value="#ff4c20">X3M-orange</option>
+              <option  value="#ffffff">Vit</option>
+              <option  value="#29225a">Nyheter 1 min-blå</option>
+              <option  value="#9A092D">Krimpodd-röd</option>
             </select>
           </label>
         </div>
@@ -319,10 +319,11 @@
                 value="0"
               />
               <br /><br />
-              <i
-                >Justera pilen så att pilens rundning börjar där texten
-                slutar.</i
-              >
+              <i>Justera så att pilens rundning börjar där texten slutar. </i>
+              <span class="checkbox-container"><label class="checkbox-container" for="exampleCheckbox">Göm 1:1 guide -></label>
+                <input type="checkbox" id="exampleCheckbox" name="exampleCheckbox" onclick="handleCheckboxClick()">
+                
+              </span>
             </p>
           </div>
           <p>
@@ -370,7 +371,7 @@
               </select> </label
             >&nbsp;&nbsp;&nbsp;<a
               id="download"
-              onclick="download_img(this);"
+              onclick="hideDownload(this);"
               class="button"
               >Ladda ned bilden</a
             >
