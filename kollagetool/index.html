@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bildkollage</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Skapa ditt bildkollage</h1>
+        <div class="upload-area">
+            <input type="file" id="file1" accept="image/*">
+            <input type="file" id="file2" accept="image/*">
+            <input type="file" id="file3" accept="image/*">
+            <input type="range" id="zoom1" min="0.5" max="2" step="0.1" value="1">
+<input type="range" id="zoom2" min="0.5" max="2" step="0.1" value="1">
+<input type="range" id="zoom3" min="0.5" max="2" step="0.1" value="1">
+        </div>
+        <button id="createCollage">Skapa kollage</button>
+        <canvas id="collageCanvas"></canvas>
+        <a id="downloadLink" download="kollage.png">Ladda ner kollage</a>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
