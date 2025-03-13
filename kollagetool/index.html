@@ -3,24 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bildkollage</title>
+    <title>Yle kollagetool</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Skapa ditt bildkollage</h1>
-        <div class="upload-area">
-            <input type="file" id="file1" accept="image/*">
-            <input type="file" id="file2" accept="image/*">
-            <input type="file" id="file3" accept="image/*">
-            <input type="range" id="zoom1" min="0.5" max="2" step="0.1" value="1">
-<input type="range" id="zoom2" min="0.5" max="2" step="0.1" value="1">
-<input type="range" id="zoom3" min="0.5" max="2" step="0.1" value="1">
+    <!-- Vågeffekter från gamla designen -->
+    <div class="wave"></div>
+    <div class="wave"></div>
+    <div class="wave"></div>
+    
+    <!-- <h1>Bildkollage</h1> -->
+    
+    <!-- Ny wrapper för att hålla container och canvas-container -->
+    <div class="main-wrapper">
+        <div class="container">
+            <button class="buttonLeft" onclick="swapSite()">Andra verktyg</button>
+            <p id="p2" style="position: relative;"> <!-- Add position: relative here -->
+                
+                <b>Björns kollagetool v0.9</b>
+              </p>
+              <p id="p3" style="text-align: center;">
+                Dra bilderna för att justera position.<br> Använd zoom-reglagen för att förstora/förminska.
+              </p>
+            <div class="bulk-upload">
+                <label for="bulkUpload">Ladda upp alla tre bilder på en gång:</label>
+                <input type="file" id="bulkUpload" accept="image/*" multiple>
+            </div>
+            
+            <div class="upload-area">
+                <div class="input-group">
+                    <label for="file1">Bild 1:</label>
+                    <input type="file" id="file1" accept="image/*">
+                    <div class="zoom-container">
+                        <label for="zoom1">Zoom:</label>
+                        <input type="range" id="zoom1" step="0.01" class="zoom-slider">
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label for="file2">Bild 2:</label>
+                    <input type="file" id="file2" accept="image/*">
+                    <div class="zoom-container">
+                        <label for="zoom2">Zoom:</label>
+                        <input type="range" id="zoom2" step="0.01" class="zoom-slider">
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label for="file3">Bild 3:</label>
+                    <input type="file" id="file3" accept="image/*">
+                    <div class="zoom-container">
+                        <label for="zoom3">Zoom:</label>
+                        <input type="range" id="zoom3" step="0.01" class="zoom-slider">
+                    </div>
+                </div>
+            </div>
+            
+            <a id="downloadLink" download="kollage.png">Ladda ner kollage</a>
         </div>
-        <button id="createCollage">Skapa kollage</button>
-        <canvas id="collageCanvas"></canvas>
-        <a id="downloadLink" download="kollage.png">Ladda ner kollage</a>
+        
+        <!-- Canvas-container nu inuti main-wrapper -->
+        <div class="canvas-container">
+            <canvas id="collageCanvas"></canvas>
+        </div>
     </div>
+    
     <script src="script.js"></script>
 </body>
 </html>
