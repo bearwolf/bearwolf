@@ -308,6 +308,15 @@ document.addEventListener('DOMContentLoaded', () => {
         zoomInputs.forEach((input, index) => {
             input.closest('.zoom-container').style.display = index < count ? 'flex' : 'none';
         });
+    
+        // Uppdatera synligheten för swap-knappar
+        document.querySelectorAll('.swap-btn').forEach(button => {
+            const fromIndex = parseInt(button.dataset.from);
+            const toIndex = parseInt(button.dataset.to);
+            
+            // Visa knappen endast om både från- och till-index är mindre än antalet sektioner
+            button.style.display = (fromIndex < count && toIndex < count) ? 'inline-block' : 'none';
+        });
     }
 
     // Add mouse handlers for canvas
@@ -683,6 +692,53 @@ document.addEventListener('DOMContentLoaded', () => {
         // Återställ globalCompositeOperation till standardvärdet
         ctx.globalCompositeOperation = 'source-over';
     }
+    document.querySelectorAll('.swap-btn').forEach(button => {
+        button.addEventListener('click', (e) => {
+            const fromIndex = parseInt(e.target.dataset.from);
+            const toIndex = parseInt(e.target.dataset.to);
+            swapImages(fromIndex, toIndex);
+        });
+    });
+    function swapImages(index1, index2) {
+        // Byt plats på bilderna i images-arrayen
+        const tempImg = images[index1];
+        images[index1] = images[index2];
+        images[index2] = tempImg;
+    
+        // Byt plats på filerna i file inputs
+        const tempFiles = fileInputs[index1].files;
+        const dt1 = new DataTransfer();
+        const dt2 = new DataTransfer();
+        
+        if (fileInputs[index2].files.length > 0) {
+            dt1.items.add(fileInputs[index2].files[0]);
+        }
+        if (fileInputs[index1].files.length > 0) {
+            dt2.items.add(fileInputs[index1].files[0]);
+        }
+        
+        fileInputs[index1].files = dt1.files;
+        fileInputs[index2].files = dt2.files;
+    
+        // Beräkna om skalorna för båda bilderna
+        [index1, index2].forEach(index => {
+            if (images[index]) {
+                const minScale = canvas.height / images[index].height;
+                const maxScale = minScale * config.zoomRange;
+                images[index].minScale = minScale;
+                images[index].maxScale = maxScale;
+                images[index].scale = Math.max(minScale, images[index].scale || minScale);
+            }
+        });
+    
+        // Uppdatera zoom-inputs
+        updateZoomInputs();
+    
+        // Rita om collaget
+        drawCollage(true);
+    }
+    
+    
 
     function adjustImagePosition(img, index, oldScale) {
         // Beräkna sektionsbredd baserat på index och totalt antal sektioner

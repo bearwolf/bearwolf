@@ -123,10 +123,9 @@ h1 {
 
 .label-group {  
     display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    margin-bottom: 0rem;
+    align-items: center;
     gap: 30px;
+    width: 100%; /* Säkerställ att flexboxen tar full bredd */
 
 }
 .input-group {
@@ -341,6 +340,33 @@ canvas {
     left: 0;
     z-index: -2;
   }
+  
+  .swap-btn {
+
+    padding: 2px 6px;
+    margin: 0 0 0 0px;
+    cursor: pointer;
+    background: #00b4c8;
+    border: 1px solid #00b4c8;
+    border-radius: 3px;
+    flex-shrink: 0; /* Förhindra att knapparna krymper */
+    margin-left: auto; /* Detta skjuter knapparna till höger */
+}
+.button-group {
+    display: flex;
+    gap: 2px;  /* Litet mellanrum mellan knapparna */
+    margin-left: auto; /* Detta skjuter knapp-gruppen till höger */
+}
+.swap-btn:hover {
+    background: #00535c;
+}
+
+.label-group label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
 @keyframes wave {
     2% {
         transform: translateX(1);
