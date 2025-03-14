@@ -18,15 +18,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const fileInputs = [
         document.getElementById('file1'),
         document.getElementById('file2'),
-        document.getElementById('file3')
+        document.getElementById('file3'),
+        document.getElementById('file4')
     ];
     const bulkUploadInput = document.getElementById('bulkUpload');
     const zoomInputs = [
         document.getElementById('zoom1'),
         document.getElementById('zoom2'),
-        document.getElementById('zoom3')
+        document.getElementById('zoom3'),
+        document.getElementById('zoom4')
     ];
-    const createButton = document.getElementById('createCollage');
+    const imageCountSelector = document.getElementById('imageCount');
     const canvas = document.getElementById('collageCanvas');
     const ctx = canvas.getContext('2d');
     const downloadLink = document.getElementById('downloadLink');
@@ -45,10 +47,12 @@ document.addEventListener('DOMContentLoaded', () => {
         // Värden i pixlar från vänster kant vid övre kanten (y=0)
         cut1: 695  , // Var beskärningen mellan bild 1 och 2 börjar
         cut2: 1367  , // Var beskärningen mellan bild 2 och 3 börjar
+        cut3: 1920,
         
         // Avdelare justeringar
         divider1X: 695  , // X-position för första avdelaren
         divider2X: 1367  , // X-position för andra avdelaren
+        divider3X: 2920,
         
         // JUSTERA DESSA VÄRDEN FÖR ATT ÄNDRA HUR LÅNGT BILDERNA KAN FLYTTAS
         // Värden i procent (0.0 - 1.0) av maximal möjlig förflyttning
@@ -56,9 +60,24 @@ document.addEventListener('DOMContentLoaded', () => {
         marginFactor1: 1.0, // Förflyttningsfaktor för bild 1
         marginFactor2: 1.0, // Förflyttningsfaktor för bild 2
         marginFactor3: 1.0,  // Förflyttningsfaktor för bild 3
+        marginFactor4: 1.0,
         
         // Zoom-inställningar
-        zoomRange: 5.0 // Hur mycket man kan zooma in relativt till minScale (2.0 = dubbelt så mycket)
+        zoomRange: 5.0, // Hur mycket man kan zooma in relativt till minScale (2.0 = dubbelt så mycket)
+        layouts: {
+            2: {
+                cuts: [1030, 2090, 9000 ],
+                dividers: [1030, 2090, 9000]
+            },
+            3: {
+                cuts: [695, 1367, 9000],
+                dividers: [695, 1367, 9000]
+            },
+            4: {
+                cuts: [550, 1030, 1510, 1920],
+                dividers: [550, 1030, 1510, 1920]
+            }
+        }
     };
 
     // Beräkna förskjutningen baserat på vinkeln
@@ -78,14 +97,11 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     // Predefined image sources
-    const defaultImageSources = ['image1.jpg', 'image2.jpg', 'image3.jpg'];
+    const defaultImageSources = ['image1.jpg', 'image2.jpg', 'image3.jpg', 'image4.jpg'];
 
     const images = [];
     let draggingIndex = -1;
     let dragStartX, dragStartY;
-
-
-
 
     // Load default images and create initial collage
     loadImagesAndCreateCollage(defaultImageSources);
@@ -93,24 +109,39 @@ document.addEventListener('DOMContentLoaded', () => {
     // Add event listener for bulk upload
     bulkUploadInput.addEventListener('change', (e) => {
         if (e.target.files && e.target.files.length > 0) {
-            // Begränsa till max 3 bilder
-            const selectedFiles = Array.from(e.target.files).slice(0, 3);
+            const fileCount = e.target.files.length;
+            // Begränsa till max 4 bilder och sätt rätt antal sektioner
+            const selectedFiles = Array.from(e.target.files).slice(0, 4);
+            
+            // Sätt rätt antal sektioner baserat på antal valda filer
+            const sectionCount = Math.min(Math.max(2, fileCount), 4);
+            const layout = config.layouts[sectionCount];
+            
+            if (layout) {
+                config.totalSections = sectionCount;
+                config.cut1 = layout.cuts[0];
+                config.cut2 = layout.cuts[1];
+                config.cut3 = layout.cuts[2];
+                
+                config.divider1X = layout.dividers[0];
+                config.divider2X = layout.dividers[1];
+                config.divider3X = layout.dividers[2];
+            }
             
             // Rensa befintliga bilder
             images.length = 0;
+            
+            // Uppdatera UI för rätt antal bilder
+            updateUIForImageCount(sectionCount);
+            imageCountSelector.value = sectionCount;
             
             // Ladda de nya bilderna
             Promise.all(selectedFiles.map((file, index) => {
                 return new Promise((resolve, reject) => {
                     const img = new Image();
                     img.onload = () => {
-                        // Beräkna minsta skalfaktor för att täcka canvas-höjden
                         const minScale = canvas.height / img.height;
-                        
-                        // Beräkna maxScale baserat på minScale och zoomRange
                         const maxScale = minScale * config.zoomRange;
-                        
-                        // Sätt skalan till minScale som startläge
                         const scale = minScale;
                         
                         img.scale = scale;
@@ -119,9 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         img.offsetX = 0;
                         img.offsetY = 0;
                         
-                        // Uppdatera motsvarande filInput för att visa filnamnet
                         if (index < fileInputs.length) {
-                            // Skapa en ny FileList-liknande objekt (kan inte skapa äkta FileList)
                             const dataTransfer = new DataTransfer();
                             dataTransfer.items.add(file);
                             fileInputs[index].files = dataTransfer.files;
@@ -135,22 +164,24 @@ document.addEventListener('DOMContentLoaded', () => {
             })).then(loadedImages => {
                 images.push(...loadedImages);
                 
-                // Om färre än 3 bilder valdes, fyll på med standardbilder
-                if (images.length < 3) {
-                    return loadRemainingDefaultImages(images.length);
+                // Vänta med att rita tills alla bilder är laddade
+                if (images.length < sectionCount) {
+                    return loadRemainingDefaultImages(images.length, sectionCount);
                 }
-                
                 return Promise.resolve();
             }).then(() => {
+                // Nu när alla bilder är laddade kan vi rita
                 updateZoomInputs();
                 drawCollage(true);
+            }).catch(error => {
+                console.error('Error loading images:', error);
             });
         }
     });
 
     // Funktion för att ladda återstående standardbilder om färre än 3 bilder valdes
-    function loadRemainingDefaultImages(startIndex) {
-        const remainingImages = defaultImageSources.slice(startIndex, 3);
+    function loadRemainingDefaultImages(startIndex, totalNeeded) {
+        const remainingImages = defaultImageSources.slice(startIndex, totalNeeded);
         
         return Promise.all(remainingImages.map((src, index) => {
             const actualIndex = startIndex + index;
@@ -210,52 +241,74 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Add event listeners for zoom inputs
     zoomInputs.forEach((input, index) => {
-        // Sätt ett mindre stegvärde för bättre upplösning
         input.step = "0.01";
         
         input.addEventListener('input', (e) => {
             if (images[index]) {
-                // Säkerställ att skalan inte går under minScale
                 const minScale = images[index].minScale || 1.0;
-                const oldScale = images[index].scale || 1.0;
+                const oldScale = images[index].scale || 1.0; // Spara gamla skalan innan vi ändrar
                 images[index].scale = Math.max(minScale, parseFloat(e.target.value));
                 
-                // Uppdatera input-värdet om det ändrades
                 if (images[index].scale !== parseFloat(e.target.value)) {
                     input.value = images[index].scale;
                 }
                 
-                // Justera positionen för att säkerställa att bilden täcker sitt område
+                // Försäkra oss om att adjustImagePosition alltid anropas med rätt värden
                 adjustImagePosition(images[index], index, oldScale);
-                
                 drawCollage(false);
             }
         });
         
         input.addEventListener('change', (e) => {
             if (images[index]) {
-                // Säkerställ att skalan inte går under minScale även här
                 const minScale = images[index].minScale || 1.0;
-                const oldScale = images[index].scale || 1.0;
+                const oldScale = images[index].scale || 1.0; // Spara gamla skalan innan vi ändrar
                 images[index].scale = Math.max(minScale, parseFloat(e.target.value));
                 
-                // Uppdatera input-värdet om det ändrades
                 if (images[index].scale !== parseFloat(e.target.value)) {
                     input.value = images[index].scale;
                 }
                 
-                // Justera positionen för att säkerställa att bilden täcker sitt område
+                // Försäkra oss om att adjustImagePosition alltid anropas med rätt värden
                 adjustImagePosition(images[index], index, oldScale);
-                
                 downloadLink.href = canvas.toDataURL('image/png');
                 downloadLink.style.display = 'inline-block';
             }
         });
     });
 
-    // createButton.addEventListener('click', () => {
-    //     drawCollage(true);
-    // });
+    imageCountSelector.addEventListener('change', (e) => {
+        const selectedCount = parseInt(e.target.value);
+        const layout = config.layouts[selectedCount];
+        
+        if (layout) {
+            config.totalSections = selectedCount;
+            config.cut1 = layout.cuts[0];
+            config.cut2 = layout.cuts[1];
+            config.cut3 = layout.cuts[2];
+            
+            config.divider1X = layout.dividers[0];
+            config.divider2X = layout.dividers[1];
+            config.divider3X = layout.dividers[2];
+            images.forEach((img, index) => {
+                if (img && index < selectedCount) {
+                    adjustImagePosition(img, index, img.scale || 1.0);
+                }
+            });
+        }
+        
+        updateUIForImageCount(selectedCount);
+        drawCollage(true);
+    });
+
+    function updateUIForImageCount(count) {
+        fileInputs.forEach((input, index) => {
+            input.closest('.input-group').style.display = index < count ? 'flex' : 'none';
+        });
+        zoomInputs.forEach((input, index) => {
+            input.closest('.zoom-container').style.display = index < count ? 'flex' : 'none';
+        });
+    }
 
     // Add mouse handlers for canvas
     canvas.addEventListener('mousedown', startDragging);
@@ -282,11 +335,13 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Identifiera vilken sektion användaren klickade på med hänsyn till diagonal beskärning
         if (canvasX < (config.cut1 - shiftAtY)) {
-            draggingIndex = 0; // Första bilden
+            draggingIndex = 0;
         } else if (canvasX < (config.cut2 - shiftAtY)) {
-            draggingIndex = 1; // Andra bilden
+            draggingIndex = 1;
+        } else if (canvasX < (config.cut3 - shiftAtY)) {
+            draggingIndex = 2;
         } else {
-            draggingIndex = 2; // Tredje bilden
+            draggingIndex = 3;
         }
         
         if (draggingIndex >= 0 && draggingIndex < images.length) {
@@ -325,8 +380,14 @@ document.addEventListener('DOMContentLoaded', () => {
             sectionWidth = config.cut1;
         } else if (draggingIndex === 1) {
             sectionWidth = config.cut2 - config.cut1 + 290;
-        } else {
-            sectionWidth = canvas.width - config.cut2 + 290;
+        } else if (draggingIndex === 2) {
+            if (config.totalSections === 3) {
+                sectionWidth = canvas.width - config.cut2 + 290; // För 3 bilder
+            } else {
+                sectionWidth = config.cut3 - config.cut2 + 290;  // För 4 bilder
+            }
+        } else if (draggingIndex === 3) {
+            sectionWidth = canvas.width - config.cut3 + 290;  // För fjärde bilden
         }
 
         // Calculate constraints
@@ -448,16 +509,17 @@ document.addEventListener('DOMContentLoaded', () => {
         // Clear main canvas
         ctx.fillStyle = 'white';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        // Rita bilderna
+    
+        // Rita bara de bilder som faktiskt finns
         images.forEach((img, index) => {
-            drawImage(img, index);
+            if (img && index < config.totalSections) {
+                drawImage(img, index);
+            }
         });
-
+    
         // Rita transparenta avdelare
         drawDividers();
-
-        // Uppdatera downloadLink endast när det behövs
+    
         if (updateDownloadLink) {
             downloadLink.href = canvas.toDataURL('image/png');
             downloadLink.style.display = 'inline-block';
@@ -503,19 +565,40 @@ document.addEventListener('DOMContentLoaded', () => {
                 {x: offCanvas.width - 2 * config.shift, y: canvas.height}, // Nedre högra hörnet
                 {x: 0, y: canvas.height} // Nedre vänstra hörnet
             ];
-        } else {
+        } else if (index === 2) {
             // Tredje bilden
-            offCanvas.width = canvas.width - config.cut2 + config.shift + 150; // Extra utrymme
+            if (config.totalSections === 3) {
+                // För 3-bildsläget
+                offCanvas.width = canvas.width - config.cut2 + config.shift + 150;
+                clipPath = [
+                    {x: config.shift, y: 0},
+                    {x: offCanvas.width, y: 0},
+                    {x: offCanvas.width, y: canvas.height},
+                    {x: 0, y: canvas.height}
+                ];
+            } else {
+                // För 4-bildsläget
+                offCanvas.width = config.cut3 - config.cut2 + 2 * config.shift + 0;
+                clipPath = [
+                    {x: config.shift, y: 0},
+                    {x: offCanvas.width - config.shift, y: 0},
+                    {x: offCanvas.width - 2 * config.shift, y: canvas.height},
+                    {x: 0, y: canvas.height}
+                ];
+            }
             offCanvas.height = canvas.height;
-            
-            // Klippningskoordinater för tredje bilden
+        } else if (index === 3) {
+            // Fjärde bilden (endast i 4-bildsläget)
+            offCanvas.width = canvas.width - config.cut3 + config.shift + 150;
+            offCanvas.height = canvas.height;
             clipPath = [
-                {x: config.shift, y: 0}, // Övre vänstra hörnet (med förskjutning)
-                {x: offCanvas.width, y: 0}, // Övre högra hörnet
-                {x: offCanvas.width, y: canvas.height}, // Nedre högra hörnet
-                {x: 0, y: canvas.height} // Nedre vänstra hörnet
+                {x: config.shift, y: 0},
+                {x: offCanvas.width, y: 0},
+                {x: offCanvas.width, y: canvas.height},
+                {x: 0, y: canvas.height}
             ];
         }
+        
         
         const offCtx = offCanvas.getContext('2d');
         
@@ -549,11 +632,13 @@ document.addEventListener('DOMContentLoaded', () => {
         // Placera bilden baserat på index
         let destX;
         if (index === 0) {
-            destX = 0; // Första bilden börjar vid 0
+            destX = 0;
         } else if (index === 1) {
-            destX = config.cut1 - config.shift; // Andra bilden justerad för lutningen
+            destX = config.cut1 - config.shift;
+        } else if (index === 2) {
+            destX = config.cut2 - config.shift;
         } else {
-            destX = config.cut2 - config.shift; // Tredje bilden justerad för lutningen
+            destX = config.cut3 - config.shift;
         }
         
         ctx.drawImage(offCanvas, destX, 0);
@@ -582,20 +667,39 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.lineTo(x2 - config.shift, canvas.height);
         ctx.closePath();
         ctx.fill();
+
+        if (config.totalSections > 2) {
+            // Tredje avdelaren
+            let x3 = config.divider3X - config.dividerWidth / 2;
+            ctx.beginPath();
+            ctx.moveTo(x3, 0);
+            ctx.lineTo(x3 + config.dividerWidth, 0);
+            ctx.lineTo(x3 + config.dividerWidth - config.shift, canvas.height);
+            ctx.lineTo(x3 - config.shift, canvas.height);
+            ctx.closePath();
+            ctx.fill();
+        }
         
         // Återställ globalCompositeOperation till standardvärdet
         ctx.globalCompositeOperation = 'source-over';
     }
 
     function adjustImagePosition(img, index, oldScale) {
-        // Beräkna sektionsbredd baserat på index
+        // Beräkna sektionsbredd baserat på index och totalt antal sektioner
         let sectionWidth;
         if (index === 0) {
             sectionWidth = config.cut1;
         } else if (index === 1) {
-            sectionWidth = config.cut2 - config.cut1 + 270; // Samma offset som i drag-funktionen
-        } else {
-            sectionWidth = canvas.width - config.cut2 + 280; // Samma offset som i drag-funktionen
+            sectionWidth = config.cut2 - config.cut1 + 270;
+        } else if (draggingIndex === 2) {
+            if (config.totalSections === 3) {
+                sectionWidth = canvas.width - config.cut2 + 290; // För 3 bilder
+            } else {
+                sectionWidth = config.cut3 - config.cut2 + 290;  // För 4 bilder
+            }
+        } else if (draggingIndex === 3) {
+            sectionWidth = canvas.width - config.cut3 + 290;  // För fjärde bilden
+        
         }
         
         // Beräkna nya begränsningar baserat på aktuell skala
@@ -621,8 +725,10 @@ document.addEventListener('DOMContentLoaded', () => {
             marginFactor = config.marginFactor1;
         } else if (index === 1) {
             marginFactor = config.marginFactor2;
-        } else {
+        } else if (index === 2) {
             marginFactor = config.marginFactor3;
+        } else {
+            marginFactor = config.marginFactor4;
         }
         
         // Begränsa offset så att bilden alltid täcker sitt område, justerat med marginalfaktorn

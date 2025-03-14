@@ -121,6 +121,14 @@ h1 {
    
 }
 
+.label-group {  
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    margin-bottom: 0rem;
+    gap: 30px;
+
+}
 .input-group {
     width: 100%;
     display: flex;
@@ -147,7 +155,7 @@ input[type="file"] {
     width: 100%;
     display: flex;
     align-items: center;
-    margin-top: 1rem;
+    margin-top: .5rem;
     flex-wrap: wrap;
 }
 
@@ -311,7 +319,28 @@ canvas {
     animation: wave 20s -1s reverse infinite;
     opacity: 0.9;
 }
-
+.disclaimer-text {
+    font-size: 11px;
+    color: #888;
+    font-style: italic;
+    display: inline-block;
+    margin-top: 3px;
+}
+.beachBall {
+    border-radius: 1000% 1000% 0 0;
+    position: fixed;
+    padding-bottom: 200px;
+    width: 100%;
+    height: 10%;
+    animation: waveBall 15s -3s linear infinite;
+    height: 12em;
+    scale: 0.2;
+    transform: translate3d(0, 0, 0);
+    opacity: 0.8;
+    bottom: 0;
+    left: 0;
+    z-index: -2;
+  }
 @keyframes wave {
     2% {
         transform: translateX(1);
@@ -328,4 +357,12 @@ canvas {
     100% {
         transform: translateX(1);
     }
+}
+
+.image-count-selector {
+    margin-bottom: 1rem;
+}
+
+.input-group:nth-child(4) {
+    display: none;
 }
