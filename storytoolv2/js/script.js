@@ -506,26 +506,26 @@ function arrowColorPick() {
   arrowColor = document.getElementById("colorSelector7").value;
   setArrow();
   var index = document.getElementById("colorSelector7").selectedIndex;
-  if (index > 0 && index < 7) {
-    for (let i = 1; i < 7; i++) {
-      document.getElementById("colorSelector" + i).selectedIndex = 0;
-      document.getElementById("colorSelector" + i).disabled = true;
-    }
-    console.log("All black");
-  } else if (index > 6) {
-    for (let i = 1; i < 7; i++) {
-      document.getElementById("colorSelector" + i).selectedIndex = 11;
-      document.getElementById("colorSelector" + i).disabled = true;
-    }
+  // if (index > 0 && index < 7) {
+  //   for (let i = 1; i < 7; i++) {
+  //     document.getElementById("colorSelector" + i).selectedIndex = 0;
+  //     document.getElementById("colorSelector" + i).disabled = true;
+  //   }
+  //   console.log("All black");
+  // } else if (index > 6) {
+  //   for (let i = 1; i < 7; i++) {
+  //     document.getElementById("colorSelector" + i).selectedIndex = 11;
+  //     document.getElementById("colorSelector" + i).disabled = true;
+  //   }
 
-    console.log("All white");
-  } else {
-    for (let i = 1; i < 7; i++) {
-      document.getElementById("colorSelector" + i).selectedIndex = 0;
-      document.getElementById("colorSelector" + i).disabled = false;
-    }
-    console.log("release the colors");
-  }
+  //   console.log("All white");
+  // } else {
+  //   for (let i = 1; i < 7; i++) {
+  //     document.getElementById("colorSelector" + i).selectedIndex = 0;
+  //     document.getElementById("colorSelector" + i).disabled = false;
+  //   }
+  //   console.log("release the colors");
+  // }
   generate();
 }
 
