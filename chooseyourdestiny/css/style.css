@@ -230,29 +230,45 @@ canvas {
 .container2 {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px; /* Just to add some space between the items */
+  gap: 20px; /* Ökade gap för mer utrymme */
+  perspective: 1000px;
+  padding: 20px;
+}
+.container2:hover .item {
+  transform: scale(0.75); /* Gör inaktiva items ännu mindre */
+  opacity: 0.4;
+  filter: blur(2px);
+}
+.container2:hover .item:hover {
+  transform: scale(1.3); /* Gör aktivt item MYCKET större */
+  opacity: 1;
+  z-index: 2;
+  filter: blur(0);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+}
+
+/* Lägg till hover effekt för bilden också */
+.container2:hover .item:hover img {
+  transform: scale(1.05);
 }
 .headinglogo {
 max-width: 70%;
 }
-
-.item img {
-  width: 100%;
-  max-height: 400px; /* Ensure the image scales proportionally */
-  object-fit: scale-down;
-  height: auto;
-  display: block; /* Remove bottom space under the image */
-  cursor: pointer;
-  border-radius: 10px;
+/* Förhindra "pop" vid klick */
+.item:active {
+  transform: scale(1.15) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
 :root{
   --color1:#39c5db;
   --color2: rgba(60, 132, 206, 1);
   --color3: rgba(48, 238, 226, 1);
   --color4: rgb(9, 114, 233);
 }
+
 .item {
-  flex: 1 1 calc(33.33% - 20px); /* Each item takes up one-third of the width minus the gap */
+  flex: 1 1 calc(33.33% - 20px);
   padding: 10px;
   background-color: #91919100;
   border: 4px solid #000000a2;
@@ -270,6 +286,22 @@ max-width: 70%;
   cursor: pointer;
   box-shadow: 3px 3px 5px rgb(0 0 0 / 1);
   animation: shimmer 10s ease-in-out infinite;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center center;
+  position: relative;
+  display: flex;
+  flex-direction: column; /* Gör att innehållet staplas vertikalt */
+}
+.item img {
+  width: 100%;
+  max-height: 400px;
+  object-fit: scale-down;
+  height: auto;
+  display: block;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  flex-shrink: 0; /* Förhindrar att bilden krymper */
 }
 #playerrow {
   margin: 5px;
@@ -277,6 +309,12 @@ max-width: 70%;
 #playerrow img{
   max-height: 80px;
   max-width: 40%;
+}
+
+.item span {
+  margin-top: 10px; /* Ger lite utrymme mellan bild och text */
+  position: relative; /* Håller texten på plats */
+  z-index: 1; /* Säkerställer att texten alltid är synlig */
 }
 @keyframes shimmer {
   0% {
