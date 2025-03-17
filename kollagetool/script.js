@@ -307,7 +307,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (images[index]) {
                 const minScale = images[index].minScale || 1.0;
                 const oldScale = images[index].scale || 1.0; // Spara gamla skalan innan vi ändrar
-                images[index].scale = Math.max(minScale, parseFloat(e.target.value));
+                images[index].scale = Math.round(Math.max(minScale, parseFloat(e.target.value)) * 100) / 100;
                 
                 if (images[index].scale !== parseFloat(e.target.value)) {
                     input.value = images[index].scale;
@@ -421,28 +421,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function drag(e) {
         if (!isDragging || draggingIndex === -1) return;
-
+        
         e.preventDefault();
-
+    
         const rect = canvas.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
-
-        const dx = x - dragStartX;
-        const dy = y - dragStartY;
-
+    
+        const dx = Math.round(x - dragStartX);
+        const dy = Math.round(y - dragStartY);
+    
         const img = images[draggingIndex];
-        const newOffsetX = (img.offsetX || 0) + dx;
-        const newOffsetY = (img.offsetY || 0) + dy;
-
+        
+        // Spara de exakta värdena vi vill ha
+        const exactOffsetX = Math.round((img.offsetX || 0) + dx);
+        const exactOffsetY = Math.round((img.offsetY || 0) + dy);
+    
         // Säkerställ att skalan inte är mindre än minScale
         const minScale = img.minScale || 1.0;
         if ((img.scale || 1) < minScale) {
             img.scale = minScale;
-            // Uppdatera zoom-reglaget om skalan ändrades
             zoomInputs[draggingIndex].value = minScale;
+            adjustImagePosition(img, draggingIndex, img.scale); // Lägg till detta
         }
-
+    
         // Beräkna sektionsbredd baserat på index
         let sectionWidth;
         if (draggingIndex === 0) {
@@ -451,22 +453,22 @@ document.addEventListener('DOMContentLoaded', () => {
             sectionWidth = config.cut2 - config.cut1 + 290;
         } else if (draggingIndex === 2) {
             if (config.totalSections === 3) {
-                sectionWidth = canvas.width - config.cut2 + 290; // För 3 bilder
+                sectionWidth = canvas.width - config.cut2 + 290;
             } else {
-                sectionWidth = config.cut3 - config.cut2 + 290;  // För 4 bilder
+                sectionWidth = config.cut3 - config.cut2 + 290;
             }
         } else if (draggingIndex === 3) {
-            sectionWidth = canvas.width - config.cut3 + 290;  // För fjärde bilden
+            sectionWidth = canvas.width - config.cut3 + 290;
         }
-
+    
         // Calculate constraints
-        const scale = img.scale || 1;
-        const scaledWidth = img.width * scale;
-        const scaledHeight = img.height * scale;
-        const maxOffsetX = Math.max(0, (scaledWidth - sectionWidth) / 2);
-        const maxOffsetY = Math.max(0, (scaledHeight - canvas.height) / 2);
+        const scale = Math.round((img.scale || 1) * 1000) / 1000;
+        const scaledWidth = Math.round(img.width * scale);
+        const scaledHeight = Math.round(img.height * scale);
+        const maxOffsetX = Math.round(Math.max(0, (scaledWidth - sectionWidth) / 2));
+        const maxOffsetY = Math.round(Math.max(0, (scaledHeight - canvas.height) / 2));
         
-        // Hämta rätt marginalfaktor baserat på bildindex
+        // Hämta rätt marginalfaktor
         let marginFactor;
         if (draggingIndex === 0) {
             marginFactor = config.marginFactor1;
@@ -475,21 +477,34 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             marginFactor = config.marginFactor3;
         }
-
-        // Apply constraints with margin factor
-        const adjustedMaxOffsetX = maxOffsetX * marginFactor;
-        img.offsetX = Math.max(-adjustedMaxOffsetX, Math.min(adjustedMaxOffsetX, newOffsetX));
-        img.offsetY = Math.max(-maxOffsetY, Math.min(maxOffsetY, newOffsetY));
-
+    
+        // Sätt de slutliga värdena med begränsningar
+        const adjustedMaxOffsetX = Math.round(maxOffsetX * marginFactor);
+        img.offsetX = Math.round(Math.max(-adjustedMaxOffsetX, Math.min(adjustedMaxOffsetX, exactOffsetX)));
+        img.offsetY = Math.round(Math.max(-maxOffsetY, Math.min(maxOffsetY, exactOffsetY)));
+    
+        // Spara de validerade värdena
+        img.lastValidX = img.offsetX;
+        img.lastValidY = img.offsetY;
+    
         dragStartX = x;
         dragStartY = y;
-
+    
+        console.log('Drag values:', {
+            index: draggingIndex,
+            exactX: exactOffsetX,
+            exactY: exactOffsetY,
+            finalX: img.offsetX,
+            finalY: img.offsetY
+        });
+    
         drawCollage();
     }
+    
+    
 
     function stopDragging(e) {
         if (isDragging) {
-            if (e) e.preventDefault();
             if (draggingIndex !== -1) {
                 snapToGrid();
                 downloadLink.href = canvas.toDataURL('image/png');
@@ -561,25 +576,40 @@ document.addEventListener('DOMContentLoaded', () => {
     
 
 
-    function updateZoomInputs() {
-        zoomInputs.forEach((input, index) => {
+    zoomInputs.forEach((input, index) => {
+        input.step = "0.01";
+        
+        input.addEventListener('input', (e) => {
             if (images[index]) {
-                // Säkerställ att bilden har rätt skala
                 const minScale = images[index].minScale || 1.0;
-                const maxScale = images[index].maxScale || (minScale * config.zoomRange);
+                const oldScale = images[index].scale || 1.0; // Spara gamla skalan
+                images[index].scale = Math.max(minScale, parseFloat(e.target.value));
                 
-                // Uppdatera min och max för input-elementet
-                input.min = minScale;
-                input.max = maxScale;
+                if (images[index].scale !== parseFloat(e.target.value)) {
+                    input.value = images[index].scale;
+                }
                 
-                // Säkerställ att skalan är inom gränserna
-                images[index].scale = Math.max(minScale, Math.min(maxScale, images[index].scale || minScale));
-                
-                // Uppdatera input-värdet med aktuell skala
-                input.value = images[index].scale;
+                adjustImagePosition(images[index], index, oldScale);
+                drawCollage(false);
             }
         });
-    }
+        
+        input.addEventListener('change', (e) => {
+            if (images[index]) {
+                const minScale = images[index].minScale || 1.0;
+                const oldScale = images[index].scale || 1.0;
+                images[index].scale = Math.max(minScale, parseFloat(e.target.value));
+                
+                if (images[index].scale !== parseFloat(e.target.value)) {
+                    input.value = images[index].scale;
+                }
+                
+                adjustImagePosition(images[index], index, oldScale);
+                downloadLink.href = canvas.toDataURL('image/png');
+                downloadLink.style.display = 'inline-block';
+            }
+        });
+    });
 
     function drawCollage(updateDownloadLink = false) {
         // Clear main canvas
@@ -603,6 +633,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function drawImage(img, index) {
+        // Logga ursprungliga värden
+        console.log('Initial values:', {
+            index: index,
+            rawScale: img.scale,
+            rawOffsetX: img.offsetX,
+            rawOffsetY: img.offsetY
+        });
+    
         // Säkerställ att bilden har rätt skala innan vi ritar
         const minScale = img.minScale || 1.0;
         if ((img.scale || 1) < minScale) {
@@ -666,17 +704,47 @@ document.addEventListener('DOMContentLoaded', () => {
     
         const offCtx = offCanvas.getContext('2d');
         
-        // Beräkna skalning och position
-        const scale = img.scale || 1;
-        const scaledWidth = img.width * scale;
-        const scaledHeight = img.height * scale;
-        const xOffset = (offCanvas.width - scaledWidth) / 2 + (img.offsetX || 0);
-        const yOffset = (offCanvas.height - scaledHeight) / 2 + (img.offsetY || 0);
+        // Beräkna skalning och position med detaljerad logging
+        img.scale = Math.round(img.scale * 1000) / 1000;
+        
+        // Beräkna skalade dimensioner
+        const rawScaledWidth = img.width * img.scale;
+        const rawScaledHeight = img.height * img.scale;
+        console.log('Raw scaled dimensions:', {
+            index: index,
+            rawScaledWidth,
+            rawScaledHeight
+        });
+    
+        const scaledWidth = Math.round(rawScaledWidth);
+        const scaledHeight = Math.round(rawScaledHeight);
+    
+        // Beräkna centrering FÖRE avrundning
+        const rawCenteringOffsetX = (offCanvas.width - scaledWidth) / 2;
+        console.log('Raw centering offset:', {
+            index: index,
+            rawCenteringOffsetX,
+            canvasWidth: offCanvas.width,
+            scaledWidth
+        });
+    
+        // Avrunda centeringOffset separat
+        const centeringOffsetX = Math.round(rawCenteringOffsetX);
+        const xOffset = centeringOffsetX + (img.lastValidX || Math.round(img.offsetX || 0));
+        const yOffset = Math.round((offCanvas.height - scaledHeight) / 2) + (img.lastValidY || Math.round(img.offsetY || 0));
+    
+        console.log('Final calculations:', {
+            index: index,
+            centeringOffsetX,
+            userOffsetX: img.offsetX,
+            finalXOffset: xOffset,
+            finalYOffset: yOffset
+        });
     
         // 1. RITA ORIGINALBILDEN FÖRST
         offCtx.drawImage(img, xOffset, yOffset, scaledWidth, scaledHeight);
     
-        // 2. APPLICERA EXPONERING
+        // 2. APPLICERA EXPONERING OCH ANDRA FILTER
         const filters = [];
         if (img.exposure !== undefined && img.exposure !== 0) {
             filters.push(`brightness(${100 + (img.exposure * 0.5)}%)`);
@@ -708,10 +776,8 @@ document.addEventListener('DOMContentLoaded', () => {
             tempCanvas.height = offCanvas.height;
             const tempCtx = tempCanvas.getContext('2d');
             
-            // Kopiera nuvarande bild till temp canvas
             tempCtx.drawImage(offCanvas, 0, 0);
             
-            // Applicera färgöverlägg
             if (tempValue > 0) {
                 tempCtx.fillStyle = `rgba(255, 140, 0, ${tempValue / 200})`;
             } else {
@@ -720,7 +786,6 @@ document.addEventListener('DOMContentLoaded', () => {
             tempCtx.globalCompositeOperation = 'overlay';
             tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
             
-            // Kopiera tillbaka resultatet
             offCtx.clearRect(0, 0, offCanvas.width, offCanvas.height);
             offCtx.drawImage(tempCanvas, 0, 0);
         }
@@ -747,9 +812,10 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             destX = config.cut3 - config.shift;
         }
-        
+    
         ctx.drawImage(offCanvas, destX, 0);
     }
+    
     
     
     function calculateColorMatrix(temperature) {
@@ -930,56 +996,74 @@ document.querySelectorAll('.temperature-control').forEach(control => {
         drawCollage(true);
     });
 });
-    function adjustImagePosition(img, index, oldScale) {
-        // Beräkna sektionsbredd baserat på index och totalt antal sektioner
-        let sectionWidth;
-        if (index === 0) {
-            sectionWidth = config.cut1;
-        } else if (index === 1) {
-            sectionWidth = config.cut2 - config.cut1 + 270;
-        } else if (draggingIndex === 2) {
-            if (config.totalSections === 3) {
-                sectionWidth = canvas.width - config.cut2 + 290; // För 3 bilder
-            } else {
-                sectionWidth = config.cut3 - config.cut2 + 290;  // För 4 bilder
-            }
-        } else if (draggingIndex === 3) {
-            sectionWidth = canvas.width - config.cut3 + 290;  // För fjärde bilden
-        
+
+function updateZoomInputs() {
+    zoomInputs.forEach((input, index) => {
+        if (images[index]) {
+            // Säkerställ att bilden har rätt skala
+            const minScale = images[index].minScale || 1.0;
+            const maxScale = images[index].maxScale || (minScale * config.zoomRange);
+            
+            // Uppdatera min och max för input-elementet
+            input.min = minScale;
+            input.max = maxScale;
+            
+            // Säkerställ att skalan är inom gränserna
+            images[index].scale = Math.max(minScale, Math.min(maxScale, images[index].scale || minScale));
+            
+            // Uppdatera input-värdet med aktuell skala
+            input.value = images[index].scale;
         }
-        
-        // Beräkna nya begränsningar baserat på aktuell skala
-        const scale = img.scale || 1;
-        const scaledWidth = img.width * scale;
-        const scaledHeight = img.height * scale;
-        
-        // Om bilden har skalats ner, justera offsetX och offsetY proportionellt
-        if (oldScale > scale) {
-            // Justera offset proportionellt mot skalförändringen
-            const ratio = scale / oldScale;
-            img.offsetX = img.offsetX * ratio;
-            img.offsetY = img.offsetY * ratio;
-        }
-        
-        // Beräkna maximal offset baserat på bildens storlek och sektionsbredd
-        const maxOffsetX = Math.max(0, (scaledWidth - sectionWidth) / 2);
-        const maxOffsetY = Math.max(0, (scaledHeight - canvas.height) / 2);
-        
-        // Hämta rätt marginalfaktor baserat på bildindex
-        let marginFactor;
-        if (index === 0) {
-            marginFactor = config.marginFactor1;
-        } else if (index === 1) {
-            marginFactor = config.marginFactor2;
-        } else if (index === 2) {
-            marginFactor = config.marginFactor3;
+    });
+}
+
+function adjustImagePosition(img, index, oldScale) {
+    // Beräkna sektionsbredd baserat på index
+    let sectionWidth;
+    if (index === 0) {
+        sectionWidth = config.cut1;
+    } else if (index === 1) {
+        sectionWidth = config.cut2 - config.cut1 + 290;
+    } else if (index === 2) {
+        if (config.totalSections === 3) {
+            sectionWidth = canvas.width - config.cut2 + 290;
         } else {
-            marginFactor = config.marginFactor4;
+            sectionWidth = config.cut3 - config.cut2 + 290;
         }
-        
-        // Begränsa offset så att bilden alltid täcker sitt område, justerat med marginalfaktorn
-        const adjustedMaxOffsetX = maxOffsetX * marginFactor;
-        img.offsetX = Math.max(-adjustedMaxOffsetX, Math.min(adjustedMaxOffsetX, img.offsetX || 0));
-        img.offsetY = Math.max(-maxOffsetY, Math.min(maxOffsetY, img.offsetY || 0));
+    } else if (index === 3) {
+        sectionWidth = canvas.width - config.cut3 + 290;
     }
+
+    const scale = Math.round((img.scale || 1) * 1000) / 1000;
+    const scaledWidth = Math.round(img.width * scale);
+    const scaledHeight = Math.round(img.height * scale);
+    const maxOffsetX = Math.round(Math.max(0, (scaledWidth - sectionWidth) / 2));
+    const maxOffsetY = Math.round(Math.max(0, (scaledHeight - canvas.height) / 2));
+
+    // Hämta rätt marginalfaktor
+    let marginFactor;
+    if (index === 0) {
+        marginFactor = config.marginFactor1;
+    } else if (index === 1) {
+        marginFactor = config.marginFactor2;
+    } else {
+        marginFactor = config.marginFactor3;
+    }
+
+    // Justera offset proportionellt mot skalförändringen
+    if (oldScale && oldScale !== scale) {
+        const ratio = scale / oldScale;
+        img.offsetX = Math.round(img.offsetX * ratio);
+        img.offsetY = Math.round(img.offsetY * ratio);
+    }
+
+    // Applicera begränsningar
+    const adjustedMaxOffsetX = Math.round(maxOffsetX * marginFactor);
+    img.offsetX = Math.round(Math.max(-adjustedMaxOffsetX, Math.min(adjustedMaxOffsetX, img.offsetX)));
+    img.offsetY = Math.round(Math.max(-maxOffsetY, Math.min(maxOffsetY, img.offsetY)));
+
+    // Spara de validerade värdena
+    img.lastValidX = img.offsetX;
+    img.lastValidY = img.offsetY;
+}
 });

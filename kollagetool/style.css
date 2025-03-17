@@ -478,7 +478,10 @@ canvas {
 }
 
 .value-display {
+    font-family: monospace;  /* Använd monospace font för konsekvent sifferbredd */
+    min-width: 30px;        /* Fast minimibredd */
+    width: 30px;            /* Fast bredd */
+    text-align: center;     /* Centrera texten */
+    display: inline-block;  /* Behåll block-egenskaper */
     margin: 0 4px;
-    min-width: 10px;
-    text-align: center;
 }
