@@ -1,5 +1,10 @@
 let isDragging = false;
-
+function initializeImageAdjustments(img, index) {
+    img.exposure = 0;
+    img.temperature = 0;
+    img.contrast = 0;
+    img.saturation = 0;
+}
 function swapSite() {
     document.body.classList.add("fadeOutAnimation");
     setTimeout(() => {
@@ -155,7 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             dataTransfer.items.add(file);
                             fileInputs[index].files = dataTransfer.files;
                         }
-                        
+                        initializeImageAdjustments(img, index);
                         resolve(img);
                     };
                     img.onerror = reject;
@@ -178,7 +183,48 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     });
-
+    document.querySelectorAll('.adjust-btn').forEach(button => {
+        button.addEventListener('click', (e) => {
+            const type = e.target.dataset.type;
+            const adjust = parseInt(e.target.dataset.adjust);
+            const controlGroup = e.target.closest('.control-group');
+            const index = parseInt(controlGroup.dataset.index);
+            
+            if (images[index]) {
+                // Justera värdet
+                const step = {
+                    exposure: 2,    // Steg för exponering
+                    temperature: 2, // Steg för temperatur
+                    contrast: 2,    // Steg för kontrast
+                    saturation: 2   // Steg för mättnad
+                };
+                
+                images[index][type] = (images[index][type] || 0) + (adjust * step[type]);
+                
+                // Begränsa värdena
+                const limits = {
+                    exposure: [-100, 100],
+                    temperature: [-100, 100],
+                    contrast: [-100, 100],
+                    saturation: [-100, 100]
+                };
+                
+                images[index][type] = Math.max(
+                    limits[type][0], 
+                    Math.min(limits[type][1], images[index][type])
+                );
+                
+                const displayClass = type === 'temperature' ? 'temp-value' : `${type}-value`;
+                const displayElement = controlGroup.querySelector(`.${displayClass}`);
+                if (displayElement) {
+                    displayElement.textContent = images[index][type];
+                }
+                
+                // Rita om collaget
+                drawCollage(false);
+            }
+        });
+    });
     // Funktion för att ladda återstående standardbilder om färre än 3 bilder valdes
     function loadRemainingDefaultImages(startIndex, totalNeeded) {
         const remainingImages = defaultImageSources.slice(startIndex, totalNeeded);
@@ -229,7 +275,21 @@ document.addEventListener('DOMContentLoaded', () => {
                     images[index].maxScale = maxScale; // Spara största skalan
                     images[index].offsetX = 0;
                     images[index].offsetY = 0;
-                    
+                                    // Nollställ justeringsvärden
+                images[index].exposure = 0;
+                images[index].temperature = 0;
+                images[index].contrast = 0;
+                images[index].saturation = 0;
+
+                // Uppdatera display-värdena
+                const controlGroup = document.querySelector(`.control-group[data-index="${index}"]`);
+                if (controlGroup) {
+                    controlGroup.querySelector('.exposure-value').textContent = '0';
+                    controlGroup.querySelector('.temp-value').textContent = '0';
+                    controlGroup.querySelector('.contrast-value').textContent = '0';
+                    controlGroup.querySelector('.saturation-value').textContent = '0';
+                }
+                    initializeImageAdjustments(images[index], index);
                     // Uppdatera UI och rita om
                     updateZoomInputs();
                     drawCollage(true);
@@ -464,35 +524,42 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function loadImagesAndCreateCollage(sources) {
-        Promise.all(sources.map(src => {
+        if (!sources || !Array.isArray(sources)) {
+            console.error('Invalid sources provided to loadImagesAndCreateCollage');
+            return;
+        }
+    
+        Promise.all(sources.map((source, sourceIndex) => {
             return new Promise((resolve, reject) => {
                 const img = new Image();
                 img.onload = () => {
-                    // Beräkna minsta skalfaktor för att täcka canvas-höjden
                     const minScale = canvas.height / img.height;
-                    
-                    // Beräkna maxScale baserat på minScale och zoomRange
                     const maxScale = minScale * config.zoomRange;
-                    
-                    // Sätt skalan till minScale som startläge
                     const scale = minScale;
                     
                     img.scale = scale;
-                    img.minScale = minScale; // Spara minsta skalan
-                    img.maxScale = maxScale; // Spara största skalan
+                    img.minScale = minScale;
+                    img.maxScale = maxScale;
                     img.offsetX = 0;
                     img.offsetY = 0;
+                    img.exposure = 0;    // Initiera exponering
+                    img.temperature = 0;  // Initiera temperatur
+                    
                     resolve(img);
                 };
                 img.onerror = reject;
-                img.src = src;
+                img.src = source;  // Använd source istället för src
             });
         })).then(loadedImages => {
             images.push(...loadedImages);
-            updateZoomInputs(); // Uppdatera zoom-inputs först
+            updateZoomInputs();
             drawCollage(true);
+        }).catch(error => {
+            console.error('Error loading images:', error);
         });
     }
+    
+
 
     function updateZoomInputs() {
         zoomInputs.forEach((input, index) => {
@@ -540,7 +607,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const minScale = img.minScale || 1.0;
         if ((img.scale || 1) < minScale) {
             img.scale = minScale;
-            // Uppdatera zoom-reglaget om skalan ändrades
             zoomInputs[index].value = minScale;
         }
         
@@ -551,33 +617,25 @@ document.addEventListener('DOMContentLoaded', () => {
         let clipPath = [];
         
         if (index === 0) {
-            // Första bilden
-            offCanvas.width = config.cut1 + 0; // Lite extra marginal
+            offCanvas.width = config.cut1 + 0;
             offCanvas.height = canvas.height;
-            
-            // Klippningskoordinater för första bilden
             clipPath = [
-                {x: 0, y: 0}, // Övre vänstra hörnet
-                {x: config.cut1, y: 0}, // Övre högra hörnet
-                {x: config.cut1 - config.shift, y: canvas.height}, // Nedre högra hörnet (med förskjutning)
-                {x: 0, y: canvas.height} // Nedre vänstra hörnet
+                {x: 0, y: 0},
+                {x: config.cut1, y: 0},
+                {x: config.cut1 - config.shift, y: canvas.height},
+                {x: 0, y: canvas.height}
             ];
         } else if (index === 1) {
-            // Andra bilden
-            offCanvas.width = config.cut2 - config.cut1 + 2 * config.shift + 0; // Extra utrymme
+            offCanvas.width = config.cut2 - config.cut1 + 2 * config.shift + 0;
             offCanvas.height = canvas.height;
-            
-            // Klippningskoordinater för andra bilden
             clipPath = [
-                {x: config.shift, y: 0}, // Övre vänstra hörnet (med förskjutning)
-                {x: offCanvas.width - config.shift, y: 0}, // Övre högra hörnet
-                {x: offCanvas.width - 2 * config.shift, y: canvas.height}, // Nedre högra hörnet
-                {x: 0, y: canvas.height} // Nedre vänstra hörnet
+                {x: config.shift, y: 0},
+                {x: offCanvas.width - config.shift, y: 0},
+                {x: offCanvas.width - 2 * config.shift, y: canvas.height},
+                {x: 0, y: canvas.height}
             ];
         } else if (index === 2) {
-            // Tredje bilden
             if (config.totalSections === 3) {
-                // För 3-bildsläget
                 offCanvas.width = canvas.width - config.cut2 + config.shift + 150;
                 clipPath = [
                     {x: config.shift, y: 0},
@@ -586,7 +644,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     {x: 0, y: canvas.height}
                 ];
             } else {
-                // För 4-bildsläget
                 offCanvas.width = config.cut3 - config.cut2 + 2 * config.shift + 0;
                 clipPath = [
                     {x: config.shift, y: 0},
@@ -597,7 +654,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             offCanvas.height = canvas.height;
         } else if (index === 3) {
-            // Fjärde bilden (endast i 4-bildsläget)
             offCanvas.width = canvas.width - config.cut3 + config.shift + 150;
             offCanvas.height = canvas.height;
             clipPath = [
@@ -607,38 +663,80 @@ document.addEventListener('DOMContentLoaded', () => {
                 {x: 0, y: canvas.height}
             ];
         }
-        
-        
+    
         const offCtx = offCanvas.getContext('2d');
         
-        // Skala och centrera bilden
+        // Beräkna skalning och position
         const scale = img.scale || 1;
         const scaledWidth = img.width * scale;
         const scaledHeight = img.height * scale;
-        
-        // Beräkna offset för centrering och användarjusteringar
         const xOffset = (offCanvas.width - scaledWidth) / 2 + (img.offsetX || 0);
         const yOffset = (offCanvas.height - scaledHeight) / 2 + (img.offsetY || 0);
-        
-        // Rita bilden på den tillfälliga canvasen
+    
+        // 1. RITA ORIGINALBILDEN FÖRST
         offCtx.drawImage(img, xOffset, yOffset, scaledWidth, scaledHeight);
+    
+        // 2. APPLICERA EXPONERING
+        const filters = [];
+        if (img.exposure !== undefined && img.exposure !== 0) {
+            filters.push(`brightness(${100 + (img.exposure * 0.5)}%)`);
+        }
+        if (img.contrast !== undefined && img.contrast !== 0) {
+            filters.push(`contrast(${100 + img.contrast}%)`);
+        }
+        if (img.saturation !== undefined && img.saturation !== 0) {
+            filters.push(`saturate(${100 + img.saturation}%)`);
+        }
         
-        // Skapa mask för klippning
+        if (filters.length > 0) {
+            offCtx.filter = filters.join(' ');
+            const tempCanvas = document.createElement('canvas');
+            tempCanvas.width = offCanvas.width;
+            tempCanvas.height = offCanvas.height;
+            const tempCtx = tempCanvas.getContext('2d');
+            tempCtx.filter = offCtx.filter;
+            tempCtx.drawImage(offCanvas, 0, 0);
+            offCtx.clearRect(0, 0, offCanvas.width, offCanvas.height);
+            offCtx.drawImage(tempCanvas, 0, 0);
+        }
+    
+        // 3. APPLICERA TEMPERATUR
+        if (img.temperature !== undefined && img.temperature !== 0) {
+            const tempValue = img.temperature;
+            const tempCanvas = document.createElement('canvas');
+            tempCanvas.width = offCanvas.width;
+            tempCanvas.height = offCanvas.height;
+            const tempCtx = tempCanvas.getContext('2d');
+            
+            // Kopiera nuvarande bild till temp canvas
+            tempCtx.drawImage(offCanvas, 0, 0);
+            
+            // Applicera färgöverlägg
+            if (tempValue > 0) {
+                tempCtx.fillStyle = `rgba(255, 140, 0, ${tempValue / 200})`;
+            } else {
+                tempCtx.fillStyle = `rgba(0, 70, 255, ${Math.abs(tempValue) / 200})`;
+            }
+            tempCtx.globalCompositeOperation = 'overlay';
+            tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
+            
+            // Kopiera tillbaka resultatet
+            offCtx.clearRect(0, 0, offCanvas.width, offCanvas.height);
+            offCtx.drawImage(tempCanvas, 0, 0);
+        }
+    
+        // 4. APPLICERA KLIPPMASK
         offCtx.globalCompositeOperation = 'destination-in';
         offCtx.fillStyle = 'white';
         offCtx.beginPath();
-        
-        // Rita klippningsvägen
         clipPath.forEach((point, i) => {
             if (i === 0) offCtx.moveTo(point.x, point.y);
             else offCtx.lineTo(point.x, point.y);
         });
-        
         offCtx.closePath();
         offCtx.fill();
-        
-        // Rita den beskurna bilden på huvudcanvasen
-        // Placera bilden baserat på index
+    
+        // 5. RITA PÅ HUVUDCANVAS PÅ RÄTT POSITION
         let destX;
         if (index === 0) {
             destX = 0;
@@ -652,6 +750,18 @@ document.addEventListener('DOMContentLoaded', () => {
         
         ctx.drawImage(offCanvas, destX, 0);
     }
+    
+    
+    function calculateColorMatrix(temperature) {
+        const t = temperature / 100;
+        return [
+            1 + (t > 0 ? t * 0.1 : 0), 0, 0, 0, 0,  // R
+            0, 1, 0, 0, 0,                           // G
+            0, 0, 1 + (t < 0 ? t * 0.1 : 0), 0, 0,  // B
+            0, 0, 0, 1, 0                            // A
+        ];
+    }
+
 
     function drawDividers() {
         // Använd globalCompositeOperation för att göra avdelarna transparenta
@@ -719,7 +829,26 @@ document.addEventListener('DOMContentLoaded', () => {
         
         fileInputs[index1].files = dt1.files;
         fileInputs[index2].files = dt2.files;
-    
+        [index1, index2].forEach(index => {
+            const controlGroup = document.querySelector(`.control-group[data-index="${index}"]`);
+            if (controlGroup && images[index]) {
+                // Uppdatera exponering
+                controlGroup.querySelector('.exposure-value').textContent = 
+                    images[index].exposure || '0';
+                
+                // Uppdatera temperatur
+                controlGroup.querySelector('.temp-value').textContent = 
+                    images[index].temperature || '0';
+                
+                // Uppdatera kontrast
+                controlGroup.querySelector('.contrast-value').textContent = 
+                    images[index].contrast || '0';
+                
+                // Uppdatera mättnad
+                controlGroup.querySelector('.saturation-value').textContent = 
+                    images[index].saturation || '0';
+            }
+        });
         // Beräkna om skalorna för båda bilderna
         [index1, index2].forEach(index => {
             if (images[index]) {
@@ -738,8 +867,69 @@ document.addEventListener('DOMContentLoaded', () => {
         drawCollage(true);
     }
     
-    
+    // Lägg till dessa egenskaper till varje bild-objekt
+function initializeImageAdjustments(img, index) {
+    img.exposure = 0;
+    img.temperature = 0;
+}
 
+function adjustTemperature(imageData, temperature) {
+    const t = temperature / 100; // Normalisera till -1 till 1
+    const data = imageData.data;
+    
+    for (let i = 0; i < data.length; i += 4) {
+        // Röd kanal
+        if (t > 0) {
+            data[i] = Math.min(255, data[i] + (t * 50)); // Öka rött för varmare
+        }
+        
+        // Blå kanal
+        if (t < 0) {
+            data[i + 2] = Math.min(255, data[i + 2] + (Math.abs(t) * 50)); // Öka blått för kallare
+        }
+        
+        // Justera motsatt kanal för bättre balans
+        if (t > 0) {
+            data[i + 2] = Math.max(0, data[i + 2] - (t * 30)); // Minska blått för varmare
+        } else {
+            data[i] = Math.max(0, data[i] - (Math.abs(t) * 30)); // Minska rött för kallare
+        }
+    }
+}
+
+document.querySelectorAll('.exposure-control').forEach(control => {
+    control.addEventListener('input', (e) => {
+        const index = parseInt(e.target.dataset.index);
+        if (images[index]) {
+            images[index].exposure = parseInt(e.target.value);
+            drawCollage(false);
+        }
+    });
+    
+    control.addEventListener('change', () => {
+        drawCollage(true);
+    });
+});
+
+document.querySelectorAll('.temperature-control').forEach(control => {
+    control.addEventListener('input', (e) => {
+        const index = parseInt(e.target.dataset.index);
+
+        if (images[index]) {
+            images[index].temperature = parseInt(e.target.value);
+            console.log('Temperature set on image:', {
+                index: index,
+                temperature: images[index].temperature,
+                imageProperties: Object.keys(images[index])
+            });
+            drawCollage(false);
+        }
+    });
+    
+    control.addEventListener('change', () => {
+        drawCollage(true);
+    });
+});
     function adjustImagePosition(img, index, oldScale) {
         // Beräkna sektionsbredd baserat på index och totalt antal sektioner
         let sectionWidth;

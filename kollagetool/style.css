@@ -392,3 +392,93 @@ canvas {
 .input-group:nth-child(4) {
     display: none;
 }
+
+.image-controls {
+    margin: 10px 0;
+}
+
+.control-group {
+    display: flex;
+    align-items: center;
+    margin: 5px 0;
+}
+
+.control-group label {
+    width: 100px;
+    margin-right: 10px;
+}
+
+.exposure-control,
+.temperature-control {
+    width: 200px;
+}
+.control-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px 30px;
+    width: 100%;
+    padding: 10px;
+    opacity: 0;
+    transform: translateY(-20px);
+    clip-path: inset(0 0 100% 0);
+    transition: all 0.3s ease;
+    visibility: hidden;  /* Göm helt när inte hover */
+    height: 0;          /* Ingen höjd när gömd */
+    margin: 0;          /* Ingen margin när gömd */
+    padding: 0;         /* Ingen padding när gömd */
+}
+
+.input-group:hover .control-group {
+    opacity: 1;
+    transform: translateY(0);
+    clip-path: inset(0 0 0 0);
+    visibility: visible;  /* Visa vid hover */
+    height: auto;        /* Auto-höjd vid hover */
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 10px;       /* Återställ padding vid hover */
+}
+.control {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin: 0;  /* Ta bort eventuella margins */
+    padding: 10;  /* Ta bort eventuell padding */
+}
+
+/* Vänsterkolumnen */
+.control:nth-child(odd) {
+    justify-content: flex-start;
+}
+
+/* Högerkolumnen */
+.control:nth-child(even) {
+    justify-content: flex-end;
+}
+
+.control span:first-child {
+    width: 80px;
+    text-align: left;
+    margin: 0;  /* Ta bort eventuella margins */
+}
+
+.adjust-btn {
+    padding: 2px 6px;
+    cursor: pointer;
+    background: #00b4c8;
+    border: 1px solid #00b4c8;
+    border-radius: 3px;
+    flex-shrink: 0;
+    color: white;
+    margin: 0px  5px;  /* Ta bort eventuella margins */
+}
+
+.adjust-btn:hover {
+    background: #00535c;
+}
+
+.value-display {
+    margin: 0 4px;
+    min-width: 10px;
+    text-align: center;
+}
