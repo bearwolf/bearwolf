@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SRT to VTT converter</title>
+    <link rel="stylesheet" href="style.css">
+    <link
+    rel="apple-touch-icon"
+    sizes="180x180"
+    href="png/apple-touch-icon.png"
+  />
+  <link
+    rel="icon"
+    type="image/png"
+    sizes="32x32"
+    href="png/favicon-32x32.png"
+  />
+  <link
+    rel="icon"
+    type="image/png"
+    sizes="16x16"
+    href="png/favicon-16x16.png"
+  />
+</head>
+<body>
+    <!-- Vågeffekter från gamla designen -->
+    <div class="wave"></div>
+    <div class="wave"></div>
+    <div class="wave"></div>
+    <div class="beachBall"><img width="600" src="png/beachball.png" /><!-- <img width="600" id="bubble" src="png/bubble.png" /> --></div>
+    <!-- <h1>Bildkollage</h1> -->
+    
+    <!-- Ny wrapper för att hålla container och canvas-container -->
+    <div class="main-wrapper">
+        <div class="container">
+            <button class="buttonLeft" onclick="swapSite()">Andra verktyg</button>
+            <p id="p2" style="position: relative;"> <!-- Add position: relative here -->
+                
+                <b>Björns kollagetool</b>
+              </p>
+              <p id="p3" style="text-align: center;">
+                Upload your SRT file, choose position, style and download. You can preview the textblocks in the first 10 seconds.
+              </p>
+              <input type="file" id="srtInput" accept=".srt">
+              <div>
+                <div class="subtitle-controls">
+                  <div>
+                    <label>Text width:</label>
+                    <select id="textSize">
+                        <option value="100%">Full width</option>
+                        <option value="80%" selected>80%</option>
+                        <option value="60%">60%</option>
+                        <option value="40%">Narrow</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Textcolor:</label>
+                    <select id="textColor">
+                        <option value="white" selected>White</option>
+                        <option value="#d6ff43">Urheilu-yellow</option>
+                        <option value="#10ffb2">Kioski-green</option>
+                        <option value="#f9799a">Svenska Yle-Pink</option>
+                        <option value="#00c1d2">Yle-blue</option>
+                    </select>
+                </div>
+                <div>
+                  <label>Text background:</label>
+                  <select id="bgColor">
+                      <option value="rgba(0,0,0,0.75)" selected>Black 75%</option>
+                      <option value="rgba(0,0,0,0.5)">Black 50%</option>
+                      <option value="rgba(0,0,0,0)">Transparent</option>
+                  </select>
+              </div>
+              <div>
+                    <label>Text position:</label>
+                    <select id="linePosition">
+                        <option value="line:-21">Highest</option>
+                        <option value="line:-18">Higher</option>
+                        <option value="line:-15">High</option>
+                        <option value="line:-12" selected>Middle</option>
+                        <option value="line:-9">Low</option>
+                        <option value="line:-7">Lowest</option>
+                    </select>
+                </div>
+                
+                <div hidden>
+                    <label>Justering:</label>
+                    <select id="alignment">
+                        <option value="align:left">Vänster</option>
+                        <option value="align:center" selected>Centrerad</option>
+                        <option value="align:right">Höger</option>
+                    </select>
+                </div>
+              </div>
+            </div>
+            <div class="preview-controls">
+                <button id="prevCue">Previous text</button>
+                <button id="nextCue">Next text</button>
+            </div>
+            <div id="downloadButton">
+              <button id="downloadVTT">Download VTT</button>
+          </div>
+        </div>
+        
+        <!-- Canvas-container nu inuti main-wrapper -->
+        <div class="canvas-container">
+
+            <div id="previewContainer">
+                <video width="349" height="620" poster="png/preview2.png">
+                    <source src="video/dummy2.mp4" type="video/mp4">
+                    <!-- Placeholder VTT som senare byts ut -->
+                    <track 
+                        id="subtitleTrack"
+                        label="Svenska" 
+                        kind="subtitles" 
+                        srclang="sv" 
+                        src="subtitles/placeholder.vtt" 
+                        default>
+                </video>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
