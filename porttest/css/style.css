@@ -1,0 +1,624 @@
+/* Global styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+
+}
+
+/* Game container styles */
+.game-container {
+    max-width: 800px;
+    width: 100%;
+    background-color: rgba(0, 0, 20, 0.7);
+    box-shadow: 0 0 20px rgba(0, 0, 255, 0.3), inset 0 0 30px rgba(0, 0, 60, 0.5);
+}
+
+/* Aspect ratio for desktop */
+@media (min-width: 601px) {
+    .game-container {
+        aspect-ratio: 4/3;
+    }
+}
+
+/* Flexbox layout for container */
+.container {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    position: relative; /* For absolute positioning of cursor */
+}
+
+/* Content area */
+.content {
+    background-color: #000022;
+    border: 6px solid #ffffff;
+    border-radius: 8px;
+    padding: 15px;
+    padding-right: 195px; /* Additional padding to accommodate menu */
+    flex: 1;
+    width: 100%;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    box-shadow: inset -2px -2px #666666, inset 0px 0px #ffffff;
+    position: relative;
+    z-index: 2;
+}
+
+/* Menu area */
+.menu {
+    background-color: #000044;
+    border: 4px solid #ffffff;
+    border-radius: 8px;
+    padding: 10px;
+    width: 180px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: inset -2px -2px #666666, inset 2px 2px #ffffff;
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 2;
+}
+
+/* Menu items */
+.menu-item {
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin: 0;
+    padding: 0;
+}
+
+/* Cursor */
+.cursor {
+    position: absolute;
+    left: -24px;
+    visibility: hidden;
+    width: 32px;
+    height: 32px;
+    margin-top: 8px;
+    background-image: url('../png/pointer.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: 10;
+}
+
+/* Menu buttons */
+.menu-button {
+    font-family: 'Press Start 2P', cursive;
+    background-color: transparent;
+    color: white;
+    border: none;
+    padding: 16px 8px 8px 16px;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    font-size: 0.8em;
+    transition: color 0.1s;
+    outline: none; /* Remove focus outline */
+}
+
+.menu-button:hover {
+    color: white;
+}
+
+.menu-button.active {
+    color: #ffff00;
+}
+
+/* Show cursor */
+.menu-item.show-cursor .cursor {
+    visibility: visible;
+}
+
+/* Cursor animation */
+@media (prefers-reduced-motion: no-preference) {
+    @keyframes pointerFloat {
+        0% { transform: translateX(0) translateY(0); }
+        50% { transform: translateX(3px) translateY(-2px); }
+        100% { transform: translateX(0) translateY(0); }
+    }
+    
+    .menu-item:hover .cursor,
+    .menu-item:has(.menu-button.active) .cursor {
+        animation: pointerFloat 1.2s infinite ease-in-out;
+    }
+}
+
+/* Headings */
+h1, h2, h4, h5, h6 {
+    font-family: 'Press Start 2P', cursive;
+    color: #ffff00;
+    text-shadow: 1px 1px 0 #000;
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+    border-bottom: 2px solid #444;
+    font-size: 1.1em;
+    line-height: 1.4;
+}
+
+h3 {
+    font-family: 'Press Start 2P', cursive;
+    color: #ffffff;
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+    font-size: 0.8em;
+    line-height: 16px;
+    -webkit-font-smoothing: none;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeSpeed;
+    transform: translateZ(0); /* Prevent subpixel rendering */
+    text-shadow: none; /* Remove text-shadow to avoid blurring */
+}
+
+/* Subheadline class for sharper text */
+.subHeadline {
+    font-family: 'Press Start 2P', cursive;
+    color: #ffffff;
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+    font-size: 0.8em;
+    line-height: 16px;
+    -webkit-font-smoothing: none;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeSpeed;
+    transform: translateZ(0); /* Prevent subpixel rendering */
+    text-shadow: none; /* Remove text-shadow to avoid blurring */
+}
+.subHeadline3 {
+    font-family: 'Press Start 2P', cursive;
+    color: #ffffff;
+
+    font-size: 0.8em;
+    line-height: 16px;
+    -webkit-font-smoothing: none;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeSpeed;
+    transform: translateZ(0) translateY(2px); /* Prevent subpixel rendering */
+    text-shadow: none; /* Remove text-shadow to avoid blurring */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    line-height: normal;
+    vertical-align: middle;
+}
+/* Character name */
+.character-name {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1.2em;
+    color: #7cfc00;
+    text-align: center;
+    margin-bottom: 15px;
+    line-height: 1.4;
+}
+
+/* List items */
+.item, .spell, .equip-slot, .stat-row, .config-option, .attribute {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+    border-bottom: 1px dotted #333;
+}
+
+/* Description area */
+.item-description, .spell-description {
+    margin-top: 15px;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.3);
+    border: 1px solid #444;
+    border-radius: 5px;
+}
+
+/* Responsive adjustments for mobile */
+@media (max-width: 600px) {
+    .game-container {
+        aspect-ratio: unset;
+        min-height: 99vh;
+        height: auto;
+
+    }
+    
+    .container {
+        flex-direction: column;
+        height: auto;
+        min-height: calc(100vh - 120px);
+        position: relative;
+        
+    }
+    
+    .content {
+        padding-right: 15px;
+        margin-bottom: 110;
+        max-height: 99vh;
+        min-height: 99vh;
+        padding-bottom: 140px;
+    }
+    
+    .content-inner {
+        padding-right: 0;
+    }
+    
+    .menu {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        top: auto;
+        width: 100%;
+        height: 120px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr); /* 3 lika kolumner */
+        grid-template-rows: 1fr 1fr; /* 2 lika rader */
+        gap: 5px;
+        padding: 10px;
+    }
+    
+    .menu-item {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+
+
+    }
+    
+    /* Skapa två rader */
+    .menu::before {
+        content: "";
+        display: block;
+        height: 50%;
+    }
+    
+    /* Första raden - 3 objekt */
+    .menu-item:nth-child(-n+3) {
+        width: 33.33%;
+        position: absolute;
+        top: 10px;
+        height: 40%;
+    }
+    
+    .menu-item:nth-child(1) { left: 0%; }
+    .menu-item:nth-child(2) { left: 33.33%; }
+    .menu-item:nth-child(3) { left: 66.66%; }
+    
+    /* Andra raden - 2 objekt */
+    .menu-item:nth-child(n+4) {
+        width: 50%;
+        position: absolute;
+        bottom: 10px;
+        height: 40%;
+    }
+    
+    .menu-item:nth-child(4) { left: 0%; }
+    .menu-item:nth-child(5) { left: 50%; }
+    /* Fullbredd för knapparna */
+    .menu-button {
+        width: auto; /* Låt knappen ta naturlig bredd */
+        text-align: center;
+        margin-left: -10px; /* Negativ margin för att dra texten tillbaka */
+        padding-left: 0; /* Ta bort vänster padding */
+    }
+    
+    .cursor {
+        position: static; /* Ta bort absolute positioning */
+        visibility: visible; /* Alltid synlig i mobilläge om den är aktiv */
+        width: 24px; /* Mindre storlek för mobil */
+        height: 24px;
+        margin-top: 3; /* Ta bort margin-top */
+        margin-right: 15px; /* Lägg till margin-right för mellanrum */
+        flex: 0 0 24px;
+    }
+    .menu-item:not(.show-cursor) .cursor {
+        visibility: hidden;
+    }
+}
+
+/* Adjustments for very small screens */
+@media (max-width: 200px) {
+
+    
+    .cursor {
+        left: -18px;
+    }
+}
+@media (max-width: 400px) {
+
+    
+    .menu-button {
+        font-size: 0.7em;
+        padding: 6px;
+    }
+}
+
+/* Character profile styles */
+.character-profile {
+    display: flex;
+    margin-bottom: 20px;
+    background-color: rgba(0, 0, 40, 0.4);
+    border: 2px solid #444;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.profile-portrait {
+    width: 100px;
+    height: 100px;
+    border: 3px solid #ffffff;
+    overflow: hidden;
+    margin-right: 15px;
+    flex-shrink: 0;
+    background-color: #000033;
+}
+
+.profile-portrait img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    image-rendering: pixelated;
+}
+
+.profile-stats {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.profile-row {
+    display: flex;
+    margin-bottom: 5px;
+}
+
+.profile-label {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.7em;
+    color: #aaaaff;
+    width: 90px;
+    flex-shrink: 0;
+}
+
+.profile-value {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.7em;
+    color: white;
+}
+
+/* Character description */
+.character-description {
+    background-color: rgba(0, 0, 40, 0.4);
+    border: 2px solid #444;
+    border-radius: 5px;
+    padding: 12px;
+    margin-bottom: 20px;
+}
+
+.character-description p {
+    margin-bottom: 10px;
+    font-size: 0.9em;
+    line-height: 1.5;
+}
+
+.character-description p:last-child {
+    margin-bottom: 0;
+}
+
+/* Character stats detail */
+.character-stats-detail {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.stats-column {
+    width: 48%;
+}
+
+.stat-detail {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+}
+
+.stat-name {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.65em;
+    color: #aaaaff;
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+.stat-bar {
+    width: 75%;
+    height: 8px;
+    background-color: #333355;
+    border: 1px solid #555577;
+    margin-right: 10px;
+}
+
+.stat-fill {
+    height: 100%;
+    background-color: #7777ff;
+}
+
+.stat-value {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.7em;
+    color: white;
+}
+
+/* Responsive adjustments for character profile */
+@media (max-width: 600px) {
+    .character-profile {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .profile-portrait {
+        margin-right: 0;
+        margin-bottom: 15px;
+    }
+    
+    .character-stats-detail {
+        flex-direction: column;
+    }
+    
+    .stats-column {
+        width: 100%;
+    }
+}
+
+/* Portfolio styles */
+.portfolio-intro {
+    background-color: rgba(0, 0, 40, 0.4);
+    border: 2px solid #444;
+    border-radius: 5px;
+    padding: 12px;
+    margin-bottom: 20px;
+}
+
+.portfolio-intro p {
+    margin-bottom: 0;
+    font-size: 0.9em;
+    line-height: 1.5;
+}
+
+.portfolio-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    
+}
+
+.portfolio-item {
+    background-color: rgba(0, 0, 40, 0.4);
+    border: 2px solid #444;
+    border-radius: 5px;
+    padding: 0;
+    overflow: hidden;
+    transition: transform 0.2s ease-in-out;
+    
+}
+
+.portfolio-item:hover {
+    transform: translateX(5px);
+}
+
+.project-title {
+    display: flex;
+    align-items: center; /* Important for vertical alignment */
+    background-color: rgba(0, 0, 60, 0.6);
+    padding: 8px 12px;
+    border-bottom: 1px solid #555;
+}
+
+.project-icon {
+    color: #7777ff;
+    font-size: 1.2em;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.project-title .pixel-heading,
+.project-title h3 {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    line-height: normal;
+}
+
+.project-description {
+    padding: 12px;
+}
+
+.project-description p {
+    margin-bottom: 10px;
+    font-size: 0.85em;
+    line-height: 1.5;
+}
+
+.project-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.stat-tag {
+    background-color: rgba(0, 0, 80, 0.5);
+    color: #aaaaff;
+    font-size: 0.7em;
+    padding: 3px 8px;
+    border-radius: 3px;
+    border: 1px solid #5555aa;
+}
+
+.portfolio-summary {
+    margin-top: 25px;
+    background-color: rgba(0, 0, 40, 0.4);
+    border: 2px solid #444;
+    border-radius: 5px;
+    padding: 12px;
+}
+
+.summary-title {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.8em;
+    color: #ffff00;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.summary-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+    border-bottom: 1px dotted #444;
+}
+
+.summary-label {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.65em;
+    color: #aaaaff;
+}
+
+.summary-value {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.7em;
+    color: white;
+}
+
+/* Responsive adjustments for portfolio */
+@media (max-width: 600px) {
+    .summary-stats {
+        grid-template-columns: 1fr;
+    }
+    
+    .portfolio-item:hover {
+        transform: none;
+    }
+}
