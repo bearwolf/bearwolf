@@ -34,6 +34,14 @@ let lastY = 0;
 const xSlider = document.getElementById('scrollslider');
 const ySlider = document.getElementById('zoomedslider');
 
+
+document.fonts.ready.then(function() {
+  console.log("Fonts loaded.");
+  generate();
+});
+
+
+
 function onMouseMove(event) {
     if (!isMouseDown) return;
 
@@ -200,7 +208,20 @@ let layerHandlers = {
     ctx.restore();
   },
 };
-
+layerHandlers["heroText"] = function (layer, ctx) {
+  ctx.save();
+  setCtxDrawOpts(ctx, layer.drawOpts || getCtxDrawOpts(ctx));
+  
+  // Sätt font och egenskaper för texten
+  ctx.font = layer.drawOpts.font;
+  ctx.fillStyle = layer.drawOpts.fillStyle;
+  ctx.textAlign = layer.drawOpts.textAlign || "center";
+  
+  // Rita texten
+  ctx.fillText(layer.text, layer.rect.x, layer.rect.y);
+  
+  ctx.restore();
+};
 // re-use image handler for yleCDNImage
 layerHandlers["yleCDNImage"] = layerHandlers["image"];
 
@@ -479,7 +500,8 @@ function setErrorMessage(msg) {
 }
 
 function getLayerDescriptions() {
-  return [
+  const nameText = document.getElementById("nameInput") ? document.getElementById("nameInput").value : "";
+  const layers = [
     {
       type: "image",
       url: selectedPodd,
@@ -511,7 +533,6 @@ function getLayerDescriptions() {
     },
     {
       type: "yleCDNImage",
-
       rect: {
         x: document.getElementById("scrollslider").value,
         y: document.getElementById("zoomedslider").value,
@@ -519,10 +540,43 @@ function getLayerDescriptions() {
         h: 0,
       },
       zOrder: -100,
-    },
+    }
   ];
+  
+  // Lägg till namnlagret om det finns text
+  if (nameText) {
+    layers.push({
+      type: "heroText",
+      text: nameText,
+      rect: { x: 540, y: 1450 }, // Centrerad x (1080/2), y-position justeras efter behov
+      drawOpts: { 
+        font: "bold 70px 'new-hero', sans-serif", 
+        fillStyle: "white",
+        textAlign: "center" 
+      },
+      ready: true,
+      zOrder: 10 // Högre än andra lager för att vara överst
+    });
+  }
+  
+  return layers;
+}
+// Lägg till en funktion för att skapa textlager med New Hero
+function makeHeroTextLayer(options) {
+  return new Promise((resolve, reject) => {
+    let textObj = {
+      ...makeLayer(),
+      type: "heroText",
+      text: options.text || "text missing",
+      ready: true,
+      ...options,
+    };
+    resolve(textObj);
+  });
 }
 
+// Uppdatera layerMakers-objektet för att inkludera heroText
+layerMakers["heroText"] = makeHeroTextLayer;
 function hideSnapshotFrame() {
   console.log("hideSnapshotFrame");
   const snapshotFrame = qsl("#snapshotFrame1");

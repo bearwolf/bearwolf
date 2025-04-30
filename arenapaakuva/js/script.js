@@ -34,6 +34,16 @@ let lastY = 0;
 const xSlider = document.getElementById('scrollslider');
 const ySlider = document.getElementById('zoomedslider');
 
+
+document.fonts.ready.then(function() {
+  console.log("Fonts loaded!");
+  // Lista alla tillgängliga fonter
+  document.fonts.forEach(function(fontFace) {
+    console.log("Available font:", fontFace.family);
+  });
+  generate();
+});
+
 function onMouseMove(event) {
     if (!isMouseDown) return;
 
@@ -206,7 +216,21 @@ let layerHandlers = {
     ctx.restore();
   },
 };
-
+layerHandlers["heroText"] = function (layer, ctx) {
+  ctx.save();
+  canvas.style.letterSpacing = "2.5px";
+  setCtxDrawOpts(ctx, layer.drawOpts || getCtxDrawOpts(ctx));
+  
+  // Sätt font och egenskaper för texten
+  ctx.font = layer.drawOpts.font;
+  ctx.fillStyle = layer.drawOpts.fillStyle;
+  ctx.textAlign = layer.drawOpts.textAlign || "center";
+  
+  // Rita texten
+  ctx.fillText(layer.text, layer.rect.x, layer.rect.y);
+  
+  ctx.restore();
+};
 // re-use image handler for yleCDNImage
 layerHandlers["yleCDNImage"] = layerHandlers["image"];
 
@@ -373,9 +397,32 @@ function masterColorCheck(x) {
 }
 
 function poddSelect() {
+  // Spara tidigare värde för debugging
+  const previousPodd = selectedPodd;
+  
+  // Uppdatera den valda podden
   selectedPodd = "png/" + document.getElementById("poddSelector").value;
+  
+  console.log("Byter från", previousPodd, "till", selectedPodd); // Debugging
+  
+  // Hantera namnrutan baserat på vald serie
+  const nameInputContainer = document.getElementById("nameInput").parentElement;
+  const nameInput = document.getElementById("nameInput");
+  
+  // Visa namnrutan endast för Sportliv, dölj för andra serier
+  if (document.getElementById("poddSelector").value === "sportliv.png") {
+    // Visa namnrutan om Sportliv är vald
+    nameInputContainer.style.display = "block";
+  } else {
+    // Dölj och töm namnrutan för andra serier
+    nameInputContainer.style.display = "none";
+    nameInput.value = ""; // Töm innehållet
+  }
 
-  generate();
+  // Säkerställ att generate körs även om det finns ett problem
+  setTimeout(() => {
+    generate();
+  }, 0);
 }
 function releaseColours() {
   for (let i = 1; i < 4; i++) {
@@ -485,11 +532,13 @@ function setErrorMessage(msg) {
 }
 
 function getLayerDescriptions() {
-  return [
+  const nameText = document.getElementById("nameInput") ? document.getElementById("nameInput").value : "";
+  
+  const layers = [
     {
       type: "image",
       url: selectedPodd,
-      rect: { x: 0, y: 0 + +heightOffset, w: 1920, h: 1080 },
+      rect: { x: 0, y: 0 + +heightOffset, w: 1080, h: 1560 },
       drawOpts: {
         fillStyle: "black",
         globalCompositeOperation: "destination-in",
@@ -500,7 +549,7 @@ function getLayerDescriptions() {
     //   type: "image",
     //   url: "png/guideline.png",
     //   rect: {
-    //     x: +sliderGuiderX,
+    //     x: +arrowLocation + +sliderGuiderX,
     //     y: sliderGuiderY,
     //     w: 0,
     //     h: 0,
@@ -517,7 +566,6 @@ function getLayerDescriptions() {
     },
     {
       type: "yleCDNImage",
-
       rect: {
         x: document.getElementById("scrollslider").value,
         y: document.getElementById("zoomedslider").value,
@@ -525,10 +573,43 @@ function getLayerDescriptions() {
         h: 0,
       },
       zOrder: -100,
-    },
+    }
   ];
+  
+  // Lägg till namnlagret om det finns text
+  if (nameText) {
+    layers.push({
+      type: "heroText",
+      text: nameText,
+      rect: { x: 960, y: 745 }, // Centrerad x (1080/2), y-position justeras efter behov
+      drawOpts: { 
+        font: "500 63.26px 'new-hero', sans-serif", 
+        fillStyle: "white",
+        textAlign: "center" 
+      },
+      ready: true,
+      zOrder: 10 // Högre än andra lager för att vara överst
+    });
+  }
+  
+  return layers;
+}
+// Lägg till en funktion för att skapa textlager med New Hero
+function makeHeroTextLayer(options) {
+  return new Promise((resolve, reject) => {
+    let textObj = {
+      ...makeLayer(),
+      type: "heroText",
+      text: options.text || "text missing",
+      ready: true,
+      ...options,
+    };
+    resolve(textObj);
+  });
 }
 
+// Uppdatera layerMakers-objektet för att inkludera heroText
+layerMakers["heroText"] = makeHeroTextLayer;
 function hideSnapshotFrame() {
   console.log("hideSnapshotFrame");
   const snapshotFrame = qsl("#snapshotFrame1");
