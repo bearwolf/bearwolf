@@ -532,8 +532,9 @@ function setErrorMessage(msg) {
 }
 
 function getLayerDescriptions() {
-  const nameText = document.getElementById("nameInput") ? document.getElementById("nameInput").value : "";
-  
+  const nameInputElement = document.getElementById("nameInput");
+  // Konvertera texten till versaler direkt när du hämtar den
+  const nameText = nameInputElement ? nameInputElement.value.toUpperCase() : "";
   const layers = [
     {
       type: "image",
