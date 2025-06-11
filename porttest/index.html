@@ -52,5 +52,33 @@
 <div id="transition-container">
     <div id="transition-grid"></div>
   </div>
+      <!-- Migreringsmeddelande Popup - Klistra in denna kod var som helst på sidan -->
+<div id="migrationPopup" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); display: flex; justify-content: center; align-items: center; z-index: 1000;">
+    <div style="background-color: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); max-width: 500px; width: 90%; text-align: center; position: relative;">
+        <button onclick="document.getElementById('migrationPopup').style.display='none'" style="position: absolute; top: 10px; right: 15px; background: none; border: none; font-size: 24px; cursor: pointer; color: #666;">&times;</button>
+        <div style="font-size: 16px; line-height: 1.5; margin: 20px 0; color: #333;">
+            <strong>Dessa verktyg flyttar snart till en ny intern adress.</strong><br><br>
+            Se mer info i Yleportalen eller kontakta Björn.
+        </div>
+        <button onclick="document.getElementById('migrationPopup').style.display='none'" style="background-color: #007cba; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-size: 16px; margin-top: 15px;">OK</button>
+    </div>
+</div>
+
+<script>
+// Stäng popup om man klickar utanför boxen
+document.getElementById('migrationPopup').addEventListener('click', function(e) {
+    if (e.target === this) {
+        this.style.display = 'none';
+    }
+});
+
+// Stäng popup med Escape-tangenten
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        var popup = document.getElementById('migrationPopup');
+        if (popup) popup.style.display = 'none';
+    }
+});
+</script>
 </body>
 </html>
