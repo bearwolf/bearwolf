@@ -1,1 +1,9 @@
-{}
+{
+  "fonts": {
+    "Noto Sans": [
+      "Noto Sans Regular",
+      "Noto Sans Bold", 
+      "Noto Sans Italic"
+    ]
+  }
+}
