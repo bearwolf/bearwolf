@@ -1,274 +1,59 @@
 <!DOCTYPE html>
-<html lang="sv">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yle kollagetool</title>
-    <link rel="stylesheet" href="style.css">
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Hejdå!</title>
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+
     <link
-    rel="apple-touch-icon"
-    sizes="180x180"
-    href="png/apple-touch-icon.png"
-  />
-  <link
-    rel="icon"
-    type="image/png"
-    sizes="32x32"
-    href="png/favicon-32x32.png"
-  />
-  <link
-    rel="icon"
-    type="image/png"
-    sizes="16x16"
-    href="png/favicon-16x16.png"
-  />
-</head>
-<body>
-    <!-- Vågeffekter från gamla designen -->
-    <div class="wave"></div>
-    <div class="wave"></div>
-    <div class="wave"></div>
-    <div class="beachBall"><img width="600" src="png/beachball.png" /><!-- <img width="600" id="bubble" src="png/bubble.png" /> --></div>
-    <!-- <h1>Bildkollage</h1> -->
-    
-    <!-- Ny wrapper för att hålla container och canvas-container -->
-    <div class="main-wrapper">
-        <div class="container">
-            <button class="buttonLeft" onclick="swapSite()">Andra verktyg</button>
-            <p id="p2" style="position: relative;"> <!-- Add position: relative here -->
-                
-                <b>Björns kollagetool</b>
-              </p>
-              <p id="p3" style="text-align: center;">
-                Dra bilderna för att justera position.<br> Använd zoom-reglagen för att förstora/förminska.
-              </p>
-            <div class="bulk-upload">
-                <label for="bulkUpload">Ladda upp flera bilder på en gång: <span class="disclaimer-text">* OBS, detta nollställer kollaget.</span></label>
-                <input type="file" id="bulkUpload" accept="image/*" multiple>
-            </div>
-            <div class="image-count-selector">
-                <label for="imageCount">Antal bilder:</label>
-                <select id="imageCount">
-                    <option value="2">2</option>
-                    <option value="3" selected>3</option>
-                    <option value="4">4</option>
-                </select>
-            </div>
-            <div class="upload-area">
-                <div class="input-group">
-                    <div class="label-group">
-                        <label for="file1">Bild 1:</label>
-                        <input type="file" id="file1" accept="image/*">
-                        <button class="swap-btn down" data-from="0" data-to="1">↓</button>
-                    </div>
-                    <div class="zoom-container">
-                        <label for="zoom1">Zoom:</label>
-                        <input type="range" id="zoom1" step="0.01" class="zoom-slider">
-                    </div>
-                    <div class="image-controls">
-                        <!-- Repetera för varje bild (data-index="0", "1", "2", "3") -->
-                        <div class="control-group" data-index="0">
-                            <div class="control">
-                                <span>Exponering:</span>
-                                <button class="adjust-btn" data-type="exposure" data-adjust="-1">-</button>
-                                <span class="value-display exposure-value">0</span>
-                                <button class="adjust-btn" data-type="exposure" data-adjust="1">+</button>
-                            </div>
-                            <div class="control">
-                                <span>Temperatur:</span>
-                                <button class="adjust-btn" data-type="temperature" data-adjust="-1">-</button>
-                                <span class="value-display temp-value">0</span>
-                                <button class="adjust-btn" data-type="temperature" data-adjust="1">+</button>
-                            </div>
-                            <div class="control">
-                                <span>Kontrast:</span>
-                                <button class="adjust-btn" data-type="contrast" data-adjust="-1">-</button>
-                                <span class="value-display contrast-value">0</span>
-                                <button class="adjust-btn" data-type="contrast" data-adjust="1">+</button>
-                            </div>
-                            <div class="control">
-                                <span>Mättnad:</span>
-                                <button class="adjust-btn" data-type="saturation" data-adjust="-1">-</button>
-                                <span class="value-display saturation-value">0</span>
-                                <button class="adjust-btn" data-type="saturation" data-adjust="1">+</button>
-                            </div>
-                        </div>
-                    </div>
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="png/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="png/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="png/favicon-16x16.png"
+    />
+    <link rel="manifest" href="site.webmanifest" />
+  </head>
+  <!-- <body onload="showsnackbar()">  -->
+  <div class="wave"></div>
+  <div class="wave"></div>
+  <div class="wave"></div>
+  <div class="beachBall"><img width="600" src="../beachball.png" /><img width="600" id="bubble" src="../bubble.png" /></div>
 
-                </div>
-                
-                <div class="input-group">
-                    <div class="label-group">
-                        <label for="file2">Bild 2:</label>
-                        <input type="file" id="file2" accept="image/*">
-                        <div class="button-group">
-                        <button class="swap-btn up" data-from="1" data-to="0">↑</button>
-                        <button class="swap-btn down" data-from="1" data-to="2">↓</button>
-                        </div>
-                        
-                    </div>
-                    <div class="zoom-container">
-                        <label for="zoom2">Zoom:</label>
-                        <input type="range" id="zoom2" step="0.01" class="zoom-slider">
-                    </div>
-                    <div class="image-controls">
-                        <!-- Repetera för varje bild (data-index="0", "1", "2", "3") -->
-                        <div class="control-group" data-index="1">
-                            <div class="control">
-                                <span>Exponering:</span>
-                                <button class="adjust-btn" data-type="exposure" data-adjust="-1">-</button>
-                                <span class="value-display exposure-value">0</span>
-                                <button class="adjust-btn" data-type="exposure" data-adjust="1">+</button>
-                            </div>
-                            <div class="control">
-                                <span>Temperatur:</span>
-                                <button class="adjust-btn" data-type="temperature" data-adjust="-1">-</button>
-                                <span class="value-display temp-value">0</span>
-                                <button class="adjust-btn" data-type="temperature" data-adjust="1">+</button>
-                            </div>
-                            <div class="control">
-                                <span>Kontrast:</span>
-                                <button class="adjust-btn" data-type="contrast" data-adjust="-1">-</button>
-                                <span class="value-display contrast-value">0</span>
-                                <button class="adjust-btn" data-type="contrast" data-adjust="1">+</button>
-                            </div>
-                            <div class="control">
-                                <span>Mättnad:</span>
-                                <button class="adjust-btn" data-type="saturation" data-adjust="-1">-</button>
-                                <span class="value-display saturation-value">0</span>
-                                <button class="adjust-btn" data-type="saturation" data-adjust="1">+</button>
-                            </div>
-                        </div>
-                    </div>
+  <h1></h1>
+  <div class="row">
+    <div id="bakgrund" class="column">
+      <div>
 
-                </div>
-                
-                <div class="input-group">
-                    <div class="label-group">
-                        <label for="file3">Bild 3:</label>
-                        <input type="file" id="file3" accept="image/*">
-                        <div class="button-group">
-                        <button class="swap-btn up" data-from="2" data-to="1">↑</button>
-                        <button class="swap-btn down" data-from="2" data-to="3" style="display: none;">↓</button>
-                        </div>
-                    </div>
-                    <div class="zoom-container">
-                        <label for="zoom3">Zoom:</label>
-                        <input type="range" id="zoom3" step="0.01" class="zoom-slider">
-                    </div>
-                    <div class="image-controls">
-                        <!-- Repetera för varje bild (data-index="0", "1", "2", "3") -->
-                        <div class="control-group" data-index="2">
-                            <div class="control">
-                                <span>Exponering:</span>
-                                <button class="adjust-btn" data-type="exposure" data-adjust="-1">-</button>
-                                <span class="value-display exposure-value">0</span>
-                                <button class="adjust-btn" data-type="exposure" data-adjust="1">+</button>
-                            </div>
-                            <div class="control">
-                                <span>Temperatur:</span>
-                                <button class="adjust-btn" data-type="temperature" data-adjust="-1">-</button>
-                                <span class="value-display temp-value">0</span>
-                                <button class="adjust-btn" data-type="temperature" data-adjust="1">+</button>
-                            </div>
-                            <div class="control">
-                                <span>Kontrast:</span>
-                                <button class="adjust-btn" data-type="contrast" data-adjust="-1">-</button>
-                                <span class="value-display contrast-value">0</span>
-                                <button class="adjust-btn" data-type="contrast" data-adjust="1">+</button>
-                            </div>
-                            <div class="control">
-                                <span>Mättnad:</span>
-                                <button class="adjust-btn" data-type="saturation" data-adjust="-1">-</button>
-                                <span class="value-display saturation-value">0</span>
-                                <button class="adjust-btn" data-type="saturation" data-adjust="1">+</button>
-                            </div>
-                        </div>
-                    </div>
+        <p id="p2">
+          <b>Hej! Alla verktyg har nu flyttat permanent internt.  <br><br>
+        </p>
+        <p id="p3">
+          Du hittar den nya adressen i yleportalen.
+        </p>
+      </div>
 
-                </div>
-                
-                <div class="input-group">
-                    <div class="label-group">
-                        <label for="file4">Bild 4:</label>
-                        <input type="file" id="file4" accept="image/*">
-                        <button class="swap-btn up" data-from="3" data-to="2">↑</button>
-                    </div>
-                    <div class="zoom-container">
-                        <label for="zoom4">Zoom:</label>
-                        <input type="range" id="zoom4" step="0.01" class="zoom-slider">
-                    </div>
-                    <div class="image-controls">
-                        <!-- Repetera för varje bild (data-index="0", "1", "2", "3") -->
-                        <div class="control-group" data-index="3">
-                            <div class="control">
-                                <span>Exponering:</span>
-                                <button class="adjust-btn" data-type="exposure" data-adjust="-1">-</button>
-                                <span class="value-display exposure-value">0</span>
-                                <button class="adjust-btn" data-type="exposure" data-adjust="1">+</button>
-                            </div>
-                            <div class="control">
-                                <span>Temperatur:</span>
-                                <button class="adjust-btn" data-type="temperature" data-adjust="-1">-</button>
-                                <span class="value-display temp-value">0</span>
-                                <button class="adjust-btn" data-type="temperature" data-adjust="1">+</button>
-                            </div>
-                            <div class="control">
-                                <span>Kontrast:</span>
-                                <button class="adjust-btn" data-type="contrast" data-adjust="-1">-</button>
-                                <span class="value-display contrast-value">0</span>
-                                <button class="adjust-btn" data-type="contrast" data-adjust="1">+</button>
-                            </div>
-                            <div class="control">
-                                <span>Mättnad:</span>
-                                <button class="adjust-btn" data-type="saturation" data-adjust="-1">-</button>
-                                <span class="value-display saturation-value">0</span>
-                                <button class="adjust-btn" data-type="saturation" data-adjust="1">+</button>
-                            </div>
-                        </div>
-                    </div>
 
-                </div>
-                
-            </div>
-            
-            <a id="downloadLink" download="kollage.png">Ladda ner kollage</a>
-        </div>
-        
-        <!-- Canvas-container nu inuti main-wrapper -->
-        <div class="canvas-container">
-            <canvas id="collageCanvas"></canvas>
-        </div>
     </div>
-    
-    <script src="script.js"></script>
-        <!-- Migreringsmeddelande Popup - Klistra in denna kod var som helst på sidan -->
-<div id="migrationPopup" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); display: flex; justify-content: center; align-items: center; z-index: 1000;">
-    <div style="background-color: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); max-width: 500px; width: 90%; text-align: center; position: relative;">
-        <button onclick="document.getElementById('migrationPopup').style.display='none'" style="position: absolute; top: 10px; right: 15px; background: none; border: none; font-size: 24px; cursor: pointer; color: #666;">&times;</button>
-        <div style="font-size: 16px; line-height: 1.5; margin: 20px 0; color: #333;">
-            <strong>Dessa verktyg flyttar snart till en ny intern adress.</strong><br><br>
-            Se mer info i Yleportalen eller kontakta Björn.
-        </div>
-        <button onclick="document.getElementById('migrationPopup').style.display='none'" style="background-color: #007cba; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-size: 16px; margin-top: 15px;">OK</button>
-    </div>
-</div>
 
-<script>
-// Stäng popup om man klickar utanför boxen
-document.getElementById('migrationPopup').addEventListener('click', function(e) {
-    if (e.target === this) {
-        this.style.display = 'none';
-    }
-});
 
-// Stäng popup med Escape-tangenten
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-        var popup = document.getElementById('migrationPopup');
-        if (popup) popup.style.display = 'none';
-    }
-});
-</script>
-</body>
+  </div>
+
+
+
+
+
+
+
 </html>

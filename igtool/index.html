@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>Yle IgTool</title>
+    <title>Hejdå!</title>
     <link href="css/style.css" rel="stylesheet" type="text/css" />
-    <link href="css/snackbar.css" rel="stylesheet" type="text/css" />
+
     <link
       rel="apple-touch-icon"
       sizes="180x180"
@@ -29,305 +29,31 @@
   <div class="wave"></div>
   <div class="wave"></div>
   <div class="wave"></div>
-  <div class="beachBall"><img width="600" src="png/beachball.png" /><img width="600" id="bubble" src="png/bubble.png" /></div>
+  <div class="beachBall"><img width="600" src="../beachball.png" /><img width="600" id="bubble" src="../bubble.png" /></div>
 
   <h1></h1>
   <div class="row">
     <div id="bakgrund" class="column">
       <div>
-        <button class="buttonLeft" onclick="swapSite()">Andra verktyg</button>
+
         <p id="p2">
-          <b>Björns 1:1 instatool 2024 edition 😎 <br><br><span id="p2" style="color: #FF0000;" style="text-align: center;">OBS! Det finns nu ett 4:5 verktyg<br>under "Andra verktyg"</span>.</b>
+          <b>Hej! Alla verktyg har nu flyttat permanent internt.  <br><br>
         </p>
         <p id="p3">
-          Skriv in text och justera boxarna med slajdern.<br />
-          Förändringar kan ibland ladda långsamt så ha tålamod.
+          Du hittar den nya adressen i yleportalen.
         </p>
       </div>
 
-      <div>
-        <div>
-          <label for="txt_Ims"
-            >IMS-kod: &nbsp;&nbsp;<input
-              type="string"
-              class="imsruta"
-              id="txt_Ims"
-              oninput="imsSelect()"
-              value="39-7643786008344a03ab7" /></label
-          ><span style="float: right;">⬅️➡️
-            <input
-              id="scrollslider"
-              oninput="generate()"
-              class="slider"
-              type="range"
-              min="-1920"
-              max="0"
-              value="0"
-            /></span><br>
-            <label for="zoomSelector"
-              >Uppskalning: <span style="color:grey">(ja, med ai 🙄)</span>
-              <select
-                id="zoomSelector"
-                class="dropdown"
-                width="20px"
-                onchange="zoomSelect()"
-              >
-                <option value="1">1x</option>
-                <option value="1.1">1.1x</option>
-                <option value="1.2">1.2x</option>
-                <option value="1.3">1.3x</option>
-                <option value="1.4">1.4x</option>
-                <option value="1.5">1.5x</option>
-                <option value="1.6">1.6x</option>
-              </select>
-            </label>
-            <span style="float: right;" hidden="true" id="zoomSpan">⬇️⬆️
-            <input
-              id="zoomedslider"
-              oninput="generate()"
-              class="slider"
-              type="range"
-              min="-1080"
-              max="0"
-              value="0"
-            /></span>
-        </div>
-        <div>
-          <label for="txt_Row1"
-            >Textrad 1:
-            <input
-              type="text"
-              style="text-transform: uppercase"
-              oninput="generate()"
-              id="txt_Row1"
-              value="SKRIV IN TEXT"
-          /></label>
-          <label for="colorSelector"
-            >Färg:&nbsp;
-            <select
-              id="colorSelector1"
-              class="dropdown"
-              onchange="masterColorCheck(1)"
-            >
-              <option value="#000000">Svart</option>
-              <option value="#4A4F54">Grå</option>
-              <option value="#00809C">Turkos</option>
-              <option value="#E90E43">Röd</option>
-              <option value="#9A092D">Mörkröd</option>
-              <option value="#058657">Grön</option>
-              <option value="#000297">Blå</option>
-              <option value="#9436B5">Lila</option>
-              <option value="#725A07">Gul</option>
-              <option value="#E65A27">Orange</option>
-              <option value="#ff4c20">X3M-orange</option>
-              <option disabled value="#ffffff">Vit</option>
-              <option disabled value="#29225a">Nyheter 1 min-blå</option>
-            </select>
-          </label>
-        </div>
 
-        <div>
-          <label for="txt_Row2"
-            >Textrad 2:
-            <input
-              type="text"
-              style="text-transform: uppercase"
-              oninput="generate()"
-              id="txt_Row2"
-              value="JUSTERA LÄNGDEN"
-          /></label>
-          <label for="colorSelector2"
-            >Färg:&nbsp;
-            <select
-              id="colorSelector2"
-              class="dropdown"
-              onchange="masterColorCheck(2)"
-            >
-              <option value="#000000">Svart</option>
-              <option value="#4A4F54">Grå</option>
-              <option value="#00809C">Turkos</option>
-              <option value="#E90E43">Röd</option>
-              <option value="#9A092D">Mörkröd</option>
-              <option value="#058657">Grön</option>
-              <option value="#000297">Blå</option>
-              <option value="#9436B5">Lila</option>
-              <option value="#725A07">Gul</option>
-              <option value="#E65A27">Orange</option>
-              <option value="#ff4c20">X3M-orange</option>
-              <option disabled value="#ffffff">Vit</option>
-              <option disabled value="#29225a">Nyheter 1 min-blå</option>
-            </select>
-          </label>
-        </div>
-        <div>
-          <label for="txt_Row3"
-            >Textrad 3:
-            <input
-              type="text"
-              style="text-transform: uppercase"
-              oninput="generate()"
-              id="txt_Row3"
-              value="VÄLJ FÄRG "
-          /></label>
-          <label for="colorSelector3"
-            >Färg:&nbsp;
-            <select
-              id="colorSelector3"
-              class="dropdown"
-              onchange="masterColorCheck(3)"
-            >
-              <option value="#000000">Svart</option>
-              <option value="#4A4F54">Grå</option>
-              <option selected value="#00809C">Turkos</option>
-              <option value="#E90E43">Röd</option>
-              <option value="#9A092D">Mörkröd</option>
-              <option value="#058657">Grön</option>
-              <option value="#000297">Blå</option>
-              <option value="#9436B5">Lila</option>
-              <option value="#725A07">Gul</option>
-              <option value="#E65A27">Orange</option>
-              <option value="#ff4c20">X3M-orange</option>
-              <option disabled value="#ffffff">Vit</option>
-              <option disabled value="#29225a">Nyheter 1 min-blå</option>
-
-            </select>
-          </label>
-        </div>
-
-        <div class="row">
-          <div class="flexcolumn">
-            <p>
-              Pil ⬅️➡️:
-              <input
-                id="length1slider"
-                oninput="slide1()"
-                class="sliderLong"
-                type="range"
-                min="-1080"
-                max="0"
-                value="-318"
-              />
-              <br /><br />Svartvit: <label class="container"> &nbsp;
-                <input type="checkbox" onchange="blackWhite()" id="greyscale">
-                <span class="checkmark"></span>
-              </label><i
-                >Justera pilen så att pilens rundning börjar där texten
-                slutar.</i
-              >
-            </p>
-          </div>
-          <p>
-            <label for="colorSelector4"
-              >Pilfärg:&nbsp;
-              <select
-                id="colorSelector4"
-                class="dropdown"
-                onchange="arrowColorPick()"
-              >
-                <option selected value="white">Vit</option>
-                <option value="green">Grön</option>
-                <option value="lila">Lila</option>
-                <option value="orange">Orange</option>
-                <option value="turkos">Turkos</option>
-                <option value="yellow">Gul</option>
-                <option value="blue">Blå</option>
-                <option value="greenforwhite">Grön för vit text</option>
-                <option value="lilaforwhite">Lila för vit text</option>
-                <option value="orangeforwhite">Orange för vit text</option>
-                <option value="turkosforwhite">Turkos för vit text</option>
-                <option value="yellowforwhite">Gul för vit text</option>
-                <option value="blueforwhite">Blå för vit text</option>
-                <option value="blackforwhite">Svart för vit text</option>
-              </select>
-            </label>
-            <label for="poddSelector"
-              >&nbsp;Podd:&nbsp;
-              <select
-                id="poddSelector"
-                class="dropdown"
-                onchange="poddSelect()"
-              >
-                <option selected value="bg2.png">Nej</option>
-                <option value="nyheter1min.png">Nyheter på en minut</option>
-                <option value="sallskapet.png">Sällskapet</option>
-                <option value="x3mnyheter.png">X3M nyheter</option>
-                <option value="nyhetspodden.png">Nyhetspodden</option>
-                <option value="ylearenan.png">Yle Arenan</option>
-                <option value="politikenblack.png">Politiken</option>
-                <option value="spelpanelen.png">Spelpanelen</option>
-                <option value="krimpodden.png">Krimpodden</option>
-              </select> </label
-            >&nbsp;&nbsp;&nbsp;<a
-              id="download"
-              onclick="download_img(this);"
-              class="button"
-              >Ladda ned bilden</a
-            >
-          </p>
-          <div class="column"></div>
-        </div>
-      </div>
     </div>
 
-    <div class="column">
-      <div class="canvas">
-        <img
-        class="spinner"
-        src="png/spinner2.gif"
-        hidden="true"
-        id="spinner"
-      />
-        <canvas id="canvas1" width="1080" height="1080"></canvas>
-      </div>
-    </div>
+
   </div>
 
-  <div id="snapshotFrame1" style="display: none; border: 1px solid black">
-    <span>image snapshot for export:</span>
 
-    <div>
-      <img id="targetImage1" />
-    </div>
-    <div><button onclick="hideSnapshotFrame()">hide snapshot</button></div>
-  </div>
 
-  <script src="js/script.js"></script>
 
-  <div id="snackbar">
-    <h1><b>Goda nyheter!</b></h1>
-    <br />
-    <p id="p3">
-      Nu finns det ett verktyg för instastories!<br />Du hittar länken här uppe
-      på sidan.<br />Ha en skön dag! /Björn
-    </p>
-  </div>
-    <!-- Migreringsmeddelande Popup - Klistra in denna kod var som helst på sidan -->
-<div id="migrationPopup" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); display: flex; justify-content: center; align-items: center; z-index: 1000;">
-    <div style="background-color: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); max-width: 500px; width: 90%; text-align: center; position: relative;">
-        <button onclick="document.getElementById('migrationPopup').style.display='none'" style="position: absolute; top: 10px; right: 15px; background: none; border: none; font-size: 24px; cursor: pointer; color: #666;">&times;</button>
-        <div style="font-size: 16px; line-height: 1.5; margin: 20px 0; color: #333;">
-            <strong>Dessa verktyg flyttar snart till en ny intern adress.</strong><br><br>
-            Se mer info i Yleportalen eller kontakta Björn.
-        </div>
-        <button onclick="document.getElementById('migrationPopup').style.display='none'" style="background-color: #007cba; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-size: 16px; margin-top: 15px;">OK</button>
-    </div>
-</div>
 
-<script>
-// Stäng popup om man klickar utanför boxen
-document.getElementById('migrationPopup').addEventListener('click', function(e) {
-    if (e.target === this) {
-        this.style.display = 'none';
-    }
-});
 
-// Stäng popup med Escape-tangenten
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-        var popup = document.getElementById('migrationPopup');
-        if (popup) popup.style.display = 'none';
-    }
-});
-</script>
-  <!-- </body> -->
+
 </html>

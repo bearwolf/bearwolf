@@ -26,7 +26,6 @@ p {
 .row {
   width: 100;
 }
-
 .spinner {
   position: absolute;
   margin: 20px;
@@ -34,7 +33,6 @@ p {
 #zoomSelector {
   width: 70px;
 }
-
 .buttonLeft {
   font-family: Arial, sans-serif;
   background-color: #00b4c8; /* Green */
@@ -175,6 +173,9 @@ body {
   float: right;
 
 }
+#zoomedslider {
+
+}
 .sliderLong {
   width: 450px;
 }
@@ -231,14 +232,6 @@ canvas {
   font-weight: bold;
   font-style: normal;
 }
-
-
-@font-face {
-font-family: "Medium";
-src: url("medium.woff2") format("woff2"), url("medium.woff") format("woff");
-font-weight: bold;
-font-style: normal;
-}
 /* Customize the label (the container) */
 .container {
   display: inline-block;
@@ -269,13 +262,12 @@ font-style: normal;
   left: 0;
   height: 25px;
   width: 25px;
-
-  background-color: #ffffff;
+  background-color: #eee;
 }
 
 /* On mouse-over, add a grey background color */
 .container:hover input ~ .checkmark {
-  background-color: #ffffff;
+  background-color: #ccc;
 }
 
 /* When the checkbox is checked, add a blue background */

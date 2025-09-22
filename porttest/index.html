@@ -1,84 +1,59 @@
 <!DOCTYPE html>
-<html lang="sv">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My PortFFolio</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-    <div class="retro-gradient" id="retro-gradient"></div>
-    <div class="game-container">
-        
-        <div class="container">
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Hejdå!</title>
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
 
-            <div class="content" id="content-area">
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="png/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="png/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="png/favicon-16x16.png"
+    />
+    <link rel="manifest" href="site.webmanifest" />
+  </head>
+  <!-- <body onload="showsnackbar()">  -->
+  <div class="wave"></div>
+  <div class="wave"></div>
+  <div class="wave"></div>
+  <div class="beachBall"><img width="600" src="../beachball.png" /><img width="600" id="bubble" src="../bubble.png" /></div>
 
-            </div>
-            <div class="menu">
-                <div class="menu-item">
-                    <span class="cursor"></span>
-                    <button class="menu-button active" data-section="home">HOME</button>
-                </div>
-                <div class="menu-item">
-                    <span class="cursor"></span>
-                    <button class="menu-button" data-section="portfolio">PORTFOLIO</button>
-                </div>
-                <div class="menu-item">
-                    <span class="cursor"></span>
-                    <button class="menu-button" data-section="items">ITEMS</button>
-                </div>
-                <div class="menu-item">
-                    <span class="cursor"></span>
-                    <button class="menu-button" data-section="magic">MAGIC</button>
-                </div>
-                <div class="menu-item">
-                    <span class="cursor"></span>
-                    <button class="menu-button" data-section="config">CONFIG</button>
-                </div>
-            </div>
-        </div>
+  <h1></h1>
+  <div class="row">
+    <div id="bakgrund" class="column">
+      <div>
+
+        <p id="p2">
+          <b>Hej! Alla verktyg har nu flyttat permanent internt.  <br><br>
+        </p>
+        <p id="p3">
+          Du hittar den nya adressen i yleportalen.
+        </p>
+      </div>
+
+
     </div>
-    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-    <script src="js/script.js"></script>
-    
 
 
-
-<div id="transition-container">
-    <div id="transition-grid"></div>
   </div>
-      <!-- Migreringsmeddelande Popup - Klistra in denna kod var som helst på sidan -->
-<div id="migrationPopup" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); display: flex; justify-content: center; align-items: center; z-index: 1000;">
-    <div style="background-color: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); max-width: 500px; width: 90%; text-align: center; position: relative;">
-        <button onclick="document.getElementById('migrationPopup').style.display='none'" style="position: absolute; top: 10px; right: 15px; background: none; border: none; font-size: 24px; cursor: pointer; color: #666;">&times;</button>
-        <div style="font-size: 16px; line-height: 1.5; margin: 20px 0; color: #333;">
-            <strong>Dessa verktyg flyttar snart till en ny intern adress.</strong><br><br>
-            Se mer info i Yleportalen eller kontakta Björn.
-        </div>
-        <button onclick="document.getElementById('migrationPopup').style.display='none'" style="background-color: #007cba; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-size: 16px; margin-top: 15px;">OK</button>
-    </div>
-</div>
 
-<script>
-// Stäng popup om man klickar utanför boxen
-document.getElementById('migrationPopup').addEventListener('click', function(e) {
-    if (e.target === this) {
-        this.style.display = 'none';
-    }
-});
 
-// Stäng popup med Escape-tangenten
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-        var popup = document.getElementById('migrationPopup');
-        if (popup) popup.style.display = 'none';
-    }
-});
-</script>
-</body>
+
+
+
+
+
 </html>

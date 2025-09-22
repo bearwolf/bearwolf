@@ -28,7 +28,7 @@ p {
 }
 .spinner {
   position: absolute;
-  margin-left: 200px;
+  margin: 20px;
 }
 #zoomSelector {
   width: 70px;

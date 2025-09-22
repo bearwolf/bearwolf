@@ -1,155 +1,59 @@
 <!DOCTYPE html>
-<html lang="sv">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SRT to VTT converter</title>
-    <link rel="stylesheet" href="style.css">
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Hejdå!</title>
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+
     <link
-    rel="apple-touch-icon"
-    sizes="180x180"
-    href="png/apple-touch-icon.png"
-  />
-  <link
-    rel="icon"
-    type="image/png"
-    sizes="32x32"
-    href="png/favicon-32x32.png"
-  />
-  <link
-    rel="icon"
-    type="image/png"
-    sizes="16x16"
-    href="png/favicon-16x16.png"
-  />
-</head>
-<body>
-    <!-- Vågeffekter från gamla designen -->
-    <div class="wave"></div>
-    <div class="wave"></div>
-    <div class="wave"></div>
-    <div class="beachBall"><img width="600" src="png/beachball.png" /><!-- <img width="600" id="bubble" src="png/bubble.png" /> --></div>
-    <!-- <h1>Bildkollage</h1> -->
-    
-    <!-- Ny wrapper för att hålla container och canvas-container -->
-    <div class="main-wrapper">
-        <div class="container">
-            <button class="buttonLeft" onclick="swapSite()">Other tools</button>
-            <p id="p2" style="position: relative;"> <!-- Add position: relative here -->
-                
-                <b>Björns VTT-Tool</b>
-              </p>
-              <p id="p3" style="text-align: center;">
-                Upload your SRT file, choose position, style and download. You can preview the textblocks in the first 10 seconds.
-              </p>
-              <input type="file" id="srtInput" accept=".srt">
-              <div>
-                <div class="subtitle-controls">
-                  <div>
-                    <label>Text width:</label>
-                    <select id="textSize">
-                        <option value="100%">Full width</option>
-                        <option value="80%" selected>80%</option>
-                        <option value="60%">60%</option>
-                        <option value="40%">Narrow</option>
-                    </select>
-                </div>
-                <div style="display: none;">
-                    <label>Textcolor:</label>
-                    <select id="textColor">
-                        <option value="white" selected>White</option>
-                        <option value="#d6ff43">Urheilu-yellow</option>
-                        <option value="#10ffb2">Kioski-green</option>
-                        <option value="#f9799a">Svenska Yle-Pink</option>
-                        <option value="#00c1d2">Yle-blue</option>
-                    </select>
-                </div>
-                <div>
-                  <label>Text background:</label>
-                  <select id="bgColor">
-                      <option value="rgba(0,0,0,0.75)" selected>Black 75%</option>
-                      <option value="rgba(0,0,0,0.5)">Black 50%</option>
-                      <option value="rgba(0,0,0,0)">Transparent</option>
-                  </select>
-              </div>
-              <div>
-                    <label>Text position:</label>
-                    <select id="linePosition">
-                        <option value="line:-21">Highest</option>
-                        <option value="line:-18">Higher</option>
-                        <option value="line:-15">High</option>
-                        <option value="line:-12" selected>Middle</option>
-                        <option value="line:-9">Low</option>
-                        <option value="line:-7">Lowest</option>
-                    </select>
-                </div>
-                
-<!--                 <div hidden>
-                    <label>Justering:</label>
-                    <select id="alignment">
-                        <option value="align:left">Vänster</option>
-                        <option value="align:center" selected>Centrerad</option>
-                        <option value="align:right">Höger</option>
-                    </select>
-                </div> -->
-              </div>
-            </div>
-            <div class="preview-controls">
-                <button id="prevCue">Previous text</button>
-                <button id="nextCue">Next text</button>
-            </div>
-            <div id="downloadButton">
-              <button id="downloadVTT">Download VTT</button>
-          </div>
-        </div>
-        
-        <!-- Canvas-container nu inuti main-wrapper -->
-        <div class="canvas-container">
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="png/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="png/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="png/favicon-16x16.png"
+    />
+    <link rel="manifest" href="site.webmanifest" />
+  </head>
+  <!-- <body onload="showsnackbar()">  -->
+  <div class="wave"></div>
+  <div class="wave"></div>
+  <div class="wave"></div>
+  <div class="beachBall"><img width="600" src="../beachball.png" /><img width="600" id="bubble" src="../bubble.png" /></div>
 
-            <div id="previewContainer">
-                <video width="349" height="620" poster="png/preview2.png">
-                    <source src="video/dummy2.mp4" type="video/mp4">
-                    <!-- Placeholder VTT som senare byts ut -->
-                    <track 
-                        id="subtitleTrack"
-                        label="Svenska" 
-                        kind="subtitles" 
-                        srclang="sv" 
-                        src="subtitles/placeholder.vtt" 
-                        default>
-                </video>
-            </div>
-        </div>
+  <h1></h1>
+  <div class="row">
+    <div id="bakgrund" class="column">
+      <div>
+
+        <p id="p2">
+          <b>Hej! Alla verktyg har nu flyttat permanent internt.  <br><br>
+        </p>
+        <p id="p3">
+          Du hittar den nya adressen i yleportalen.
+        </p>
+      </div>
+
+
     </div>
-    
-    <script src="script.js"></script>
-    <!-- Migreringsmeddelande Popup - Klistra in denna kod var som helst på sidan -->
-<div id="migrationPopup" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); display: flex; justify-content: center; align-items: center; z-index: 1000;">
-    <div style="background-color: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); max-width: 500px; width: 90%; text-align: center; position: relative;">
-        <button onclick="document.getElementById('migrationPopup').style.display='none'" style="position: absolute; top: 10px; right: 15px; background: none; border: none; font-size: 24px; cursor: pointer; color: #666;">&times;</button>
-        <div style="font-size: 16px; line-height: 1.5; margin: 20px 0; color: #333;">
-            <strong>Dessa verktyg flyttar snart till en ny intern adress.</strong><br><br>
-            Se mer info i Yleportalen eller kontakta Björn.
-        </div>
-        <button onclick="document.getElementById('migrationPopup').style.display='none'" style="background-color: #007cba; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-size: 16px; margin-top: 15px;">OK</button>
-    </div>
-</div>
 
-<script>
-// Stäng popup om man klickar utanför boxen
-document.getElementById('migrationPopup').addEventListener('click', function(e) {
-    if (e.target === this) {
-        this.style.display = 'none';
-    }
-});
 
-// Stäng popup med Escape-tangenten
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-        var popup = document.getElementById('migrationPopup');
-        if (popup) popup.style.display = 'none';
-    }
-});
-</script>
-</body>
+  </div>
+
+
+
+
+
+
+
 </html>

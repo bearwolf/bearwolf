@@ -1,6 +1,6 @@
 h1 {
   font-family: Arial, sans-serif;
-  font-weight: 400;
+  font-weight: 40;
   font-size: 48px;
 }
 #p2 {
@@ -19,10 +19,9 @@ p {
   font-family: Arial, sans-serif;
   font-weight: 400px;
 }
-
 .column {
   float: left;
-  width: 25%;
+  width: 30%;
 }
 .row {
   width: 100;
@@ -34,17 +33,22 @@ p {
 #zoomSelector {
   width: 70px;
 }
-button {
+.buttonLeft {
   font-family: Arial, sans-serif;
-  background-color: #00b4c8; 
+  background-color: #00b4c8; /* Green */
+  box-shadow: 3px 3px 10px rgb(0 0 0 / 0.5);
+  position: absolute;
   border: none;
   color: white;
-  padding: 6px 32px;
+  padding: 5px 12px;
   text-align: center;
   text-decoration: none;
-  display: inline-block;
+  display: flex;
   font-size: 16px;
   border-radius: 8px;
+  float: left;
+  margin-right: 6px;
+  cursor: pointer;
 }
 #bakgrund {
   box-shadow: 3px 3px 10px rgb(0 0 0 / 1);
@@ -62,7 +66,7 @@ button {
 }
 .button {
   font-family: Arial, sans-serif;
-  background-color: #00b4c8; 
+  background-color: #00b4c8; /* Green */
   box-shadow: 3px 3px 10px rgb(0 0 0 / 0.5);
   border: none;
   color: white;
@@ -73,23 +77,6 @@ button {
   font-size: 16px;
   border-radius: 8px;
   float: right;
-  margin-right: 6px;
-  cursor: pointer;
-}
-.buttonLeft {
-  font-family: Arial, sans-serif;
-  background-color: #00b4c8; 
-  box-shadow: 3px 3px 10px rgb(0 0 0 / 0.5);
-  position: absolute;
-  border: none;
-  color: white;
-  padding: 5px 12px;
-  text-align: center;
-  text-decoration: none;
-  display: flex;
-  font-size: 16px;
-  border-radius: 8px;
-  float: left;
   margin-right: 6px;
   cursor: pointer;
 }
@@ -139,7 +126,7 @@ body {
   overflow: auto;
   background: linear-gradient(
     315deg,
-    rgb(55, 197, 219) 3%,
+    #39c5db 3%,
     rgba(60, 132, 206, 1) 38%,
     rgba(48, 238, 226, 1) 68%,
     rgb(9, 114, 233) 98%
@@ -161,7 +148,6 @@ body {
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
 }
-
 @keyframes fadeInAnimation {
   0% {
     opacity: 0;
@@ -179,17 +165,6 @@ body {
   }
 }
 
-@keyframes gradient {
-  0% {
-    background-position: 0% 0%;
-  }
-  50% {
-    background-position: 100% 100%;
-  }
-  100% {
-    background-position: 0% 0%;
-  }
-}
 .imsruta {
   width: 20px;
 }
@@ -198,13 +173,12 @@ body {
   float: right;
 
 }
+#zoomedslider {
+
+}
 .sliderLong {
   width: 450px;
 }
-.reverseLong {
-  width: 450px;
-}
-
 .content {
   max-width: 500px;
   margin: auto;
@@ -224,8 +198,10 @@ textarea {
   font-family: Arial, sans-serif;
 }
 canvas {
-  box-shadow: 3px 3px 5px rgb(0 0 0 / 0.2);
-  height: 700px;
+  /* //transform scale: 0.5;
+  //-webkit-transform: scale(0.5, 0.5); */
+  box-shadow: 3px 3px 5px rgb(0 0 0 / 0.8);
+  height: 500px;
   margin: 20px;
 }
 
@@ -238,14 +214,24 @@ canvas {
   transition: 0.5s all;
   -webkit-transition: 0.5s all;
   -moz-transition: 0.5s all;
+  /* more transition here */
 }
+
+@media only screen and (max-width: 600px) {
+  .dropdown {
+    width: 100px;
+  }
+  input[type="text"] {
+    width: 200px;
+  }
+}
+
 @font-face {
   font-family: "Heavy";
-  src: url("./heavy.woff2") format("woff2"), url("./heavy.woff") format("woff");
+  src: url("heavy.woff2") format("woff2"), url("heavy.woff") format("woff");
   font-weight: bold;
   font-style: normal;
 }
-
 /* Customize the label (the container) */
 .container {
   display: inline-block;
@@ -259,22 +245,7 @@ canvas {
   -ms-user-select: none;
   user-select: none;
 }
-.checkbox-container {
-  display:inline-flex;
-  vertical-align: middle;
-  float: right;
-}
 
-.checkbox-container i,
-.checkbox-container label{
-  display: inline-block;
-  vertical-align: middle;
-  white-space: nowrap; /* Förhindra radbrytningar inom label */
-  margin: 10;
-}
-.checkbox-container input {
-  margin-left: 5px; /* Justera avståndet mellan elementen om nödvändigt */
-}
 /* Hide the browser's default checkbox */
 .container input {
   position: absolute;
@@ -329,6 +300,18 @@ canvas {
   transform: rotate(45deg);
 }
 
+@keyframes gradient {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
+
 .wave {
   background: rgb(255 255 255 / 25%);
   border-radius: 1000% 1000% 0 0;
@@ -376,6 +359,7 @@ canvas {
   left: -400px;
 
 }
+
 .wave:nth-of-type(4) {
   bottom: -2.5em;
   animation: wave 24s -1s reverse infinite;
@@ -422,13 +406,5 @@ canvas {
 
   100% {
     transform: translateY(1) translateX(1);
-  }
-}
-@media only screen and (max-width: 600px) {
-  .dropdown {
-    width: 100px;
-  }
-  input[type="text"] {
-    width: 200px;
   }
 }
